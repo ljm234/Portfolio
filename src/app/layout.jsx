@@ -13,7 +13,7 @@ import ViewTransitions from "@/components/effects/ViewTransitions";
 import TopProgress from "@/components/effects/TopProgress";
 
 export const metadata = {
-  metadataBase: new URL("https://cs-220-portfolio-v3-ljm234.vercel.app"),
+  metadataBase: new URL("https://jordanmontenegrocalla.com"),
   title: {
     default: "Jordan Montenegro — AI/ML Research Engineer & Clinical ML Researcher",
     template: "%s — Jordan Montenegro",
@@ -35,7 +35,6 @@ export const metadata = {
   },
   robots: "index,follow",
 
-  // ⬇⬇⬇ ADDED: tell Next/OG what favicon to use
   icons: {
     icon: "/favicon.ico",
   },
