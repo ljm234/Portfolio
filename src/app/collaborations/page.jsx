@@ -41,13 +41,13 @@ export default function CollaborationsPage() {
           Amoebanator — clinical ML safety
         </h2>
         <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
-          A 9-class differential diagnosis system for severe central nervous
-          system infections, with primary amoebic meningoencephalitis as the
-          highest-stakes target class. PyTorch on RigoBERTa Clinical, 5-model
-          deep ensemble, dual-gate out-of-distribution detection (Mahalanobis
-          plus logit-energy), Mondrian per-class conformal prediction, and a
-          hardcoded safety rule for freshwater exposure. medRxiv preprint
-          targeted for May 28, 2026.
+          A binary triage signal for primary amoebic meningoencephalitis (PAM)
+          risk, the rare and near-uniformly fatal CNS infection caused by
+          Naegleria fowleri. A compact tabular PyTorch MLP (914 parameters)
+          with temperature scaling, split conformal prediction with abstention,
+          dual energy-based and Mahalanobis OOD detection, and decision curve
+          analysis. Proof-of-concept trained on 30 simulated rows; not a
+          diagnostic, research and educational use only.
         </p>
       </section>
 
@@ -80,8 +80,8 @@ export default function CollaborationsPage() {
         </h2>
         <ul className="list-disc space-y-2 pl-5 text-neutral-700 dark:text-neutral-300 leading-relaxed">
           <li>
-            Co-authors and adjudicators on Amoebanator: clinicians with severe
-            CNS infection experience, in Spanish or English.
+            Collaborators interested in calibrated, abstention-aware clinical
+            ML and uncertainty quantification.
           </li>
           <li>
             Pilot sites for Kallpa: primary care clinics in Peru, with priority

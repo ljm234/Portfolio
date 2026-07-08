@@ -11,7 +11,7 @@ const PROJECTS = [
   {
     slug: "amoebanator",
     title: "Amoebanator",
-    desc: "ML triage for primary amoebic meningoencephalitis (Naegleria fowleri) with calibrated abstention. Nine-class differential, 5-model PyTorch ensemble on RigoBERTa Clinical, dual-gate OOD, Mondrian per-class conformal prediction.",
+    desc: "Binary PAM-risk triage (Naegleria fowleri) with calibrated abstention. Compact tabular MLP (914 params), split conformal prediction, dual-gate OOD, decision curve analysis. Proof-of-concept on simulated data.",
     tags: ["ML", "Clinical"],
     anim: "amoebanator",
   },

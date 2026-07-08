@@ -1,24 +1,5 @@
 [
   {
-    "id": "amoebanator-preprint",
-    "title": "Amoebanator: Calibrated Triage for Severe CNS Infections with Dual Out-of-Distribution Detection and Per-Class Conformal Abstention",
-    "authors": ["L. Jordan Montenegro Calla"],
-    "venue": "medRxiv (target)",
-    "year": 2026,
-    "topic": "ML",
-    "tags": ["clinical ML", "conformal prediction", "OOD detection", "Naegleria fowleri"],
-    "abstract": "A 9-class differential diagnosis system for severe central nervous system infections, with primary amoebic meningoencephalitis (PAM) caused by Naegleria fowleri as the highest-stakes target class. Built in PyTorch on the RigoBERTa Clinical encoder, with a 5-model deep ensemble, dual-gate out-of-distribution detection (Mahalanobis plus logit-energy), and Mondrian per-class conformal prediction so coverage is controlled within each diagnostic class.",
-    "contributions": [
-      "Dual-gate OOD detection combining Mahalanobis distance with a logit-energy criterion",
-      "Mondrian per-class conformal abstention so the model declines rather than guess on out-of-domain cases",
-      "5-model deep ensemble over RigoBERTa Clinical for the 9-class differential"
-    ],
-    "links": {
-      "status": "In preparation. medRxiv target May 28, 2026."
-    },
-    "_comment": "TODO: add medRxiv DOI once the preprint posts. TODO: add GitHub repo link when the repo goes public."
-  },
-  {
     "id": "jem-2026-paper-1",
     "title": "Manuscript on Naegleria fowleri (title forthcoming)",
     "authors": ["L. Jordan Montenegro Calla"],

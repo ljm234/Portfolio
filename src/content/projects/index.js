@@ -1,21 +1,25 @@
 export const projects = [
   {
     slug: "amoebanator",
-    title: "Amoebanator: Calibrated Triage for Severe CNS Infections",
+    title: "Amoebanator: Calibrated Abstention-Aware Triage for PAM Risk",
     tags: ["Clinical ML", "Conformal", "OOD"],
     summary:
-      "Nine-class differential diagnosis with calibrated abstention for primary amoebic meningoencephalitis.",
+      "Binary PAM-risk triage (Naegleria fowleri) with calibrated abstention. Compact tabular MLP with conformal prediction and dual OOD detection. Proof-of-concept on simulated data.",
     sections: {
       abstract:
-        "Amoebanator is a 9-class differential diagnosis system for severe central nervous system infections, with primary amoebic meningoencephalitis (PAM) caused by Naegleria fowleri as the highest-stakes target class. The system pairs a calibrated probability over the 9 conditions with explicit abstention when the input falls outside the validated population.",
+        "Amoebanator is a binary triage signal for primary amoebic meningoencephalitis (PAM) risk, the rare and near-uniformly fatal CNS infection caused by Naegleria fowleri. It pairs a compact tabular multilayer perceptron (914 parameters) with calibration and conformal abstention, declining to predict when a valid coverage guarantee cannot be made on the input.",
       methods:
-        "PyTorch implementation built on the RigoBERTa Clinical encoder. A 5-model deep ensemble produces the predictive distribution. Out-of-distribution detection is dual-gated, combining Mahalanobis distance in feature space with a logit-energy criterion. Abstention is governed by Mondrian per-class conformal prediction so coverage is controlled within each diagnostic class instead of pooled across the 9.",
+        "PyTorch tabular MLP with temperature scaling for calibration. Out-of-distribution detection is dual-gated, combining Mahalanobis distance with logit-energy and neg-energy criteria. Abstention is governed by split conformal prediction, and threshold selection uses decision curve analysis at clinically realistic prevalences.",
       results:
-        "Results will be reported in the medRxiv preprint targeted for May 28, 2026. The current development build evaluates calibration, ensemble disagreement, and OOD detection on held-out splits.",
+        "Proof-of-concept trained on 30 simulated rows with an 80/20 split. Headline metrics on the n=6 validation split are not clinically meaningful and are reported only for methodological completeness; the value of the project is the calibrated abstention machinery, not accuracy claims.",
       limits:
-        "PAM is rare. The ensemble is trained on a limited number of confirmed cases and a substantially larger set of differential diagnoses, which means OOD performance under true deployment shift is the primary unknown. External prospective validation is the next milestone.",
+        "Every training row is simulated (source=simulated, physician=demo); none came from a clinical record. The calibration and OOD gates share a small validation set, so coverage should be read as empirical on a tiny held-out set, not a population-level guarantee. Not a diagnostic; it must not be used to rule PAM in or out of any real clinical workflow.",
       ethics:
-        "Decision support, not autonomous diagnosis. The abstention gate is the safety control. The model is intended to flag suspected PAM early enough that confirmatory CSF testing can be ordered, not to replace it."
+        "Research and educational use only. Not a cleared medical device and not a substitute for clinical judgment. Any deployment would require prospective evaluation, site-level threshold tuning, and human oversight."
+    },
+    links: {
+      github: "https://github.com/ljm234/amoebanator-25",
+      huggingface: "https://huggingface.co/spaces/luisjordanmontenegro/amoebanator-25"
     }
   },
   {
