@@ -49,7 +49,7 @@ export default function AboutPage() {
 
             <Reveal effect="fade-up">
               <p className="mt-4 text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                I have completed two of four undergraduate degrees and I am finishing the other two. The completed ones are medical microbiology at Weber State (August 2025) and IT and System Administration at Ensign College (December 2025). I am still finishing software engineering at Ensign College (graduating August 2026, GPA 4.000) and computer science at the University of the People (graduating December 2026, GPA 3.85). Two research papers are under review at the Journal of Eukaryotic Microbiology. I’m credentialed on MIMIC-IV. I built Amoebanator (PyTorch, conformal prediction, dual-OOD;{" "}
+                I have completed two of four undergraduate degrees and I am finishing the other two. The completed ones are medical microbiology at Weber State (August 2025) and IT and System Administration at Ensign College (December 2025). I am still finishing software engineering at Ensign College (graduating August 2026, GPA 4.000) and computer science at the University of the People (graduating December 2026, GPA 3.92). One research paper is under review at the Journal of Eukaryotic Microbiology. I’m credentialed on MIMIC-IV. I built Amoebanator (PyTorch, conformal prediction, dual-OOD;{" "}
                 <a
                   className="underline"
                   href="https://huggingface.co/spaces/luisjordanmontenegro/amoebanator-25"
@@ -58,7 +58,7 @@ export default function AboutPage() {
                 >
                   published on Hugging Face
                 </a>
-                ) and Kallpa (a bilingual primary care decision support engine in active development at kallpahealthcare.com). I submitted to the Anthropic Fellows Program in April 2026.
+                ) and Kallpa (a bilingual primary care decision support engine in active development at kallpahealthcare.com).
               </p>
             </Reveal>
 
@@ -68,7 +68,6 @@ export default function AboutPage() {
               </p>
             </Reveal>
 
-            {/* TODO: replace with updated CV before October 15, 2026 for application materials packet */}
             <Reveal effect="fade-up">
               <a
                 href="/downloads/Jordan-Montenegro-CV.pdf"
