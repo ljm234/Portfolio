@@ -1,69 +1,18 @@
 [
   {
-    "id": "jem-2026-paper-1",
-    "title": "Manuscript on Naegleria fowleri (title forthcoming)",
+    "id": "montenegro-medium-jem",
+    "title": "Montenegro's Medium (MM): A serum-free, low-cost axenic medium for robust growth of Naegleria fowleri",
     "authors": ["L. Jordan Montenegro Calla"],
     "venue": "Journal of Eukaryotic Microbiology",
     "year": 2026,
     "topic": "Microbiology",
-    "tags": ["Naegleria fowleri", "wet lab"],
-    "abstract": "Manuscript currently under peer review at the Journal of Eukaryotic Microbiology. The full title and abstract will be released when the paper enters the public record.",
-    "contributions": [],
-    "links": {
-      "status": "Under review at JEM 2026"
-    },
-    "_comment": "TODO: replace placeholder title and abstract with the real paper 1 metadata once review concludes. TODO: confirm authorship order."
-  },
-  {
-    "id": "jem-2026-paper-2",
-    "title": "Manuscript on Naegleria fowleri (title forthcoming)",
-    "authors": ["L. Jordan Montenegro Calla"],
-    "venue": "Journal of Eukaryotic Microbiology",
-    "year": 2026,
-    "topic": "Microbiology",
-    "tags": ["Naegleria fowleri", "wet lab"],
-    "abstract": "Manuscript currently under peer review at the Journal of Eukaryotic Microbiology. The full title and abstract will be released when the paper enters the public record.",
-    "contributions": [],
-    "links": {
-      "status": "Under review at JEM 2026"
-    },
-    "_comment": "TODO: replace placeholder title and abstract with the real paper 2 metadata once review concludes. TODO: confirm authorship order."
-  },
-  {
-    "id": "organelle-target-2025",
-    "title": "Organelle-Target Discovery for Selective Amoebicidal Therapy",
-    "authors": ["L. Jordan Montenegro Calla"],
-    "venue": "Zenodo",
-    "year": 2025,
-    "topic": "Microbiology",
-    "tags": ["assays", "mitochondria", "Naegleria fowleri"],
-    "abstract": "Matched HeLa+Nf vs Nf-only readouts across LDH (24 h), Caspase-3 (48 h), and JC-1 (72 h) to surface organelle-level dependencies that predict selective amoebicidal effect.",
-    "contributions": [
-      "Plate-level assay design across three timepoints with matched co-culture controls",
-      "Reproducible analysis pipeline with documented per-plate QC"
-    ],
-    "links": {
-      "doi": "https://doi.org/10.5281/zenodo.17527970"
-    },
-    "_comment": "TODO: confirm whether this Zenodo deposit corresponds to one of the JEM submissions and consolidate or cross-link if so."
-  },
-  {
-    "id": "montenegro-medium-2025",
-    "title": "Montenegro's Medium: Low-cost Culture Formulation for Naegleria fowleri",
-    "authors": ["L. Jordan Montenegro Calla"],
-    "venue": "Zenodo",
-    "year": 2025,
-    "topic": "Microbiology",
-    "tags": ["growth media", "low-cost", "Naegleria fowleri"],
+    "tags": ["Naegleria fowleri", "growth media", "wet lab"],
     "abstract": "A serum-free, low-cost axenic medium that supports robust Naegleria fowleri growth at a fraction of the per-liter cost of standard formulations, with reproducible passage timing across replicates.",
     "contributions": [
       "Three to five times increase in trophozoite yield versus the baseline reference medium",
       "Cost-aware formulation with documented sourcing for each component",
       "Reproducible protocol with QC checkpoints and stable passage cadence"
     ],
-    "links": {
-      "doi": "https://doi.org/10.5281/zenodo.17766277"
-    },
-    "_comment": "TODO: confirm whether this Zenodo deposit corresponds to one of the JEM submissions and consolidate or cross-link if so."
+    "links": { "status": "Submitted 2025; under review at Journal of Eukaryotic Microbiology" }
   }
 ]
