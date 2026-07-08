@@ -38,10 +38,10 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
-      url: `${base}/research/kallpa`,
+      url: `${base}/kallpa`,
       lastModified: now,
       changeFrequency: "monthly",
-      priority: 0.9,
+      priority: 0.7,
     },
     {
       url: `${base}/research/montenegro-medium`,

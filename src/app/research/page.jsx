@@ -16,13 +16,6 @@ const PROJECTS = [
     anim: "amoebanator",
   },
   {
-    slug: "kallpa",
-    title: "Kallpa",
-    desc: "Bilingual Spanish/English primary care decision support for Latin America. Production-deployed at kallpahealthcare.com, scoped to 200 conditions for V1.0.",
-    tags: ["ML", "Clinical"],
-    anim: "kallpa",
-  },
-  {
     slug: "montenegro-medium",
     title: "Montenegro’s Medium",
     desc: "Serum-free, low-cost culture medium that supports 3 to 5 times the growth of standard formulations for Naegleria fowleri.",
@@ -218,45 +211,9 @@ function AnimatedPanel({ kind }) {
       return <CanvasAnim draw={drawColonies} />;
     case "erstress":
       return <CanvasAnim draw={drawNetwork} />;
-    case "kallpa":
-      return <CanvasAnim draw={drawBilingual} />;
     default:
       return <div className="h-full w-full bg-accent-gradient opacity-30" />;
   }
-}
-
-function drawBilingual(ctx, t, w, h) {
-  ctx.clearRect(0, 0, w, h);
-  const cx = w / 2;
-  const cy = h / 2;
-  const phase = (Math.sin(t * 0.0015) + 1) / 2;
-
-  ctx.font = "700 28px system-ui, sans-serif";
-  ctx.textBaseline = "middle";
-
-  ctx.fillStyle = "rgba(99,102,241,.85)";
-  ctx.globalAlpha = 0.35 + 0.55 * phase;
-  ctx.textAlign = "right";
-  ctx.fillText("EN", cx - 18, cy);
-
-  ctx.fillStyle = "rgba(16,185,129,.85)";
-  ctx.globalAlpha = 0.35 + 0.55 * (1 - phase);
-  ctx.textAlign = "left";
-  ctx.fillText("ES", cx + 18, cy);
-
-  ctx.globalAlpha = 1;
-  ctx.strokeStyle = "rgba(120,120,120,.5)";
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(cx - 12, cy);
-  ctx.lineTo(cx + 12, cy);
-  ctx.stroke();
-
-  const r = 6 + 14 * phase;
-  ctx.strokeStyle = "rgba(56,189,248,.35)";
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.stroke();
 }
 
 function CanvasAnim({ draw }) {

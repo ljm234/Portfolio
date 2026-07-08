@@ -58,7 +58,7 @@ export default function CollaborationsPage() {
         </h2>
         <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
           A bilingual Spanish/English clinical decision support engine for
-          primary care, deployed at{" "}
+          primary care, in active development at{" "}
           <a
             className="underline"
             href="https://kallpahealthcare.com"
@@ -67,9 +67,8 @@ export default function CollaborationsPage() {
           >
             kallpahealthcare.com
           </a>
-          . V1.0 is scoped to 200 conditions with a target ship of October
-          2026. The longer-term roadmap covers Peru, Latin America, Europe,
-          and the United States.
+          , with V1.0 targeted for October 2026. Aimed at underserved
+          populations in Latin America, starting with Peru.
         </p>
       </section>
 

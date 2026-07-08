@@ -58,7 +58,7 @@ export default function AboutPage() {
                 >
                   published on Hugging Face
                 </a>
-                ) and Kallpa (a bilingual primary care decision support engine deployed at kallpahealthcare.com). I submitted to the Anthropic Fellows Program in April 2026.
+                ) and Kallpa (a bilingual primary care decision support engine in active development at kallpahealthcare.com). I submitted to the Anthropic Fellows Program in April 2026.
               </p>
             </Reveal>
 

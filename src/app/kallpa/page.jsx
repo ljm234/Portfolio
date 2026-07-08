@@ -1,10 +1,10 @@
 import Reveal from "@/components/effects/Reveal";
 
 export const metadata = {
-  title: "Kallpa — Research",
+  title: "Kallpa",
   description:
-    "Bilingual Spanish/English primary care decision support for Latin America. V1.0 ship target October 2026.",
-  alternates: { canonical: "/research/kallpa" },
+    "Bilingual Spanish/English primary care decision support, in active development. V1.0 targeted for October 2026.",
+  alternates: { canonical: "/kallpa" },
 };
 
 export default function KallpaPage() {
@@ -34,10 +34,10 @@ export default function KallpaPage() {
       <section className="space-y-3">
         <h2 className="text-xl font-semibold tracking-tight">What it is</h2>
         <p className="text-neutral-700 dark:text-neutral-300">
-          Kallpa is a production-deployed clinical decision support engine scoped to
-          200 conditions for V1.0. The system is built for primary care clinicians in
-          bilingual Spanish/English settings and is targeted at underserved populations
-          in Latin America, starting with Peru.
+          Kallpa is a bilingual Spanish/English clinical decision support engine
+          for primary care, in active development. It is built for clinicians in
+          bilingual settings and aimed at underserved populations in Latin
+          America, starting with Peru.
         </p>
       </section>
 
@@ -46,16 +46,15 @@ export default function KallpaPage() {
         <ul className="list-disc space-y-1 pl-5 text-neutral-700 dark:text-neutral-300">
           <li>TypeScript across the front end and the backend, with Vitest for unit tests.</li>
           <li>Multi-tenant architecture using Auth.js for authentication.</li>
-          <li>GPT engine for clinical reasoning across the 200-condition scope.</li>
+          <li>LLM-based clinical reasoning engine.</li>
           <li>Bilingual content layer with English and Spanish parity at the symptom, condition, and patient-instructions level.</li>
         </ul>
-        {/* TODO: expand with deployment stack, data sources, evaluation, and clinical guardrails when scope is locked. */}
       </section>
 
       <section className="space-y-3">
         <h2 className="text-xl font-semibold tracking-tight">Status</h2>
         <p className="text-neutral-700 dark:text-neutral-300">
-          The platform is production-deployed at{" "}
+          In active development at{" "}
           <a
             className="underline"
             href="https://kallpahealthcare.com"
@@ -64,7 +63,7 @@ export default function KallpaPage() {
           >
             kallpahealthcare.com
           </a>
-          . V1.0 covers 200 conditions and is on track to ship in October 2026.
+          , with V1.0 targeted for October 2026.
         </p>
       </section>
     </div>
