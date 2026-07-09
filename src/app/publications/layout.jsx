@@ -1,7 +1,7 @@
 export const metadata = {
   title: "Publications — Jordan Montenegro",
   description:
-    "Preprints, peer-reviewed manuscripts in progress, and Zenodo data deposits.",
+    "A manuscript under review in microbiology.",
   alternates: { canonical: "/publications" },
 };
 

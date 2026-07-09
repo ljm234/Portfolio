@@ -19,9 +19,7 @@ const yearsOf = (rows) => [...new Set(rows.map((p) => p.year))].sort((a, b) => b
 
 // Research-page routes for entries that have a project page
 const DATA_ROUTES = {
-  "montenegro-medium-2025": "/research/montenegro-medium",
-  "organelle-target-2025": "/research/organelle-targets",
-  "amoebanator-preprint": "/research/amoebanator",
+  "montenegro-medium-jem": "/research/montenegro-medium",
 };
 
 // “Download Project” preference order
