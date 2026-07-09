@@ -33,7 +33,7 @@ Data & Models
         <ul className="list-disc list-inside text-sm space-y-1">
           <li><b>Safety-first demos:</b> no PHI, browser inference, seeded synthetic cohorts.</li>
           <li><b>Clinical legibility:</b> calibration, decision curve, model card, limitations.</li>
-          <li><b>Ops maturity:</b> CI (Vitest + Playwright), perf budgets, a11y checks.</li>
+          <li><b>Ops maturity:</b> CI (Vitest + Playwright), a11y checks.</li>
           <li><b>Extensibility:</b> API toggles support server inference later.</li>
         </ul>
       </Section>

@@ -13,8 +13,7 @@
     "e2e": "playwright test",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "compress-images": "node scripts/compress-images.js",
-    "lhci": "lhci autorun"
+    "compress-images": "node scripts/compress-images.js"
   },
   "dependencies": {
     "next": "^14.2.33",
@@ -25,7 +24,6 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@lhci/cli": "^0.14.0",
     "@playwright/test": "^1.56.0",
     "@testing-library/jest-dom": "6.4.6",
     "@testing-library/react": "14.3.1",

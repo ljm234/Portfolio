@@ -55,12 +55,6 @@ export default function HomeClient() {
       tag: "Open & reproducible",
     },
     {
-      title: "Performance",
-      desc: "Budgets, Lighthouse, and live device vitals — fast on purpose.",
-      href: "/perf",
-      tag: "Measured",
-    },
-    {
       title: "Collaborations",
       desc: "Scope, guardrails, and weekly milestones with steady progress.",
       href: "/collaborations",
@@ -123,8 +117,6 @@ export default function HomeClient() {
                 "Dataset cards",
                 "Reproducible figures",
                 "Accessible UX",
-                "Lighthouse-tested on every PR",
-                "Prospective pilots",
               ].map((t, i) => (
                 <span key={i} className="mx-3 whitespace-nowrap text-sm opacity-80">
                   {t} •
@@ -140,8 +132,6 @@ export default function HomeClient() {
                 "Dataset cards",
                 "Reproducible figures",
                 "Accessible UX",
-                "Lighthouse-tested on every PR",
-                "Prospective pilots",
               ].map((t, i) => (
                 <span key={`d-${i}`} className="mx-3 whitespace-nowrap text-sm opacity-80">
                   {t} •
@@ -153,7 +143,6 @@ export default function HomeClient() {
           {/* quick KPIs */}
           <dl className="mt-6 grid gap-3 sm:grid-cols-4">
             {[
-              ["Lighthouse", "Tested per PR"],
               ["Ship cadence", "Weekly"],
               ["Accessibility", "AA target"],
               ["Tests", "Green"],
@@ -188,7 +177,6 @@ export default function HomeClient() {
         >
           GitHub
         </a>
-        {/* TODO: add Google Scholar URL when profile is live */}
         <a
           href="https://linkedin.com/in/jordan-montenegro-calla"
           target="_blank"
@@ -203,7 +191,6 @@ export default function HomeClient() {
         >
           jordanmontenegroc.99@gmail.com
         </a>
-        {/* TODO: replace with updated CV before October 15, 2026 for application materials packet */}
         <a
           href="/downloads/Jordan-Montenegro-CV.pdf"
           className="rounded-md border px-3 py-1 underline-offset-4 hover:underline"

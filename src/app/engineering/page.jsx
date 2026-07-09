@@ -38,13 +38,6 @@ export default function Engineering(){
             <li>GitHub Actions: lint → build → test → e2e</li>
           </ul>
         </Card>
-        <Card title="Performance & A11y">
-          <ul className="list-disc list-inside text-sm space-y-1">
-            <li>LCP &lt; 2.5s goal; <code>next/image</code> for media</li>
-            <li>Skip-nav, focus rings, contrast-safe palette</li>
-            <li>Content served statically wherever possible</li>
-          </ul>
-        </Card>
       </section>
     </div>
   );
