@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import CountUpNumber from "@/components/effects/CountUpNumber";
 
 /**
- * Safety & Threshold - premium UI
+ * Safety and Threshold controls
  * - Animated donut gauges (Alert rate, PPV)
  * - Confusion matrix with live counts
  * - Operating point slider + tiny ROC sketch

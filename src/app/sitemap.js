@@ -32,12 +32,6 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
-      url: `${base}/research/amoebanator`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
       url: `${base}/kallpa`,
       lastModified: now,
       changeFrequency: "monthly",

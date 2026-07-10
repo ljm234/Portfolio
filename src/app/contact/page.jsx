@@ -360,7 +360,7 @@ function BeachFX() {
       <style>{`
         :root { --horizon: 60vh; }
 
-        /* Subtle motion + premium palette */
+        /* Subtle motion + accent palette */
         .sky { background: linear-gradient(180deg,#cfe9fb 0%,#f3f8ff 48%,#cfe9fb 100%); }
         .sun {
           left: 50%; top: 12vh; width: 34vmin; height: 34vmin; transform: translateX(-50%);

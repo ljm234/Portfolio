@@ -88,7 +88,7 @@ export default function HomeClient() {
             <span className="title-grad">Clinical&nbsp;ML</span>{" "}
             and{" "}
             <span className="title-grad-2">AI/ML products</span>{" "}
-            that ship - and stand up to scrutiny
+            that ship and hold up to scrutiny
           </h1>
           <p className="mt-4 max-w-3xl text-neutral-700 dark:text-neutral-300">
             I split my work between careful{" "}
