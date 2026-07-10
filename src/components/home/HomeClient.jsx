@@ -28,7 +28,7 @@ export default function HomeClient() {
         "Observable data pipelines and evaluation harnesses.",
         "A/B or counterfactual checks to prove real lift.",
       ],
-      href: "/playground",
+      href: "https://huggingface.co/spaces/luisjordanmontenegro/amoebanator-25",
     },
     {
       title: "Clinical ML research",
@@ -101,7 +101,7 @@ export default function HomeClient() {
           <div className="mt-6 flex flex-wrap gap-3">
             <a href="/research" className="btn-primary">See work</a>
             <a href="/contact" className="btn-ghost">Contact</a>
-            <a href="/playground" className="btn-ghost">Live demo</a>
+            <a href="https://huggingface.co/spaces/luisjordanmontenegro/amoebanator-25" target="_blank" rel="noopener noreferrer" className="btn-ghost">Live demo</a>
           </div>
 
           {/* trust chips / marquee */}
@@ -204,7 +204,13 @@ export default function HomeClient() {
         <h2 className="text-xl font-semibold tracking-tight">Where I can help</h2>
         <div className="grid gap-6 md:grid-cols-2">
           {Cards.map((c) => (
-            <a key={c.title} href={c.href} className="group relative block rounded-2xl border p-6 card hover:shadow-lg">
+            <a
+              key={c.title}
+              href={c.href}
+              target={c.href.startsWith("http") ? "_blank" : undefined}
+              rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              className="group relative block rounded-2xl border p-6 card hover:shadow-lg"
+            >
               <span className="glow" />
               <div className="text-lg font-semibold">{c.title}</div>
               <ul className="mt-3 list-disc space-y-2 pl-5">

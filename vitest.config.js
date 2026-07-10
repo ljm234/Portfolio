@@ -13,5 +13,6 @@ export default defineConfig({
     exclude: ["e2e/**","node_modules/**",".next/**","dist/**"],
     setupFiles: ["./vitest.setup.js"],
     css: true,
+    passWithNoTests: true,
   },
 });

@@ -14,7 +14,6 @@ export default function Notes(){
 Client (Next.js App Router)
  ├─ UI: Tailwind + shadcn-like primitives (hand-rolled)
  ├─ Charts: Recharts (calibration, PR, decision curve)
- ├─ Playground: browser LR model + Threshold Tuner
  └─ Accessibility: skip-nav, focus, contrast
 
 Server (Vercel)

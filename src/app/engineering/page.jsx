@@ -34,7 +34,7 @@ export default function Engineering(){
         <Card title="Testing & CI">
           <ul className="list-disc list-inside text-sm space-y-1">
             <li>Vitest unit tests for model utils</li>
-            <li>Playwright e2e for nav & playground</li>
+            <li>Playwright e2e for navigation</li>
             <li>GitHub Actions: lint → build → test → e2e</li>
           </ul>
         </Card>
@@ -54,7 +54,7 @@ function Diagram(){
         <g fontFamily="ui-sans-serif, system-ui" fontSize="12" fill="none" stroke="#6b7280" strokeWidth="1.5">
           <rect x="20" y="20" width="190" height="80" rx="10" fill="#f9fafb"/>
           <text x="115" y="50" textAnchor="middle" fill="#111827">Browser (Client)</text>
-          <text x="115" y="70" textAnchor="middle" fill="#111827">Playground UI + LR baseline</text>
+          <text x="115" y="70" textAnchor="middle" fill="#111827">Amoebanator demo + charts</text>
 
           <rect x="250" y="20" width="210" height="80" rx="10" fill="#f9fafb"/>
           <text x="355" y="50" textAnchor="middle" fill="#111827">Next.js App Router</text>

@@ -6,7 +6,6 @@ export default function sitemap() {
   // Priority tiers:
   //   0.9 - homepage and primary research pages
   //   0.7 - about, contact, publications, collaborations
-  //   0.5 - secondary surfaces (playground)
   //
   // Routes intentionally excluded from the sitemap because they are
   // either incomplete or internal-only:
@@ -72,12 +71,6 @@ export default function sitemap() {
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.7,
-    },
-    {
-      url: `${base}/playground`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.5,
     },
   ];
 }
