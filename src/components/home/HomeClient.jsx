@@ -1,7 +1,8 @@
 // src/components/home/HomeClient.jsx
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import SelvaBackground from "@/components/effects/SelvaBackground";
 
 export default function HomeClient() {
   // subtle parallax for the hero field
@@ -18,6 +19,15 @@ export default function HomeClient() {
     };
     window.addEventListener("pointermove", move, { passive: true });
     return () => window.removeEventListener("pointermove", move);
+  }, []);
+
+  const [isDark, setIsDark] = useState(false);
+  useEffect(() => {
+    const check = () => setIsDark(document.documentElement.classList.contains("dark"));
+    check();
+    const obs = new MutationObserver(check);
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => obs.disconnect();
   }, []);
 
   const Cards = [
@@ -71,16 +81,13 @@ export default function HomeClient() {
         {/* background field */}
         <div
           ref={fxRef}
-          className="heroFX pointer-events-none absolute inset-0 -z-10"
+          className="heroFX pointer-events-none absolute inset-0 z-0"
           aria-hidden="true"
         >
-          <div className="noise" />
-          <div className="orb orb-a" />
-          <div className="orb orb-b" />
-          <div className="gridlines" />
+          <SelvaBackground className="absolute inset-0 h-full w-full" isDark={isDark} />
         </div>
 
-        <div className="p-6 md:p-10">
+        <div className="relative z-10 p-6 md:p-10">
           <h1
             data-testid="hero-title"
             className="text-balance text-4xl md:text-5xl font-extrabold tracking-tight leading-tight"
