@@ -61,6 +61,28 @@ export default function ProjectPage({ params }) {
       <h2>Ethics</h2>
       <p>{S.ethics}</p>
 
+      {proj.links && (
+        <>
+          <h2>Links</h2>
+          <ul>
+            {proj.links.github && (
+              <li>
+                <a href={proj.links.github} target="_blank" rel="noopener noreferrer">
+                  Source code on GitHub
+                </a>
+              </li>
+            )}
+            {proj.links.huggingface && (
+              <li>
+                <a href={proj.links.huggingface} target="_blank" rel="noopener noreferrer">
+                  Live demo on Hugging Face
+                </a>
+              </li>
+            )}
+          </ul>
+        </>
+      )}
+
       <hr />
       <p className="text-sm text-neutral-500">
         Demo content for review. No clinical use.
