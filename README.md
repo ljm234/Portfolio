@@ -1,4 +1,4 @@
-# Jordan Montenegro-Calla — Portfolio
+# Jordan Montenegro-Calla - Portfolio
 
 Personal portfolio site at jordanmontenegrocalla.com.
 

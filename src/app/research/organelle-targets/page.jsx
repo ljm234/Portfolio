@@ -11,21 +11,21 @@ export const metadata = {
 };
 
 const FIGS = [
-  // LDH — 24 h
-  { key: "ldh-hn-p1-percent", title: "LDH 24 h — HeLa+Nf P1 (percent)", src: "/research/ot/ldh-hela-nf-24h-plate1-percent.png" },
-  { key: "ldh-hn-p2-raw",     title: "LDH 24 h — HeLa+Nf P2 (raw)",      src: "/research/ot/ldh-hela-nf-24h-plate2-raw.png" },
-  { key: "ldh-nf-p1-raw",     title: "LDH 24 h — Nf-only P1 (raw)",      src: "/research/ot/ldh-nf-only-24h-plate1-raw.png" },
-  { key: "ldh-nf-p2-raw",     title: "LDH 24 h — Nf-only P2 (raw)",      src: "/research/ot/ldh-nf-only-24h-plate2-raw.png" },
-  // Caspase-3 — 48 h
-  { key: "casp3-hn-p1-percent", title: "Caspase-3 48 h — HeLa+Nf P1 (percent)", src: "/research/ot/caspase3-hela-nf-48h-plate1-percent.png" },
-  { key: "casp3-hn-p2-percent", title: "Caspase-3 48 h — HeLa+Nf P2 (percent)", src: "/research/ot/caspase3-hela-nf-48h-plate2-percent.png" },
-  { key: "casp3-nf-p1-raw",     title: "Caspase-3 48 h — Nf-only P1 (raw)",     src: "/research/ot/caspase3-nf-only-48h-plate1-raw.png" },
-  { key: "casp3-nf-p2-raw",     title: "Caspase-3 48 h — Nf-only P2 (raw)",     src: "/research/ot/caspase3-nf-only-48h-plate2-raw.png" },
-  // JC-1 — 72 h
-  { key: "jc1-hn-p1-percent", title: "JC-1 72 h — HeLa+Nf P1 (percent)", src: "/research/ot/jc1-hela-nf-72h-plate1-percent.png" },
-  { key: "jc1-hn-p2-percent", title: "JC-1 72 h — HeLa+Nf P2 (percent)", src: "/research/ot/jc1-hela-nf-72h-plate2-percent.png" },
-  { key: "jc1-nf-p1-percent", title: "JC-1 72 h — Nf-only P1 (percent)", src: "/research/ot/jc1-nf-only-72h-plate1-percent.png" },
-  { key: "jc1-nf-p2-raw",     title: "JC-1 72 h — Nf-only P2 (raw)",     src: "/research/ot/jc1-nf-only-72h-plate2-raw.png" },
+  // LDH - 24 h
+  { key: "ldh-hn-p1-percent", title: "LDH 24 h - HeLa+Nf P1 (percent)", src: "/research/ot/ldh-hela-nf-24h-plate1-percent.png" },
+  { key: "ldh-hn-p2-raw",     title: "LDH 24 h - HeLa+Nf P2 (raw)",      src: "/research/ot/ldh-hela-nf-24h-plate2-raw.png" },
+  { key: "ldh-nf-p1-raw",     title: "LDH 24 h - Nf-only P1 (raw)",      src: "/research/ot/ldh-nf-only-24h-plate1-raw.png" },
+  { key: "ldh-nf-p2-raw",     title: "LDH 24 h - Nf-only P2 (raw)",      src: "/research/ot/ldh-nf-only-24h-plate2-raw.png" },
+  // Caspase-3 - 48 h
+  { key: "casp3-hn-p1-percent", title: "Caspase-3 48 h - HeLa+Nf P1 (percent)", src: "/research/ot/caspase3-hela-nf-48h-plate1-percent.png" },
+  { key: "casp3-hn-p2-percent", title: "Caspase-3 48 h - HeLa+Nf P2 (percent)", src: "/research/ot/caspase3-hela-nf-48h-plate2-percent.png" },
+  { key: "casp3-nf-p1-raw",     title: "Caspase-3 48 h - Nf-only P1 (raw)",     src: "/research/ot/caspase3-nf-only-48h-plate1-raw.png" },
+  { key: "casp3-nf-p2-raw",     title: "Caspase-3 48 h - Nf-only P2 (raw)",     src: "/research/ot/caspase3-nf-only-48h-plate2-raw.png" },
+  // JC-1 - 72 h
+  { key: "jc1-hn-p1-percent", title: "JC-1 72 h - HeLa+Nf P1 (percent)", src: "/research/ot/jc1-hela-nf-72h-plate1-percent.png" },
+  { key: "jc1-hn-p2-percent", title: "JC-1 72 h - HeLa+Nf P2 (percent)", src: "/research/ot/jc1-hela-nf-72h-plate2-percent.png" },
+  { key: "jc1-nf-p1-percent", title: "JC-1 72 h - Nf-only P1 (percent)", src: "/research/ot/jc1-nf-only-72h-plate1-percent.png" },
+  { key: "jc1-nf-p2-raw",     title: "JC-1 72 h - Nf-only P2 (raw)",     src: "/research/ot/jc1-nf-only-72h-plate2-raw.png" },
 ];
 
 export default function OrganelleTargetsPage() {
@@ -67,7 +67,7 @@ export default function OrganelleTargetsPage() {
       </section>
 
       <footer className="pt-2 text-sm text-neutral-500">
-        © {new Date().getFullYear()} Jordan Montenegro — AI/ML Research Engineer & Clinical ML Researcher
+        © {new Date().getFullYear()} Jordan Montenegro - AI/ML Research Engineer & Clinical ML Researcher
       </footer>
     </div>
   );

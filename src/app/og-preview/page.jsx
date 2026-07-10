@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 export const metadata = {
-  title: "OG Preview — Jordan Montenegro",
+  title: "OG Preview - Jordan Montenegro",
   description: "Preview Open Graph images (dark & light).",
   alternates: { canonical: "/og-preview" },
   robots: { index: false, follow: false },

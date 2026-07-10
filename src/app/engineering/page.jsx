@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Engineering Notes — Jordan Montenegro",
+  title: "Engineering Notes - Jordan Montenegro",
   alternates: { canonical: "/engineering" },
 };
 

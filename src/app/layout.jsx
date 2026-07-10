@@ -15,12 +15,12 @@ import TopProgress from "@/components/effects/TopProgress";
 export const metadata = {
   metadataBase: new URL("https://jordanmontenegrocalla.com"),
   title: {
-    default: "Jordan Montenegro — AI/ML Research Engineer & Clinical ML Researcher",
-    template: "%s — Jordan Montenegro",
+    default: "Jordan Montenegro - AI/ML Research Engineer & Clinical ML Researcher",
+    template: "%s - Jordan Montenegro",
   },
   description: "Portfolio with research, demos, and AI/ML artifacts.",
   openGraph: {
-    title: "Jordan Montenegro — AI/ML Research Engineer & Clinical ML Researcher",
+    title: "Jordan Montenegro - AI/ML Research Engineer & Clinical ML Researcher",
     description: "ML/AI prototypes with calibration, decision-curve analysis, and safe demos.",
     url: "/",
     siteName: "Jordan Montenegro",
@@ -29,7 +29,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jordan Montenegro — AI/ML Research Engineer & Clinical ML Researcher",
+    title: "Jordan Montenegro - AI/ML Research Engineer & Clinical ML Researcher",
     description: "ML/AI prototypes with calibration, decision-curve analysis, and safe demos.",
     images: ["/og"],
   },
@@ -90,7 +90,7 @@ export default function RootLayout({ children }) {
         </main>
         <footer className="mt-16 border-t border-neutral-200/60 dark:border-neutral-800">
           <div className="mx-auto max-w-7xl px-4 py-6 text-sm text-neutral-500">
-            © {new Date().getFullYear()} Jordan Montenegro — AI/ML Research Engineer & Clinical ML Researcher
+            © {new Date().getFullYear()} Jordan Montenegro - AI/ML Research Engineer & Clinical ML Researcher
           </div>
         </footer>
       </body>

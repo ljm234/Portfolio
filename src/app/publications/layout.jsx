@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Publications — Jordan Montenegro",
+  title: "Publications - Jordan Montenegro",
   description:
     "A manuscript under review in microbiology.",
   alternates: { canonical: "/publications" },

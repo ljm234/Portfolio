@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 export const metadata = {
-  title: "Montenegro’s Medium (MM) — Research",
+  title: "Montenegro’s Medium (MM) - Research",
   description:
     "Serum-free, low-cost axenic medium enabling robust Naegleria fowleri growth.",
   alternates: { canonical: "/research/montenegro-medium" },
@@ -24,7 +24,7 @@ export default function Page() {
           <h3 className="text-lg font-semibold">Growth curve in MM</h3>
           <Image
             src="/research/mm/fig2-growth.png"
-            alt="Growth in Montenegro’s Medium from 0–168 hours"
+            alt="Growth in Montenegro’s Medium from 0-168 hours"
             width={1600}
             height={1000}
             sizes="100vw"
@@ -32,7 +32,7 @@ export default function Page() {
             priority={false}
           />
           <figcaption className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-            Fig. 2 — Growth in MM (0–168 h).
+            Fig. 2 - Growth in MM (0-168 h).
           </figcaption>
         </figure>
 
@@ -47,7 +47,7 @@ export default function Page() {
             className="mt-3 h-auto w-full rounded-lg border"
           />
           <figcaption className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-            Fig. 3 — Fresh vs old MM at 48 h and 72 h.
+            Fig. 3 - Fresh vs old MM at 48 h and 72 h.
           </figcaption>
         </figure>
 
@@ -55,14 +55,14 @@ export default function Page() {
           <h3 className="text-lg font-semibold">Passage timing & method</h3>
           <Image
             src="/research/mm/fig4-passage.png"
-            alt="Passage timing TD3–TD5 and comparison of DT vs CT"
+            alt="Passage timing TD3-TD5 and comparison of DT vs CT"
             width={1600}
             height={1000}
             sizes="100vw"
             className="mt-3 h-auto w-full rounded-lg border"
           />
           <figcaption className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-            Fig. 4 — Passage timing & method (TD3–TD5; DT vs CT).
+            Fig. 4 - Passage timing & method (TD3-TD5; DT vs CT).
           </figcaption>
         </figure>
 

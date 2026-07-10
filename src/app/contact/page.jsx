@@ -55,7 +55,7 @@ export default function Contact() {
     }
     if (payload.message.length < 10) {
       setStatus("idle");
-      setErr("A little more detail would help — 10+ characters please.");
+      setErr("A little more detail would help - 10+ characters please.");
       return;
     }
 
@@ -242,7 +242,7 @@ function SuccessCard() {
           <path d="M20 6L9 17l-5-5" />
         </svg>
       </div>
-      <h2 className="mt-3 text-lg font-semibold">Thanks — got it!</h2>
+      <h2 className="mt-3 text-lg font-semibold">Thanks - got it!</h2>
       <p className="mx-auto mt-1 max-w-md text-sm text-neutral-700 dark:text-neutral-300">
         I’ll reply shortly. If it’s urgent, email{" "}
         <a

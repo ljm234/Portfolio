@@ -20,8 +20,8 @@ export default function Playground() {
   const parts = useMemo(() => contributions(x), [x]);
 
   const p = Number.isFinite(out.p) ? Math.max(0, Math.min(1, out.p)) : 0;
-  const pct = Number.isFinite(out.p) ? (p * 100).toFixed(1) + "%" : "—";
-  const band = out.band ?? "—";
+  const pct = Number.isFinite(out.p) ? (p * 100).toFixed(1) + "%" : "-";
+  const band = out.band ?? "-";
 
   const reset = () => setX(DEFAULT_INPUT);
 
@@ -35,11 +35,11 @@ export default function Playground() {
         <section className="space-y-4">
           <Reveal effect="fade-up">
             <h1 className="text-3xl font-bold tracking-tight">
-              Amoebanator — Triage Demo
+              Amoebanator - Triage Demo
             </h1>
           </Reveal>
           <p className="text-sm text-neutral-500">
-            Demo only — not for clinical use.
+            Demo only - not for clinical use.
           </p>
 
           <Form x={x} setX={setX} />
@@ -268,7 +268,7 @@ function ContribBars({ parts }) {
             <div className="flex items-center justify-between text-sm">
               <span className="capitalize">{p.feature.replaceAll("_", " ")}</span>
               <span className="tabular-nums text-neutral-600 dark:text-neutral-300">
-                {Number.isFinite(p.contrib) ? p.contrib.toFixed(2) : "—"} {sign}
+                {Number.isFinite(p.contrib) ? p.contrib.toFixed(2) : "-"} {sign}
               </span>
             </div>
             <div className="mt-1 h-2.5 w-full rounded bg-neutral-100 dark:bg-neutral-900">

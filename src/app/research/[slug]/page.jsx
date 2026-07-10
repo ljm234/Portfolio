@@ -10,7 +10,7 @@ import PR from "@/content/data/pr.json";
 export async function generateMetadata({ params }) {
   const proj = projects.find((p) => p.slug === params.slug);
   return {
-    title: proj ? `${proj.title} — Research` : "Research",
+    title: proj ? `${proj.title} - Research` : "Research",
     description: proj?.summary,
     alternates: { canonical: `/research/${params.slug}` },
   };
@@ -40,7 +40,7 @@ export default function ProjectPage({ params }) {
             <CalibrationChart data={calib} />
           </div>
 
-          <h2>Precision–Recall</h2>
+          <h2>Precision-Recall</h2>
           <div className="not-prose">
             <PRCurve data={PR} />
           </div>

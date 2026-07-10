@@ -1,7 +1,7 @@
 import dd from "@/content/data_dictionary.json";
 
 export const metadata = {
-  title: "Data Dictionary — Jordan Montenegro",
+  title: "Data Dictionary - Jordan Montenegro",
   description: "Field definitions, types, and required flags for the triage schema.",
   alternates: { canonical: "/data-dictionary" },
 };
@@ -9,7 +9,7 @@ export const metadata = {
 export default function DataDictionary(){
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight">Data Dictionary — {dd.entity} v{dd.version}</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Data Dictionary - {dd.entity} v{dd.version}</h1>
       <table className="w-full text-sm rounded border">
         <thead>
           <tr className="text-left bg-neutral-50 dark:bg-neutral-900">

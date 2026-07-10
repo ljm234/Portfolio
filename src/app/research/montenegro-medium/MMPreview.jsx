@@ -66,7 +66,7 @@ export default function MMPreview({ abstract, figures }) {
               ${open ? "translate-x-0" : "translate-x-full"}`}
           >
             <div className="h-14 px-4 flex items-center justify-between border-b border-neutral-200/70 dark:border-neutral-800">
-              <div className="font-semibold">Montenegro’s Medium — Preview</div>
+              <div className="font-semibold">Montenegro’s Medium - Preview</div>
               <button onClick={() => setOpen(false)} className="rounded border px-2 py-1 text-xs">Close</button>
             </div>
 
@@ -118,7 +118,7 @@ export default function MMPreview({ abstract, figures }) {
                   sizes="100vw"
                 />
                 <figcaption className="mt-2 text-center text-sm text-neutral-200">
-                  {lightbox.caption} — <button className="underline" onClick={() => setLightbox(null)}>Close</button>
+                  {lightbox.caption} - <button className="underline" onClick={() => setLightbox(null)}>Close</button>
                 </figcaption>
               </figure>
             </div>

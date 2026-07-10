@@ -16,7 +16,7 @@ export async function GET() {
         fontSize: 64,
         fontWeight: 700
       }}>
-        Portfolio — Light
+        Portfolio - Light
       </div>
     ),
     { width: 1200, height: 630 }

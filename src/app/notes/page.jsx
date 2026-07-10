@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Engineering Notes — Jordan Montenegro",
+  title: "Engineering Notes - Jordan Montenegro",
   description: "Architecture, design decisions, and future extensions.",
   alternates: { canonical: "/notes" },
 };
@@ -41,7 +41,7 @@ Data & Models
       <Section title="Future extensions">
         <ul className="list-disc list-inside text-sm space-y-1">
           <li>Conformal prediction sets and uncertainty ranges.</li>
-          <li>De-identified retrospective pilot (n=30–50) with data card.</li>
+          <li>De-identified retrospective pilot (n=30-50) with data card.</li>
           <li>Small tfjs/onnx model for tabular baseline with version tags.</li>
         </ul>
       </Section>

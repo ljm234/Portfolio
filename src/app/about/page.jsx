@@ -212,7 +212,7 @@ export default function AboutPage() {
                 className="h-[320px] w-full max-w-full object-cover animate-ken will-change-transform"
               />
               <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 text-sm text-white">
-                Commencement — grateful and just getting started.
+                Commencement - grateful and just getting started.
               </figcaption>
               <OverlayHint />
             </button>

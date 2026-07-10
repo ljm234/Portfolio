@@ -43,7 +43,7 @@ export async function POST(req) {
     `Message:`,
     message,
     ``,
-    `— sent from jordanmontenegrocalla.com/contact`,
+    `- sent from jordanmontenegrocalla.com/contact`,
     `IP: ${ip}`,
   ].join("\n");
 

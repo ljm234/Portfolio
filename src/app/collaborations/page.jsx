@@ -2,7 +2,7 @@
 import AndesParallax from "@/components/effects/AndesParallax";
 
 export const metadata = {
-  title: "Collaborations — Jordan Montenegro",
+  title: "Collaborations - Jordan Montenegro",
   description:
     "Where I am focused this year. Amoebanator, Kallpa, and the kind of conversations I am looking for.",
   alternates: { canonical: "/collaborations" },
@@ -35,10 +35,10 @@ export default function CollaborationsPage() {
         </div>
       </header>
 
-      {/* Section A — Amoebanator */}
+      {/* Section A - Amoebanator */}
       <section className="space-y-3">
         <h2 className="text-2xl font-semibold tracking-tight">
-          Amoebanator — clinical ML safety
+          Amoebanator - clinical ML safety
         </h2>
         <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
           A binary triage signal for primary amoebic meningoencephalitis (PAM)
@@ -51,10 +51,10 @@ export default function CollaborationsPage() {
         </p>
       </section>
 
-      {/* Section B — Kallpa */}
+      {/* Section B - Kallpa */}
       <section className="space-y-3">
         <h2 className="text-2xl font-semibold tracking-tight">
-          Kallpa — bilingual primary care decision support
+          Kallpa - bilingual primary care decision support
         </h2>
         <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
           A bilingual Spanish/English clinical decision support engine for
@@ -72,7 +72,7 @@ export default function CollaborationsPage() {
         </p>
       </section>
 
-      {/* Section C — What I am looking for */}
+      {/* Section C - What I am looking for */}
       <section className="space-y-3">
         <h2 className="text-2xl font-semibold tracking-tight">
           What I’m looking for
