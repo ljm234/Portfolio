@@ -1,302 +1,200 @@
 // /src/components/effects/SelvaBackground.jsx
 "use client";
 
-import { useEffect, useRef } from "react";
-
-function prefersReducedMotion() {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
 /**
- * Animated Peruvian-jungle background (canvas only, lightweight):
- * - Dawn sky over the Amazon basin, with a soft sun glow and halo
- * - Distant snow-capped Andean ranges (the sierra descending into the selva)
- * - A meandering river with a flowing shimmer
- * - Layered forest canopy ridges with a gentle parallax drift
- * - Foreground ferns and palms that sway
- * - Occasional macaw crossing the sky and fireflies near the floor
- * Colors adapt for light and dark mode via the isDark prop.
+ * Animated Peruvian-Amazon background rendered as inline SVG.
+ * Scene: dawn sky over the basin with a soft sun, distant snow-capped ranges,
+ * a river with flowing highlights and floating Victoria regia lilies, layered
+ * canopy hills, heliconia and fern plants on the sides, palms, a swinging
+ * monkey on a liana, drifting butterflies, and a pair of birds gliding slowly.
+ *
+ * The whole scene is wrapped in a viewBox clip so nothing overflows, and it
+ * scales to fill its container via preserveAspectRatio="xMidYMid slice".
+ * Motion respects prefers-reduced-motion through the CSS media query below.
+ * The isDark prop shifts the palette toward a cooler night variant.
  */
-export default function SelvaBackground({
-  className = "",
-  canopyLayers = 5,
-  speed = 0.08,
-  isDark = false,
-}) {
-  const ref = useRef(null);
+export default function SelvaBackground({ className = "", isDark = false }) {
+  const sky = isDark
+    ? { a: "#2a3f52", b: "#33505c", c: "#3a4a34", d: "#3f4a30" }
+    : { a: "#8bbcd6", b: "#bcdae4", c: "#e8e4c0", d: "#f2ecc8" };
+  const water = isDark ? { a: "#4a6f88", b: "#3a5872" } : { a: "#9ecadf", b: "#6aa8ca" };
+  const hills = isDark
+    ? { back: "#4a6b3a", mid: "#3a5a2c", low: "#2e4a22", front1: "#243a1a", front2: "#1c2e14" }
+    : { back: "#8fbf5e", mid: "#6ba03e", low: "#54862e", front1: "#3f6a24", front2: "#31531b" };
+  const sunOpacity = isDark ? 0.4 : 1;
 
-  useEffect(() => {
-    const canvas = ref.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: true });
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 680 450"
+      preserveAspectRatio="xMidYMid slice"
+      role="img"
+      aria-label="Animated Peruvian Amazon landscape"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <style>{`
+        @keyframes selva-mistA { 0%,100% { transform: translateX(0); opacity: 0.4; } 50% { transform: translateX(14px); opacity: 0.72; } }
+        @keyframes selva-mistB { 0%,100% { transform: translateX(0); opacity: 0.35; } 50% { transform: translateX(-12px); opacity: 0.6; } }
+        @keyframes selva-birds { 0% { transform: translate(-60px,8px); opacity: 0; } 6%{opacity:1;} 94%{opacity:1;} 100% { transform: translate(740px,-18px); opacity: 0; } }
+        @keyframes selva-flap { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.6); } }
+        @keyframes selva-river { 0% { transform: translateX(0); } 100% { transform: translateX(-40px); } }
+        @keyframes selva-shimmer { 0%,100% { opacity: 0.45; } 50% { opacity: 0.82; } }
+        @keyframes selva-swayA { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(1.2deg); } }
+        @keyframes selva-swayB { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-1deg); } }
+        @keyframes selva-monkey { 0%,100% { transform: rotate(-2.5deg); } 50% { transform: rotate(2.5deg); } }
+        @keyframes selva-sun { 0%,100% { opacity: 0.82; } 50% { opacity: 1; } }
+        @keyframes selva-bflyA { 0% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(24px,-14px) rotate(6deg); } 100% { transform: translate(48px,-4px) rotate(-4deg); } }
+        @keyframes selva-bflyB { 0% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(-20px,-12px) rotate(-6deg); } 100% { transform: translate(-42px,-2px) rotate(5deg); } }
+        @keyframes selva-lily { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+        @keyframes selva-helic { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(2.5deg); } }
+        .selva-pf { transform-origin: bottom center; animation: selva-swayA 10s ease-in-out infinite; }
+        .selva-pg { transform-origin: bottom center; animation: selva-swayB 12s ease-in-out infinite; }
+        .selva-hc { transform-origin: bottom center; animation: selva-helic 8s ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) {
+          .selva-pf, .selva-pg, .selva-hc, [class^="selva-anim"] { animation: none !important; }
+          .selva-birds-g { display: none; }
+        }
+      `}</style>
 
-    const resize = () => {
-      const dpr = Math.min(2, window.devicePixelRatio || 1);
-      const { clientWidth: w, clientHeight: h } = canvas;
-      canvas.width = Math.max(1, Math.floor(w * dpr));
-      canvas.height = Math.max(1, Math.floor(h * dpr));
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-    const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
+      <defs>
+        <linearGradient id="selvaSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor={sky.a} />
+          <stop offset="0.4" stopColor={sky.b} />
+          <stop offset="0.72" stopColor={sky.c} />
+          <stop offset="1" stopColor={sky.d} />
+        </linearGradient>
+        <linearGradient id="selvaWater" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor={water.a} />
+          <stop offset="1" stopColor={water.b} />
+        </linearGradient>
+        <radialGradient id="selvaSun" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stopColor="#fff6d8" />
+          <stop offset="0.6" stopColor="#ffe9b0" />
+          <stop offset="1" stopColor="#ffe9b0" stopOpacity="0" />
+        </radialGradient>
+        <clipPath id="selvaFrame">
+          <rect x="0" y="0" width="680" height="450" />
+        </clipPath>
+        <clipPath id="selvaRiver">
+          <path d="M0,255 Q120,237 250,253 Q380,269 520,249 Q600,239 680,251 L680,296 Q600,306 520,290 Q380,312 250,292 Q120,278 0,296 Z" />
+        </clipPath>
+      </defs>
 
-    const paint = (t = 0) => {
-      const w = canvas.clientWidth;
-      const h = canvas.clientHeight;
-      ctx.clearRect(0, 0, w, h);
+      <g clipPath="url(#selvaFrame)">
+        <rect x="0" y="0" width="680" height="450" fill="url(#selvaSky)" />
 
-      // 1) sky gradient (dawn over the basin; deeper at night)
-      const sky = ctx.createLinearGradient(0, 0, 0, h);
-      if (isDark) {
-        sky.addColorStop(0, "rgba(30,58,90,0.55)");
-        sky.addColorStop(0.5, "rgba(20,60,70,0.40)");
-        sky.addColorStop(1, "rgba(12,45,30,0.55)");
-      } else {
-        sky.addColorStop(0, "rgba(160,214,232,0.55)");
-        sky.addColorStop(0.45, "rgba(180,224,200,0.35)");
-        sky.addColorStop(1, "rgba(95,148,40,0.45)");
-      }
-      ctx.fillStyle = sky;
-      ctx.fillRect(0, 0, w, h);
+        <circle cx="470" cy="145" r="125" fill="url(#selvaSun)" opacity={sunOpacity} style={{ animation: "selva-sun 7s ease-in-out infinite" }} />
+        <circle cx="470" cy="145" r="40" fill="#fff6d8" opacity={0.9 * sunOpacity} />
 
-      // 2) sun glow with halo (top-right)
-      const sx = w * 0.82;
-      const sy = h * 0.16;
-      const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, h * 0.7);
-      const sunA = isDark ? 0.25 : 0.5;
-      glow.addColorStop(0, `rgba(255,224,160,${sunA})`);
-      glow.addColorStop(1, "rgba(255,224,160,0)");
-      ctx.fillStyle = glow;
-      ctx.fillRect(0, 0, w, h);
+        <g className="selva-birds-g" style={{ animation: "selva-birds 110s linear infinite" }}>
+          <g transform="translate(0,60)"><g style={{ transformOrigin: "center", animation: "selva-flap 2.6s ease-in-out infinite" }}><path d="M-9,2 Q0,-6 9,2" fill="none" stroke="#5f7077" strokeWidth="2" strokeLinecap="round" /></g></g>
+          <g transform="translate(30,48)"><g style={{ transformOrigin: "center", animation: "selva-flap 2.8s ease-in-out infinite 0.4s" }}><path d="M-7,2 Q0,-5 7,2" fill="none" stroke="#5f7077" strokeWidth="1.8" strokeLinecap="round" /></g></g>
+        </g>
 
-      // 3) distant snow-capped ranges
-      drawRanges(ctx, w, h, isDark);
+        <path d="M0,140 L110,96 L175,120 L270,88 L365,118 L460,92 L555,120 L680,96 L680,180 L0,180 Z" fill="#9fb8c8" opacity="0.45" />
+        <path d="M110,96 L128,114 L134,108 L146,128 L130,124 L118,132 Z" fill="#f4f8fa" />
+        <path d="M270,88 L292,110 L299,103 L330,128 L308,122 L292,132 Z" fill="#f4f8fa" />
+        <path d="M460,92 L480,112 L486,106 L514,128 L492,122 L476,132 Z" fill="#f4f8fa" />
 
-      // 4) river band with flowing shimmer
-      drawRiver(ctx, t * speed, w, h, isDark);
+        <ellipse cx="220" cy="158" rx="150" ry="15" fill="#ffffff" style={{ animation: "selva-mistA 16s ease-in-out infinite" }} />
+        <ellipse cx="500" cy="172" rx="130" ry="12" fill="#ffffff" style={{ animation: "selva-mistB 19s ease-in-out infinite" }} />
 
-      // 5) canopy ridges with parallax
-      drawCanopy(ctx, t * speed, w, h, canopyLayers, isDark);
+        <path d="M0,168 Q70,150 140,162 Q230,178 320,158 Q420,140 520,160 Q600,174 680,156 L680,215 L0,215 Z" fill={hills.back} opacity="0.92" />
+        <path d="M0,200 Q90,182 180,196 Q290,212 400,192 Q510,176 620,194 Q660,200 680,194 L680,255 L0,255 Z" fill={hills.mid} />
 
-      // 6) foreground plants (ferns + palms) that sway
-      drawPlants(ctx, t, w, h, isDark);
+        <g className="selva-hc" transform="translate(40,258)">
+          <path d="M0,0 L0,-72" fill="none" stroke="#2d6020" strokeWidth="3.5" />
+          <path d="M0,-24 Q-16,-32 -22,-22 Q-12,-20 0,-18 Z" fill="#3a7a2c" />
+          <path d="M0,-44 Q16,-52 22,-42 Q12,-40 0,-38 Z" fill="#3a7a2c" />
+          <path d="M0,-70 L-8,-63 Q-14,-58 -12,-52 Q-6,-55 -2,-61 Z" fill="#e04838" />
+          <path d="M-2,-61 L-10,-52 Q-15,-47 -12,-42 Q-7,-45 -3,-51 Z" fill="#e8622a" />
+          <path d="M-3,-51 L-10,-42 Q-14,-37 -11,-33 Q-6,-36 -3,-42 Z" fill="#e04838" />
+          <path d="M0,-70 L8,-62 Q13,-57 11,-52 Q6,-55 2,-61 Z" fill="#e8622a" />
+        </g>
+        <g className="selva-hc" transform="translate(640,258)" style={{ animationDelay: "1.5s" }}>
+          <path d="M0,0 L0,-66" fill="none" stroke="#2d6020" strokeWidth="3.5" />
+          <path d="M0,-22 Q16,-30 22,-20 Q12,-18 0,-16 Z" fill="#3a7a2c" />
+          <path d="M0,-42 Q-16,-50 -22,-40 Q-12,-38 0,-36 Z" fill="#3a7a2c" />
+          <path d="M0,-64 L-7,-57 Q-12,-52 -10,-47 Q-5,-50 -2,-56 Z" fill="#e04838" />
+          <path d="M-2,-56 L-9,-47 Q-13,-42 -10,-38 Q-5,-41 -2,-47 Z" fill="#e8622a" />
+          <path d="M0,-64 L7,-56 Q12,-51 10,-46 Q5,-49 2,-55 Z" fill="#e8622a" />
+        </g>
 
-      // 7) fireflies / sparkles near the floor
-      const sparkA = isDark ? 0.9 : 0.5;
-      for (let i = 0; i < 18; i++) {
-        const fx = (i * 137.5) % w;
-        const fy = h * (0.72 + ((i * 53) % 100) / 380);
-        const a = sparkA * (0.4 + 0.5 * Math.sin(t * 0.0012 + i * 1.9));
-        ctx.fillStyle = `rgba(255,243,176,${Math.max(0, a)})`;
-        ctx.beginPath();
-        ctx.arc(fx, fy, 1.6, 0, Math.PI * 2);
-        ctx.fill();
-      }
+        <path d="M0,255 Q120,237 250,253 Q380,269 520,249 Q600,239 680,251 L680,296 Q600,306 520,290 Q380,312 250,292 Q120,278 0,296 Z" fill="url(#selvaWater)" />
+        <g clipPath="url(#selvaRiver)">
+          <g style={{ animation: "selva-river 11s linear infinite" }}>
+            <path d="M-60,268 Q60,262 180,270 Q300,278 420,268 Q540,260 660,268 Q720,272 780,268" fill="none" stroke="#c0e0f0" strokeWidth="5" opacity="0.65" />
+            <path d="M-60,282 Q60,276 180,284 Q300,292 420,282 Q540,274 660,282 Q720,286 780,282" fill="none" stroke="#ffffff" strokeWidth="3" opacity="0.45" />
+            <path d="M-60,258 Q60,252 180,260 Q300,268 420,258 Q540,250 660,258 Q720,262 780,258" fill="none" stroke="#fff2cc" strokeWidth="3" opacity="0.5" />
+          </g>
+          <ellipse cx="380" cy="272" rx="70" ry="11" fill="#fff6d8" opacity="0.45" style={{ animation: "selva-shimmer 6s ease-in-out infinite" }} />
+          <g style={{ animation: "selva-lily 6s ease-in-out infinite" }}>
+            <ellipse cx="500" cy="272" rx="24" ry="7.5" fill="#4a8a3a" />
+            <ellipse cx="500" cy="271" rx="20" ry="6" fill="#5fa04a" />
+            <path d="M500,265 L511,271 A20,6 0 0 1 500,277 Z" fill="#4a8a3a" />
+            <ellipse cx="500" cy="271" rx="20" ry="6" fill="none" stroke="#3a6e2c" strokeWidth="1.4" />
+          </g>
+          <g style={{ animation: "selva-lily 7s ease-in-out infinite 1.2s" }}>
+            <ellipse cx="575" cy="280" rx="18" ry="6" fill="#4a8a3a" />
+            <ellipse cx="575" cy="279" rx="15" ry="5" fill="#5fa04a" />
+            <ellipse cx="575" cy="279" rx="15" ry="5" fill="none" stroke="#3a6e2c" strokeWidth="1.2" />
+            <path d="M571,275 Q573,269 577,271 Q581,273 579,277 Q575,279 571,275 Z" fill="#f2c4d8" />
+            <circle cx="575" cy="274" r="1.4" fill="#fff" />
+          </g>
+        </g>
 
-      // 8) a macaw crossing on a slow loop
-      drawMacaw(ctx, t, w, h);
-    };
+        <path d="M0,293 Q55,277 110,289 Q170,301 230,285 Q290,271 350,287 Q410,303 470,285 Q535,269 600,287 Q645,299 680,285 L680,335 L0,335 Z" fill={hills.low} />
 
-    if (prefersReducedMotion()) {
-      paint(0);
-      return () => ro.disconnect();
-    }
+        <g className="selva-pf">
+          <path d="M92,335 Q88,264 82,206" fill="none" stroke="#6b4d30" strokeWidth="7" strokeLinecap="round" />
+          <path d="M82,206 Q54,188 26,194 M82,206 Q56,200 30,214 M82,206 Q58,214 36,234 M82,206 Q110,188 138,194 M82,206 Q108,200 134,214 M82,206 Q106,214 128,234 M82,206 Q78,180 72,158 M82,206 Q88,180 94,158" fill="none" stroke="#448030" strokeWidth="6" strokeLinecap="round" />
+        </g>
+        <g className="selva-pg">
+          <path d="M602,335 Q606,262 612,202" fill="none" stroke="#6b4d30" strokeWidth="7" strokeLinecap="round" />
+          <path d="M612,202 Q584,184 556,190 M612,202 Q586,196 560,210 M612,202 Q588,212 566,232 M612,202 Q640,184 668,190 M612,202 Q638,196 664,210 M612,202 Q634,212 656,232 M612,202 Q608,176 602,154 M612,202 Q618,176 624,154" fill="none" stroke="#448030" strokeWidth="6" strokeLinecap="round" />
+        </g>
 
-    let raf = 0;
-    const tick = (now) => {
-      paint(now);
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
+        <path d="M0,335 Q60,319 120,331 Q185,343 250,327 Q315,311 380,329 Q445,345 510,327 Q575,311 640,329 Q662,335 680,327 L680,385 L0,385 Z" fill={hills.front1} />
+        <path d="M0,380 Q80,365 160,377 Q260,391 360,373 Q460,357 560,375 Q640,387 680,377 L680,450 L0,450 Z" fill={hills.front2} />
 
-    return () => {
-      cancelAnimationFrame(raf);
-      ro.disconnect();
-    };
-  }, [canopyLayers, speed, isDark]);
+        <g transform="translate(250,290)">
+          <path d="M-40,-40 Q0,-30 40,-38" fill="none" stroke="#4a3520" strokeWidth="4" strokeLinecap="round" />
+          <path d="M0,-34 Q-4,-20 -2,-6" fill="none" stroke="#7a5430" strokeWidth="4" strokeLinecap="round" />
+          <g style={{ transformOrigin: "0px -34px", animation: "selva-monkey 5.5s ease-in-out infinite" }}>
+            <path d="M0,-8 Q-5,4 -3,16 Q-1,22 1,16 Q3,4 0,-8 Z" fill="#7a5430" />
+            <ellipse cx="0" cy="-14" rx="6" ry="7" fill="#7a5430" />
+            <circle cx="0" cy="-12" r="4.5" fill="#c9a878" />
+            <circle cx="-5" cy="-16" r="2.5" fill="#7a5430" />
+            <circle cx="5" cy="-16" r="2.5" fill="#7a5430" />
+            <circle cx="-2" cy="-13" r="0.8" fill="#1a1a1a" />
+            <circle cx="2" cy="-13" r="0.8" fill="#1a1a1a" />
+            <path d="M-2,-10 Q0,-8 2,-10" fill="none" stroke="#5a3d22" strokeWidth="0.8" />
+            <path d="M-5,-8 Q-11,-4 -9,3 M5,-8 Q11,-4 9,3" fill="none" stroke="#7a5430" strokeWidth="3" strokeLinecap="round" />
+            <path d="M-3,12 Q-11,17 -14,10" fill="none" stroke="#7a5430" strokeWidth="2.5" strokeLinecap="round" />
+          </g>
+        </g>
 
-  return <canvas ref={ref} className={className} aria-hidden="true" />;
-}
+        <g transform="translate(330,300)" style={{ animation: "selva-bflyA 9s ease-in-out infinite alternate" }}>
+          <path d="M0,0 Q-7,-6 -9,0 Q-7,6 0,0" fill="#f0a838" />
+          <path d="M0,0 Q7,-6 9,0 Q7,6 0,0" fill="#d85a28" />
+          <line x1="0" y1="-3" x2="0" y2="3" stroke="#4a2810" strokeWidth="0.8" />
+        </g>
+        <g transform="translate(150,315)" style={{ animation: "selva-bflyB 11s ease-in-out infinite alternate" }}>
+          <path d="M0,0 Q-6,-5 -8,0 Q-6,5 0,0" fill="#6b9de8" />
+          <path d="M0,0 Q6,-5 8,0 Q6,5 0,0" fill="#4569d0" />
+        </g>
 
-function drawRanges(ctx, w, h, isDark) {
-  const ranges = [
-    { y: 0.30, amp: 26, alpha: isDark ? 0.28 : 0.42, tone: isDark ? "120,145,175" : "166,189,216" },
-    { y: 0.34, amp: 20, alpha: isDark ? 0.22 : 0.34, tone: isDark ? "100,125,155" : "147,174,206" },
-  ];
-  ranges.forEach((r, idx) => {
-    const baseY = h * r.y;
-    ctx.fillStyle = `rgba(${r.tone},${r.alpha})`;
-    ctx.beginPath();
-    ctx.moveTo(0, baseY);
-    const peaks = 6;
-    for (let p = 0; p <= peaks; p++) {
-      const x = (w / peaks) * p;
-      const up = p % 2 === 0 ? r.amp : -r.amp * 0.6;
-      ctx.lineTo(x, baseY - up - (idx === 0 ? 18 : 0));
-    }
-    ctx.lineTo(w, baseY + 40);
-    ctx.lineTo(0, baseY + 40);
-    ctx.closePath();
-    ctx.fill();
-
-    // snow caps on the front range only
-    if (idx === 0) {
-      ctx.fillStyle = "rgba(255,255,255,0.8)";
-      for (let p = 0; p <= peaks; p += 2) {
-        const x = (w / peaks) * p;
-        const peakY = baseY - r.amp - 18;
-        ctx.beginPath();
-        ctx.moveTo(x, peakY);
-        ctx.lineTo(x - 10, peakY + 12);
-        ctx.lineTo(x - 4, peakY + 10);
-        ctx.lineTo(x, peakY + 15);
-        ctx.lineTo(x + 5, peakY + 10);
-        ctx.lineTo(x + 10, peakY + 12);
-        ctx.closePath();
-        ctx.fill();
-      }
-    }
-  });
-}
-
-function drawRiver(ctx, time, w, h, isDark) {
-  const midY = h * 0.62;
-  const amp = h * 0.05;
-  const riverTone = isDark ? "80,120,150" : "111,176,228";
-  const width = h * 0.06;
-
-  // base water
-  ctx.strokeStyle = `rgba(${riverTone},0.55)`;
-  ctx.lineWidth = width;
-  ctx.lineCap = "round";
-  ctx.beginPath();
-  for (let x = -20; x <= w + 20; x += 4) {
-    const y = midY + Math.sin(x * 0.006 + time * 0.3) * amp;
-    if (x === -20) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  }
-  ctx.stroke();
-
-  // flowing highlight (dashed, animated offset)
-  ctx.strokeStyle = isDark ? "rgba(200,225,245,0.4)" : "rgba(220,240,255,0.6)";
-  ctx.lineWidth = width * 0.3;
-  ctx.setLineDash([18, 26]);
-  ctx.lineDashOffset = -(time * 12) % 400;
-  ctx.beginPath();
-  for (let x = -20; x <= w + 20; x += 4) {
-    const y = midY + Math.sin(x * 0.006 + time * 0.3) * amp;
-    if (x === -20) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  }
-  ctx.stroke();
-  ctx.setLineDash([]);
-}
-
-function drawCanopy(ctx, time, w, h, layers, isDark) {
-  for (let i = 0; i < layers; i++) {
-    const d = i / (layers - 1 || 1);
-    const baseY = h * (0.66 + d * 0.30);
-    const amp = 16 + 24 * (1 - d);
-    const freq = 0.007 + d * 0.004;
-    const phase = time * (0.7 + d * 0.5);
-
-    // green canopy: lighter/back to darker/front
-    const light = isDark ? 22 - d * 8 : 42 - d * 14;
-    const sat = isDark ? 40 : 55;
-    const alpha = 0.5 - d * 0.28;
-    ctx.fillStyle = `hsla(95, ${sat}%, ${light}%, ${alpha})`;
-
-    ctx.beginPath();
-    ctx.moveTo(0, h);
-    for (let x = 0; x <= w; x += 3) {
-      const y =
-        baseY +
-        Math.sin(x * freq + phase) * amp +
-        Math.sin(x * (freq * 0.5) - phase * 1.3) * amp * 0.35;
-      ctx.lineTo(x, y);
-    }
-    ctx.lineTo(w, h);
-    ctx.closePath();
-    ctx.fill();
-  }
-}
-
-function drawPlants(ctx, t, w, h, isDark) {
-  const stroke = isDark ? "rgba(12,90,70,0.5)" : "rgba(15,110,86,0.35)";
-  ctx.strokeStyle = stroke;
-  ctx.lineWidth = 2;
-
-  // a set of fronds anchored along the bottom, each swaying at its own phase
-  const fronds = [
-    { x: 0.05, size: 90, dir: 1, ph: 0.0 },
-    { x: 0.14, size: 62, dir: -1, ph: 1.1 },
-    { x: 0.30, size: 74, dir: 1, ph: 2.0 },
-    { x: 0.42, size: 54, dir: -1, ph: 0.6 },
-    { x: 0.55, size: 80, dir: 1, ph: 1.5 },
-    { x: 0.68, size: 60, dir: -1, ph: 2.6 },
-    { x: 0.80, size: 88, dir: 1, ph: 0.9 },
-    { x: 0.92, size: 66, dir: -1, ph: 1.8 },
-  ];
-
-  fronds.forEach((f) => {
-    const bx = w * f.x;
-    const by = h;
-    const sway = Math.sin(t * 0.0006 + f.ph) * 0.12 * f.dir;
-    ctx.save();
-    ctx.translate(bx, by);
-    ctx.rotate(sway);
-    // central stem
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(0, -f.size);
-    ctx.stroke();
-    // leaflets
-    const pairs = 5;
-    for (let k = 1; k <= pairs; k++) {
-      const yy = -(f.size * k) / (pairs + 1);
-      const ll = f.size * 0.28 * (1 - k / (pairs + 2));
-      ctx.beginPath();
-      ctx.moveTo(0, yy);
-      ctx.quadraticCurveTo(-ll, yy - ll * 0.4, -ll * 1.3, yy - ll * 0.1);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(0, yy);
-      ctx.quadraticCurveTo(ll, yy - ll * 0.4, ll * 1.3, yy - ll * 0.1);
-      ctx.stroke();
-    }
-    ctx.restore();
-  });
-}
-
-function drawMacaw(ctx, t, w, h) {
-  // slow horizontal loop across the upper third
-  const period = 40000;
-  const p = (t % period) / period;
-  const x = -60 + p * (w + 120);
-  const y = h * 0.24 - Math.sin(p * Math.PI) * 20;
-  const flap = Math.sin(t * 0.006) * 0.5 + 0.5;
-  const wing = 8 + flap * 6;
-
-  ctx.save();
-  ctx.translate(x, y);
-  // body
-  ctx.fillStyle = "rgba(226,75,74,0.85)";
-  ctx.beginPath();
-  ctx.ellipse(0, 0, 5, 3, 0, 0, Math.PI * 2);
-  ctx.fill();
-  // wings (red/blue)
-  ctx.strokeStyle = "rgba(226,75,74,0.85)";
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.lineTo(-11, -wing);
-  ctx.stroke();
-  ctx.strokeStyle = "rgba(55,138,221,0.85)";
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.lineTo(11, -wing);
-  ctx.stroke();
-  ctx.restore();
+        <g className="selva-pf" transform="translate(130,335)">
+          <path d="M0,0 Q-2,-24 0,-46" fill="none" stroke="#2d6020" strokeWidth="2.5" />
+          <path d="M0,-46 Q-14,-54 -18,-42 Q-16,-30 -4,-26 Q-10,-38 0,-46 Z" fill="#3f8030" />
+          <path d="M0,-46 Q14,-56 18,-44 Q17,-32 5,-27 Q11,-39 0,-46 Z" fill="#4a9038" />
+        </g>
+        <g className="selva-pg" transform="translate(548,335)">
+          <path d="M0,0 Q2,-22 0,-42" fill="none" stroke="#2d6020" strokeWidth="2.5" />
+          <path d="M0,-42 Q-13,-50 -17,-39 Q-15,-28 -4,-24 Q-9,-36 0,-42 Z" fill="#3f8030" />
+          <path d="M0,-42 Q13,-52 17,-40 Q16,-30 5,-25 Q10,-37 0,-42 Z" fill="#4a9038" />
+        </g>
+      </g>
+    </svg>
+  );
 }
