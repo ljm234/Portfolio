@@ -21,7 +21,7 @@ function prefersReducedMotion() {
 export default function SelvaBackground({
   className = "",
   canopyLayers = 5,
-  speed = 0.3,
+  speed = 0.08,
   isDark = false,
 }) {
   const ref = useRef(null);
@@ -88,7 +88,7 @@ export default function SelvaBackground({
       for (let i = 0; i < 18; i++) {
         const fx = (i * 137.5) % w;
         const fy = h * (0.72 + ((i * 53) % 100) / 380);
-        const a = sparkA * (0.4 + 0.5 * Math.sin(t * 0.003 + i * 1.9));
+        const a = sparkA * (0.4 + 0.5 * Math.sin(t * 0.0012 + i * 1.9));
         ctx.fillStyle = `rgba(255,243,176,${Math.max(0, a)})`;
         ctx.beginPath();
         ctx.arc(fx, fy, 1.6, 0, Math.PI * 2);
@@ -183,7 +183,7 @@ function drawRiver(ctx, time, w, h, isDark) {
   ctx.strokeStyle = isDark ? "rgba(200,225,245,0.4)" : "rgba(220,240,255,0.6)";
   ctx.lineWidth = width * 0.3;
   ctx.setLineDash([18, 26]);
-  ctx.lineDashOffset = -(time * 40) % 400;
+  ctx.lineDashOffset = -(time * 12) % 400;
   ctx.beginPath();
   for (let x = -20; x <= w + 20; x += 4) {
     const y = midY + Math.sin(x * 0.006 + time * 0.3) * amp;
@@ -243,7 +243,7 @@ function drawPlants(ctx, t, w, h, isDark) {
   fronds.forEach((f) => {
     const bx = w * f.x;
     const by = h;
-    const sway = Math.sin(t * 0.0011 + f.ph) * 0.12 * f.dir;
+    const sway = Math.sin(t * 0.0006 + f.ph) * 0.12 * f.dir;
     ctx.save();
     ctx.translate(bx, by);
     ctx.rotate(sway);
@@ -272,11 +272,11 @@ function drawPlants(ctx, t, w, h, isDark) {
 
 function drawMacaw(ctx, t, w, h) {
   // slow horizontal loop across the upper third
-  const period = 17000;
+  const period = 40000;
   const p = (t % period) / period;
   const x = -60 + p * (w + 120);
   const y = h * 0.24 - Math.sin(p * Math.PI) * 20;
-  const flap = Math.sin(t * 0.012) * 0.5 + 0.5;
+  const flap = Math.sin(t * 0.006) * 0.5 + 0.5;
   const wing = 8 + flap * 6;
 
   ctx.save();

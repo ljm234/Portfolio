@@ -1,26 +1,10 @@
 // src/components/home/HomeClient.jsx
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import SelvaBackground from "@/components/effects/SelvaBackground";
 
 export default function HomeClient() {
-  // subtle parallax for the hero field
-  const fxRef = useRef(null);
-  useEffect(() => {
-    const el = fxRef.current;
-    if (!el) return;
-    const move = (e) => {
-      const r = el.getBoundingClientRect();
-      const x = (e.clientX - (r.left + r.width / 2)) / r.width;
-      const y = (e.clientY - (r.top + r.height / 2)) / r.height;
-      el.style.setProperty("--mx", x.toFixed(3));
-      el.style.setProperty("--my", y.toFixed(3));
-    };
-    window.addEventListener("pointermove", move, { passive: true });
-    return () => window.removeEventListener("pointermove", move);
-  }, []);
-
   const [isDark, setIsDark] = useState(false);
   useEffect(() => {
     const check = () => setIsDark(document.documentElement.classList.contains("dark"));
@@ -73,20 +57,15 @@ export default function HomeClient() {
   ];
 
   return (
-    <div className="relative mx-auto max-w-7xl px-4 py-8 md:py-10 space-y-10">
+    <>
+    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <SelvaBackground className="absolute inset-0 h-full w-full" isDark={isDark} />
+    </div>
+    <div className="relative z-10 mx-auto max-w-7xl px-4 pt-2 md:pt-4 pb-8 md:pb-10 space-y-10">
       <StyleBlock />
 
       {/* HERO */}
-      <header className="relative overflow-hidden rounded-3xl border">
-        {/* background field */}
-        <div
-          ref={fxRef}
-          className="heroFX pointer-events-none absolute inset-0 z-0"
-          aria-hidden="true"
-        >
-          <SelvaBackground className="absolute inset-0 h-full w-full" isDark={isDark} />
-        </div>
-
+      <header className="relative overflow-hidden">
         <div className="relative z-10 p-6 md:p-10">
           <h1
             data-testid="hero-title"
@@ -267,6 +246,7 @@ export default function HomeClient() {
         </div>
       </section>
     </div>
+    </>
   );
 }
 
