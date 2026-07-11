@@ -52,7 +52,7 @@ export const viewport = {
 const THEME_INIT = `
 try {
   var s = localStorage.getItem('theme');
-  var mode = s ? s : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  var mode = s ? s : ((new Date().getHours() >= 18) ? 'dark' : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
   var root = document.documentElement;
   if (mode === 'dark') root.classList.add('dark'); else root.classList.remove('dark');
 } catch (e) {}

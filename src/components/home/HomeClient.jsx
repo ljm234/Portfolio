@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import SelvaBackground from "@/components/effects/SelvaBackground";
+import HananPachaBackground from "@/components/effects/HananPachaBackground";
 
 export default function HomeClient() {
   const [isDark, setIsDark] = useState(false);
@@ -59,7 +59,7 @@ export default function HomeClient() {
   return (
     <>
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <SelvaBackground className="absolute inset-0 h-full w-full" isDark={isDark} />
+      <HananPachaBackground className="absolute inset-0 h-full w-full" isDark={isDark} />
     </div>
     <div className="relative z-10 mx-auto max-w-7xl px-4 pt-2 md:pt-4 pb-8 md:pb-10 space-y-10">
       <StyleBlock />
