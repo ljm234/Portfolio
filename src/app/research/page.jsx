@@ -4,6 +4,7 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import HoverLift from "@/components/effects/HoverLift";
 import Reveal from "@/components/effects/Reveal";
+import MorayBackground from "@/components/effects/MorayBackground";
 
 const FILTERS = ["All", "ML", "Wet lab", "Clinical"];
 
@@ -33,6 +34,15 @@ const PROJECTS = [
 
 export default function ResearchPage() {
   const [filter, setFilter] = useState("All");
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsDark(document.documentElement.classList.contains("dark"));
+    check();
+    const obs = new MutationObserver(check);
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => obs.disconnect();
+  }, []);
   const items = useMemo(
     () => (filter === "All" ? PROJECTS : PROJECTS.filter((p) => p.tags.includes(filter))),
     [filter]
@@ -40,12 +50,18 @@ export default function ResearchPage() {
 
   return (
     <>
-      <div className="space-y-6">
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <MorayBackground className="absolute inset-0 h-full w-full" isDark={isDark} />
+      </div>
+
+      <div className="relative z-10 max-w-2xl space-y-6">
         <header className="space-y-2">
           <Reveal effect="fade-up">
-            <h1 className="text-3xl font-bold tracking-tight">Research</h1>
+            <h1 className="text-3xl font-bold tracking-tight [text-shadow:0_1px_2px_rgba(244,242,234,0.9)] dark:[text-shadow:0_1px_2px_rgba(0,0,0,0.5)]">
+              Research
+            </h1>
           </Reveal>
-          <p className="text-neutral-600 dark:text-neutral-300">
+          <p className="text-neutral-700 dark:text-neutral-200 [text-shadow:0_1px_1px_rgba(244,242,234,0.8)] dark:[text-shadow:none]">
             Selected work across ML, wet lab, and clinical collaborations.
           </p>
 
@@ -55,10 +71,10 @@ export default function ResearchPage() {
                 key={f}
                 onClick={() => setFilter(f)}
                 className={
-                  "rounded-full border px-3 py-1 text-sm transition " +
+                  "rounded-full border px-3 py-1 text-sm backdrop-blur-sm transition " +
                   (filter === f
                     ? "bg-black text-white dark:bg-white dark:text-black"
-                    : "hover:bg-neutral-50 dark:hover:bg-neutral-900")
+                    : "bg-white/70 hover:bg-white dark:bg-neutral-950/60 dark:hover:bg-neutral-900")
                 }
                 aria-pressed={filter === f}
               >
@@ -68,61 +84,21 @@ export default function ResearchPage() {
           </div>
         </header>
 
-        {filter === "All" ? <Marquee items={items} /> : <StaticGrid items={items} />}
+        <StackedList items={items} />
       </div>
 
-      {/* Inline keyframes so the marquee always works */}
-      <style jsx global>{`
-        @keyframes rf-slide {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
-        }
-        .rf-marquee { position: relative; overflow: hidden; }
-        .rf-marquee .rf-track {
-          animation: rf-slide var(--dur, 18s) linear infinite;
-          will-change: transform;
-        }
-        .rf-marquee.paused .rf-track { animation-play-state: paused; }
-        @media (prefers-reduced-motion: reduce) {
-          .rf-marquee .rf-track { animation: none !important; }
-        }
-      `}</style>
-    </>
+      </>
   );
 }
 
-/* ---------- Static grid for filtered views ---------- */
-function StaticGrid({ items }) {
+/* ---------- Stacked list: three equal cards, kept to the left ---------- */
+function StackedList({ items }) {
   return (
-    <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <section className="flex flex-col gap-4" aria-label="Research projects">
       {items.map((p) => (
-        <ResearchCard key={p.slug} proj={p} variant="grid" />
+        <ResearchCard key={p.slug} proj={p} variant="row" />
       ))}
     </section>
-  );
-}
-
-/* ---------- Auto-rotating marquee for “All” ---------- */
-function Marquee({ items }) {
-  // duplicate for seamless loop (both halves identical width)
-  const doubled = useMemo(() => [...items, ...items], [items]);
-  const [paused, setPaused] = useState(false);
-
-  return (
-    <div
-      className={`rf-marquee ${paused ? "paused" : ""}`}
-      aria-label="Research projects carousel"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onTouchStart={() => setPaused(true)}
-      onTouchEnd={() => setPaused(false)}
-    >
-      <div className="rf-track flex w-max gap-6" style={{ ["--dur"]: "18s" }}>
-        {doubled.map((p, i) => (
-          <ResearchCard key={`${p.slug}-${i}`} proj={p} variant="carousel" />
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -136,7 +112,7 @@ function ResearchCard({ proj, variant = "grid" }) {
     }
   };
 
-  const sizing = variant === "carousel" ? "w-[min(92vw,22rem)] shrink-0" : "w-full";
+  const isRow = variant === "row";
 
   return (
     <HoverLift>
@@ -145,19 +121,21 @@ function ResearchCard({ proj, variant = "grid" }) {
         tabIndex={0}
         onKeyDown={onKey}
         onClick={open}
-        className={`group relative ${sizing} overflow-hidden rounded-xl border bg-white dark:bg-neutral-950`}
+        className="group relative flex h-32 w-full items-stretch overflow-hidden rounded-xl border bg-white/85 backdrop-blur-sm dark:bg-neutral-950/80"
       >
-        {/* Media/animation area */}
-        <div className="relative aspect-[16/10] w-full overflow-hidden">
+        {/* Media/animation area (left, fixed square-ish) */}
+        <div className="relative w-32 shrink-0 self-stretch overflow-hidden sm:w-40" style={{ minHeight: "7rem" }}>
           <AnimatedPanel kind={proj.anim} />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-40" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent to-black/5 dark:to-black/20" />
         </div>
 
-        {/* Text */}
-        <div className="p-4">
-          <div className="font-semibold">{proj.title}</div>
-          <p className="mt-1 text-sm text-neutral-500">{proj.desc}</p>
-          <div className="mt-3 flex items-center justify-between">
+        {/* Text (right) */}
+        <div className="flex min-w-0 flex-1 flex-col p-4">
+          <div className="line-clamp-1 font-semibold">{proj.title}</div>
+          <p className="mt-1 line-clamp-2 text-sm text-neutral-500 dark:text-neutral-400">
+            {proj.desc}
+          </p>
+          <div className="mt-auto flex items-center justify-between pt-3">
             <div className="flex flex-wrap gap-1">
               {proj.tags.map((t) => (
                 <span
@@ -172,16 +150,13 @@ function ResearchCard({ proj, variant = "grid" }) {
               aria-hidden="true"
               className="text-sm text-neutral-500 transition-transform duration-200 group-hover:translate-x-0.5"
             >
-              →
+              &rarr;
             </span>
           </div>
         </div>
 
         {/* Floating Quick preview */}
-        <div
-          className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
-          aria-hidden="false"
-        >
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
           <div className="pointer-events-auto rounded-xl border bg-white/90 p-3 text-sm shadow-xl dark:bg-neutral-900/90">
             <div className="font-medium">{proj.title}</div>
             <div className="mt-1 max-w-[36ch] text-neutral-600 dark:text-neutral-300">
