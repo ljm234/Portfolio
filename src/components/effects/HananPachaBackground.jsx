@@ -18,8 +18,10 @@ import { useEffect, useState } from "react";
  * visitors lives in the layout theme script, not here.
  *
  * Each scene carries a small bilingual caption (Spanish first, English
- * below). Motion respects prefers-reduced-motion via the media query in
- * the embedded stylesheet.
+ * below) rendered as an HTML overlay outside the sliced svg, so it can
+ * never be cropped by the viewport aspect ratio. Dawn and day add a soft
+ * radial scrim behind the hero corner so light text stays readable.
+ * Motion respects prefers-reduced-motion via the embedded stylesheet.
  */
 
 function sceneForHour(hour) {
@@ -45,14 +47,31 @@ function Condor({ glideAnim, soarDur = "7s" }) {
   );
 }
 
-function Caption({ es, en, fillTop, fillBottom }) {
-  return (
-    <g fontFamily="ui-sans-serif, system-ui" fontSize="9" letterSpacing="0.5">
-      <text x="40" y="422" fill={fillTop}>{es}</text>
-      <text x="40" y="436" fill={fillBottom}>{en}</text>
-    </g>
-  );
-}
+const CAPTIONS = {
+  dawn: {
+    es: "EL CONDOR, AVE DEL HANAN PACHA, CRUZA EL AMANECER",
+    en: "THE CONDOR, BIRD OF THE UPPER WORLD, CROSSES THE DAWN",
+    esColor: "#e8d8b8",
+    enColor: "#c0aa88",
+  },
+  day: {
+    es: "EL CONDOR CRUZA EL CIELO DEL MEDIODIA ANDINO",
+    en: "THE CONDOR CROSSES THE ANDEAN MIDDAY SKY",
+    esColor: "#f0f6e8",
+    enColor: "#d8e4d0",
+  },
+  night: {
+    es: "HANAN PACHA: EL MUNDO DE ARRIBA. LOS INCAS LEIAN EL CIELO",
+    en: "HANAN PACHA: THE WORLD ABOVE. THE INCAS READ THE SKY",
+    esColor: "#a8b4c8",
+    enColor: "#7a8498",
+  },
+};
+
+const SCRIMS = {
+  dawn: "radial-gradient(circle at 20% 24%, rgba(10,14,30,0.32), rgba(10,14,30,0) 65%)",
+  day: "radial-gradient(circle at 20% 24%, rgba(14,26,46,0.3), rgba(14,26,46,0) 65%)",
+};
 
 export default function HananPachaBackground({ className = "", isDark = false }) {
   const [timeScene, setTimeScene] = useState("day");
@@ -65,10 +84,13 @@ export default function HananPachaBackground({ className = "", isDark = false })
   }, []);
 
   const scene = isDark ? "night" : timeScene === "dusk" ? "dawn" : timeScene;
+  const caption = CAPTIONS[scene];
+  const scrim = SCRIMS[scene];
 
   return (
+    <div className={className}>
     <svg
-      className={className}
+      className="absolute inset-0 h-full w-full"
       viewBox="0 0 680 450"
       preserveAspectRatio="xMidYMid slice"
       role="img"
@@ -146,12 +168,6 @@ export default function HananPachaBackground({ className = "", isDark = false })
             <path d="M240,282 L264,308 L271,300 L304,330 L280,323 L264,334 Z" fill="#f0d8b8" opacity="0.9" />
             <path d="M430,290 L452,314 L458,307 L488,332 L464,326 L448,336 Z" fill="#f0d8b8" opacity="0.9" />
             <path d="M0,412 L120,372 L230,406 L360,366 L490,404 L600,372 L680,398 L680,450 L0,450 Z" fill="#241c2e" />
-            <Caption
-              es="EL CONDOR, AVE DEL HANAN PACHA, CRUZA EL AMANECER"
-              en="THE CONDOR, BIRD OF THE UPPER WORLD, CROSSES THE DAWN"
-              fillTop="#e8d8b8"
-              fillBottom="#c0aa88"
-            />
           </g>
         )}
 
@@ -187,12 +203,6 @@ export default function HananPachaBackground({ className = "", isDark = false })
             <path d="M430,244 L454,284 L460,277 L492,312 L466,304 L448,318 Z" fill="#ffffff" />
             <path d="M0,398 L120,346 L230,392 L360,338 L490,388 L600,346 L680,382 L680,450 L0,450 Z" fill="#5a7a3e" />
             <path d="M0,428 L160,388 L320,424 L480,384 L680,420 L680,450 L0,450 Z" fill="#4a6a32" />
-            <Caption
-              es="EL CONDOR CRUZA EL CIELO DEL MEDIODIA ANDINO"
-              en="THE CONDOR CROSSES THE ANDEAN MIDDAY SKY"
-              fillTop="#f0f6e8"
-              fillBottom="#d0e0c0"
-            />
           </g>
         )}
 
@@ -229,15 +239,15 @@ export default function HananPachaBackground({ className = "", isDark = false })
               </g>
             </g>
             <path d="M0,378 L90,306 L160,350 L250,292 L340,346 L440,300 L540,350 L620,314 L680,342 L680,450 L0,450 Z" fill="#0d1422" />
-            <Caption
-              es="HANAN PACHA: EL MUNDO DE ARRIBA. LOS INCAS LEIAN EL CIELO"
-              en="HANAN PACHA: THE WORLD ABOVE. THE INCAS READ THE SKY"
-              fillTop="#a8b4c8"
-              fillBottom="#7a8498"
-            />
           </g>
         )}
       </g>
     </svg>
+    {scrim && <div className="absolute inset-0" style={{ background: scrim }} />}
+    <div className="absolute bottom-5 left-5 md:bottom-8 md:left-10 select-none">
+      <p className="text-[10px] md:text-xs tracking-[0.15em]" style={{ color: caption.esColor }}>{caption.es}</p>
+      <p className="mt-1 text-[10px] md:text-xs tracking-[0.15em]" style={{ color: caption.enColor }}>{caption.en}</p>
+    </div>
+    </div>
   );
 }

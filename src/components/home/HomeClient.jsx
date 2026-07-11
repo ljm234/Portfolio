@@ -69,14 +69,14 @@ export default function HomeClient() {
         <div className="relative z-10 p-6 md:p-10">
           <h1
             data-testid="hero-title"
-            className="text-balance text-4xl md:text-5xl font-extrabold tracking-tight leading-tight"
+            className="text-balance text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#f5f1e6] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]"
           >
             <span className="title-grad">Clinical&nbsp;ML</span>{" "}
             and{" "}
             <span className="title-grad-2">AI/ML products</span>{" "}
             that ship and hold up to scrutiny
           </h1>
-          <p className="mt-4 max-w-3xl text-neutral-700 dark:text-neutral-300">
+          <p className="mt-4 max-w-3xl text-[#ece7d8] drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
             I split my work between careful{" "}
             <span className="font-medium">Clinical ML research</span> and shipping{" "}
             <span className="font-medium">AI/ML products</span>. The work I care about:
@@ -187,7 +187,7 @@ export default function HomeClient() {
 
       {/* WHERE I CAN HELP */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold tracking-tight">Where I can help</h2>
+        <h2 className="text-xl font-semibold tracking-tight text-[#f5f1e6] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">Where I can help</h2>
         <div className="grid gap-6 md:grid-cols-2">
           {Cards.map((c) => (
             <a
@@ -214,7 +214,7 @@ export default function HomeClient() {
 
       {/* SELECTED WORK */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold tracking-tight">Selected work</h2>
+        <h2 className="text-xl font-semibold tracking-tight text-[#f5f1e6] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">Selected work</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {Work.map((w) => (
             <a key={w.title} href={w.href} className="group relative block rounded-2xl border p-5 card hover:shadow-lg">
@@ -230,7 +230,7 @@ export default function HomeClient() {
       </section>
 
       {/* CTA */}
-      <section className="relative overflow-hidden rounded-2xl border p-6 md:p-8">
+      <section className="relative overflow-hidden rounded-2xl border bg-white/70 dark:bg-neutral-950/55 backdrop-blur-sm p-6 md:p-8">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_20%_0%,rgba(16,185,129,.12),transparent),radial-gradient(80%_60%_at_80%_100%,rgba(56,189,248,.12),transparent)]" />
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
