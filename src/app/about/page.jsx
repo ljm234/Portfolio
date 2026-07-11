@@ -1,9 +1,15 @@
 // /src/app/about/page.jsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import NaymlapBackground from "@/components/effects/NaymlapBackground";
+
+const PANEL_PHOTOS = [
+  { src: "/about/Picture%201.jpg", alt: "Jordan Montenegro portrait" },
+  { src: "/about/IMG_9933.jpg", alt: "Microscopy and culture work" },
+  { src: "/about/IMG_6759.jpg", alt: "Night at the pier" },
+];
 
 const TIMELINE = [
   { year: "2016", label: "Peru" },
@@ -33,10 +39,10 @@ export default function AboutPage() {
       <div className="relative z-10 mx-auto max-w-6xl px-4 pt-2 pb-16 md:pt-3 space-y-8">
         {/* HERO */}
         <section className="pt-4 md:pt-6">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[#f5f1e6] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-[#f5f1e6] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
             About
           </h1>
-          <p className="mt-2 max-w-2xl italic text-[#ece7d8] drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
+          <p className="mt-2 max-w-2xl italic text-neutral-800 dark:text-[#ece7d8] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
             From Chiclayo to clinical ML: models that know when to say
             {" "}&quot;I don&apos;t know&quot;.
           </p>
@@ -45,25 +51,7 @@ export default function AboutPage() {
         <div className="grid gap-6 md:grid-cols-[280px_1fr] md:items-start">
           {/* SIDE PANEL */}
           <aside className="rounded-2xl border bg-white/75 dark:bg-neutral-950/55 backdrop-blur-sm p-4 md:sticky md:top-24">
-            <button
-              type="button"
-              onClick={() =>
-                setLightbox({ src: "/about/Picture%201.jpg", alt: "Jordan Montenegro portrait" })
-              }
-              className="group relative block w-full overflow-hidden rounded-xl border cursor-zoom-in"
-              aria-label="Expand portrait"
-              title="Click to expand"
-            >
-              <Image
-                src="/about/Picture%201.jpg"
-                alt="Jordan Montenegro"
-                width={1200}
-                height={1200}
-                priority
-                className="h-56 w-full object-cover"
-              />
-              <OverlayHint />
-            </button>
+            <PanelCarousel photos={PANEL_PHOTOS} onOpen={setLightbox} />
 
             <div className="mt-3">
               <div className="text-base font-semibold">Jordan Montenegro</div>
@@ -95,7 +83,7 @@ export default function AboutPage() {
 
           {/* STORY */}
           <div className="space-y-6">
-            <StoryBlock title="ORIGEN">
+            <StoryBlock title="ORIGIN">
               I was born in Peru and started medical school at Universidad San Martin de
               Porres (2016-2018), then served as a missionary in Chile from 2018 to 2020.
               Moving to the United States showed me that people fall through the cracks of
@@ -103,7 +91,7 @@ export default function AboutPage() {
               healthcare reach everyone?&quot; into a personal one.
             </StoryBlock>
 
-            <StoryBlock title="FORMACION">
+            <StoryBlock title="TRAINING">
               Four undergraduate degrees across biology and computing: medical microbiology
               (Weber State, 2025), IT and system administration (Ensign College, 2025),
               software engineering (Ensign College, August 2026, GPA 4.000), and computer
@@ -123,7 +111,7 @@ export default function AboutPage() {
               development at kallpahealthcare.com.
             </StoryBlock>
 
-            <StoryBlock title="RUMBO">
+            <StoryBlock title="WHERE I'M HEADED">
               Everything I build points at bilingual healthcare AI for underserved
               populations, anchored in calibrated abstention and clinical ML safety. I&apos;m
               applying to PhD programs that bridge computer science with biomedical
@@ -187,6 +175,80 @@ export default function AboutPage() {
 }
 
 /* ---------- helpers ---------- */
+
+function PanelCarousel({ photos, onOpen }) {
+  const trackRef = useRef(null);
+  const [active, setActive] = useState(0);
+
+  const scrollToIndex = (i) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const clamped = Math.max(0, Math.min(photos.length - 1, i));
+    el.scrollTo({ left: clamped * el.clientWidth, behavior: "smooth" });
+  };
+
+  const onScroll = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    setActive(Math.round(el.scrollLeft / el.clientWidth));
+  };
+
+  return (
+    <div className="relative">
+      <div
+        ref={trackRef}
+        onScroll={onScroll}
+        aria-label="Photos, scroll left or right"
+        className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth rounded-xl border [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {photos.map((p, i) => (
+          <button
+            key={p.src}
+            type="button"
+            onClick={() => onOpen({ src: p.src, alt: p.alt })}
+            className="group relative w-full flex-none snap-center cursor-zoom-in"
+            aria-label={`Expand: ${p.alt}`}
+            title="Click to expand"
+          >
+            <Image
+              src={p.src}
+              alt={p.alt}
+              width={1200}
+              height={1200}
+              priority={i === 0}
+              className="h-56 w-full object-cover"
+            />
+            <OverlayHint />
+          </button>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={() => scrollToIndex(active - 1)}
+        aria-label="Previous photo"
+        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/85 px-2.5 py-0.5 text-base font-semibold text-neutral-900 shadow hover:bg-white dark:bg-neutral-900/80 dark:text-white"
+      >
+        {"\u2039"}
+      </button>
+      <button
+        type="button"
+        onClick={() => scrollToIndex(active + 1)}
+        aria-label="Next photo"
+        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/85 px-2.5 py-0.5 text-base font-semibold text-neutral-900 shadow hover:bg-white dark:bg-neutral-900/80 dark:text-white"
+      >
+        {"\u203a"}
+      </button>
+      <div className="pointer-events-none absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
+        {photos.map((p, i) => (
+          <span
+            key={p.src}
+            className={"h-1.5 w-1.5 rounded-full " + (i === active ? "bg-white" : "bg-white/50")}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function StoryBlock({ title, children }) {
   return (
