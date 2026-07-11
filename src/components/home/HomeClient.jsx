@@ -151,7 +151,7 @@ export default function HomeClient() {
           href="https://orcid.org/0009-0000-7851-7139"
           target="_blank"
           rel="noreferrer"
-          className="rounded-md border px-3 py-1 underline-offset-4 hover:underline"
+          className="rounded-md border bg-white/70 dark:bg-neutral-950/55 backdrop-blur-sm font-medium px-3 py-1 underline-offset-4 hover:underline"
         >
           ORCID 0009-0000-7851-7139
         </a>
@@ -159,7 +159,7 @@ export default function HomeClient() {
           href="https://github.com/ljm234"
           target="_blank"
           rel="noreferrer"
-          className="rounded-md border px-3 py-1 underline-offset-4 hover:underline"
+          className="rounded-md border bg-white/70 dark:bg-neutral-950/55 backdrop-blur-sm font-medium px-3 py-1 underline-offset-4 hover:underline"
         >
           GitHub
         </a>
@@ -167,19 +167,19 @@ export default function HomeClient() {
           href="https://linkedin.com/in/jordan-montenegro-calla"
           target="_blank"
           rel="noreferrer"
-          className="rounded-md border px-3 py-1 underline-offset-4 hover:underline"
+          className="rounded-md border bg-white/70 dark:bg-neutral-950/55 backdrop-blur-sm font-medium px-3 py-1 underline-offset-4 hover:underline"
         >
           LinkedIn
         </a>
         <a
           href="mailto:jordanmontenegroc.99@gmail.com"
-          className="rounded-md border px-3 py-1 underline-offset-4 hover:underline"
+          className="rounded-md border bg-white/70 dark:bg-neutral-950/55 backdrop-blur-sm font-medium px-3 py-1 underline-offset-4 hover:underline"
         >
           jordanmontenegroc.99@gmail.com
         </a>
         <a
           href="/downloads/Jordan-Montenegro-CV.pdf"
-          className="rounded-md border px-3 py-1 underline-offset-4 hover:underline"
+          className="rounded-md border bg-white/70 dark:bg-neutral-950/55 backdrop-blur-sm font-medium px-3 py-1 underline-offset-4 hover:underline"
         >
           CV (PDF)
         </a>
@@ -314,7 +314,7 @@ function StyleBlock() {
       }
       .card:hover .glow{ opacity:1 }
       .chip{
-        position:absolute; top:.75rem; right:.75rem; font-size:.7rem; letter-spacing:.02em;
+        display:inline-block; font-size:.7rem; letter-spacing:.02em;
         padding:.35rem .55rem; border-radius:9999px; border:1px solid rgba(0,0,0,.12);
         background:rgba(255,255,255,.75);
       }
