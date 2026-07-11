@@ -5,10 +5,27 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import NaymlapBackground from "@/components/effects/NaymlapBackground";
 
-const PANEL_PHOTOS = [
-  { src: "/about/Picture%201.jpg", alt: "Jordan Montenegro portrait" },
-  { src: "/about/IMG_9933.jpg", alt: "Microscopy and culture work" },
-  { src: "/about/IMG_6759.jpg", alt: "Night at the pier" },
+const GALLERY_PHOTOS = [
+  {
+    src: "/about/IMG_8413.jpg",
+    alt: "Bench work and experimental planning",
+    caption: "Planning assays and documenting changes at the hood.",
+  },
+  {
+    src: "/about/IMG_9933.jpg",
+    alt: "Microscopy and culture work",
+    caption: "Microscopy and growth experiments inform model features.",
+  },
+  {
+    src: "/about/IMG_8156.jpg",
+    alt: "Graduation day",
+    caption: "Commencement, grateful and just getting started.",
+  },
+  {
+    src: "/about/IMG_6759.jpg",
+    alt: "Night at the pier",
+    caption: "Late-night runs by the water keep the head clear.",
+  },
 ];
 
 const TIMELINE = [
@@ -51,7 +68,25 @@ export default function AboutPage() {
         <div className="grid gap-6 md:grid-cols-[280px_1fr] md:items-start">
           {/* SIDE PANEL */}
           <aside className="rounded-2xl border bg-white/75 dark:bg-neutral-950/55 backdrop-blur-sm p-4 md:sticky md:top-24">
-            <PanelCarousel photos={PANEL_PHOTOS} onOpen={setLightbox} />
+            <button
+              type="button"
+              onClick={() =>
+                setLightbox({ src: "/about/Picture%201.jpg", alt: "Jordan Montenegro portrait" })
+              }
+              className="group relative block w-full overflow-hidden rounded-xl border cursor-zoom-in"
+              aria-label="Expand portrait"
+              title="Click to expand"
+            >
+              <Image
+                src="/about/Picture%201.jpg"
+                alt="Jordan Montenegro"
+                width={1200}
+                height={1200}
+                priority
+                className="h-56 w-full object-cover"
+              />
+              <OverlayHint />
+            </button>
 
             <div className="mt-3">
               <div className="text-base font-semibold">Jordan Montenegro</div>
@@ -121,20 +156,7 @@ export default function AboutPage() {
             </StoryBlock>
 
             {/* PHOTOS */}
-            <div className="grid gap-6 sm:grid-cols-2">
-              <PhotoCard
-                src="/about/IMG_8413.jpg"
-                alt="Bench work and experimental planning"
-                caption="Planning assays and documenting changes at the hood."
-                onOpen={setLightbox}
-              />
-              <PhotoCard
-                src="/about/IMG_8156.jpg"
-                alt="Graduation day"
-                caption="Commencement, grateful and just getting started."
-                onOpen={setLightbox}
-              />
-            </div>
+            <GalleryCarousel photos={GALLERY_PHOTOS} onOpen={setLightbox} />
 
             {/* CTA */}
             <section className="rounded-2xl border bg-white/75 dark:bg-neutral-950/55 backdrop-blur-sm p-6">
@@ -176,48 +198,64 @@ export default function AboutPage() {
 
 /* ---------- helpers ---------- */
 
-function PanelCarousel({ photos, onOpen }) {
+function GalleryCarousel({ photos, onOpen }) {
   const trackRef = useRef(null);
   const [active, setActive] = useState(0);
+
+  const nearestIndex = () => {
+    const el = trackRef.current;
+    if (!el) return 0;
+    const kids = Array.from(el.children);
+    let best = 0;
+    let bestDist = Infinity;
+    kids.forEach((kid, i) => {
+      const d = Math.abs(kid.offsetLeft - el.scrollLeft);
+      if (d < bestDist) {
+        bestDist = d;
+        best = i;
+      }
+    });
+    return best;
+  };
 
   const scrollToIndex = (i) => {
     const el = trackRef.current;
     if (!el) return;
     const clamped = Math.max(0, Math.min(photos.length - 1, i));
-    el.scrollTo({ left: clamped * el.clientWidth, behavior: "smooth" });
+    const kid = el.children[clamped];
+    if (kid) el.scrollTo({ left: kid.offsetLeft, behavior: "smooth" });
   };
 
-  const onScroll = () => {
-    const el = trackRef.current;
-    if (!el) return;
-    setActive(Math.round(el.scrollLeft / el.clientWidth));
-  };
+  const onScroll = () => setActive(nearestIndex());
 
   return (
     <div className="relative">
       <div
         ref={trackRef}
         onScroll={onScroll}
-        aria-label="Photos, scroll left or right"
-        className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth rounded-xl border [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        aria-label="Photo gallery, scroll left or right"
+        className="flex gap-4 snap-x snap-mandatory overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {photos.map((p, i) => (
+        {photos.map((p) => (
           <button
             key={p.src}
             type="button"
             onClick={() => onOpen({ src: p.src, alt: p.alt })}
-            className="group relative w-full flex-none snap-center cursor-zoom-in"
+            className="group relative w-[85%] sm:w-[calc(50%-0.5rem)] flex-none snap-start overflow-hidden rounded-2xl border cursor-zoom-in bg-white/60 dark:bg-neutral-950/40"
             aria-label={`Expand: ${p.alt}`}
             title="Click to expand"
           >
             <Image
               src={p.src}
               alt={p.alt}
-              width={1200}
+              width={1600}
               height={1200}
-              priority={i === 0}
-              className="h-56 w-full object-cover"
+              loading="lazy"
+              className="h-64 w-full max-w-full object-cover"
             />
+            <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 text-left text-sm text-white">
+              {p.caption}
+            </figcaption>
             <OverlayHint />
           </button>
         ))}
@@ -225,7 +263,7 @@ function PanelCarousel({ photos, onOpen }) {
       <button
         type="button"
         onClick={() => scrollToIndex(active - 1)}
-        aria-label="Previous photo"
+        aria-label="Previous photos"
         className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/85 px-2.5 py-0.5 text-base font-semibold text-neutral-900 shadow hover:bg-white dark:bg-neutral-900/80 dark:text-white"
       >
         {"\u2039"}
@@ -233,16 +271,16 @@ function PanelCarousel({ photos, onOpen }) {
       <button
         type="button"
         onClick={() => scrollToIndex(active + 1)}
-        aria-label="Next photo"
+        aria-label="Next photos"
         className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/85 px-2.5 py-0.5 text-base font-semibold text-neutral-900 shadow hover:bg-white dark:bg-neutral-900/80 dark:text-white"
       >
         {"\u203a"}
       </button>
-      <div className="pointer-events-none absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5">
+      <div className="pointer-events-none absolute -bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5">
         {photos.map((p, i) => (
           <span
             key={p.src}
-            className={"h-1.5 w-1.5 rounded-full " + (i === active ? "bg-white" : "bg-white/50")}
+            className={"h-1.5 w-1.5 rounded-full " + (i === active ? "bg-neutral-700 dark:bg-white" : "bg-neutral-400/60 dark:bg-white/40")}
           />
         ))}
       </div>
@@ -258,30 +296,6 @@ function StoryBlock({ title, children }) {
       </h2>
       <p className="mt-2 text-neutral-700 dark:text-neutral-300 leading-relaxed">{children}</p>
     </section>
-  );
-}
-
-function PhotoCard({ src, alt, caption, onOpen }) {
-  return (
-    <button
-      type="button"
-      onClick={() => onOpen({ src, alt })}
-      className="group relative overflow-hidden rounded-2xl border cursor-zoom-in bg-white/60 dark:bg-neutral-950/40"
-      aria-label={`Expand: ${alt}`}
-    >
-      <Image
-        src={src}
-        alt={alt}
-        width={1600}
-        height={1200}
-        loading="lazy"
-        className="h-64 w-full max-w-full object-cover"
-      />
-      <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 text-left text-sm text-white">
-        {caption}
-      </figcaption>
-      <OverlayHint />
-    </button>
   );
 }
 
