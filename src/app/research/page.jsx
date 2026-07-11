@@ -57,11 +57,11 @@ export default function ResearchPage() {
       <div className="relative z-10 max-w-2xl space-y-6">
         <header className="space-y-2">
           <Reveal effect="fade-up">
-            <h1 className="text-3xl font-bold tracking-tight [text-shadow:0_1px_2px_rgba(244,242,234,0.9)] dark:[text-shadow:0_1px_2px_rgba(0,0,0,0.5)]">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-[#f5f1e6] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
               Research
             </h1>
           </Reveal>
-          <p className="text-neutral-700 dark:text-neutral-200 [text-shadow:0_1px_1px_rgba(244,242,234,0.8)] dark:[text-shadow:none]">
+          <p className="mt-2 max-w-2xl italic text-neutral-800 dark:text-[#ece7d8] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
             Selected work across ML, wet lab, and clinical collaborations.
           </p>
 
