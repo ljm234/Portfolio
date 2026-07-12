@@ -62,7 +62,7 @@ export default function ResearchPage() {
             Selected work across ML, wet lab, and clinical collaborations.
           </p>
 
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-8 flex flex-wrap gap-2">
             {FILTERS.map((f) => (
               <button
                 key={f}
