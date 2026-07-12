@@ -3,7 +3,6 @@
 
 import { useMemo, useState, useEffect, useRef } from "react";
 import HoverLift from "@/components/effects/HoverLift";
-import Reveal from "@/components/effects/Reveal";
 import MorayBackground from "@/components/effects/MorayBackground";
 
 const FILTERS = ["All", "ML", "Wet lab", "Clinical"];
@@ -54,13 +53,11 @@ export default function ResearchPage() {
         <MorayBackground className="absolute inset-0 h-full w-full" isDark={isDark} />
       </div>
 
-      <div className="relative z-10 max-w-2xl space-y-6">
-        <header className="space-y-2">
-          <Reveal effect="fade-up">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-[#f5f1e6] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
-              Research
-            </h1>
-          </Reveal>
+      <div className="relative z-10 max-w-2xl space-y-8 pt-2 pb-16 md:pt-3">
+        <header className="pt-4 md:pt-6">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-[#f5f1e6] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
+            Research
+          </h1>
           <p className="mt-2 max-w-2xl italic text-neutral-800 dark:text-[#ece7d8] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
             Selected work across ML, wet lab, and clinical collaborations.
           </p>
@@ -94,7 +91,7 @@ export default function ResearchPage() {
 /* ---------- Stacked list: three equal cards, kept to the left ---------- */
 function StackedList({ items }) {
   return (
-    <section className="flex flex-col gap-4" aria-label="Research projects">
+    <section className="flex flex-col gap-6" aria-label="Research projects">
       {items.map((p) => (
         <ResearchCard key={p.slug} proj={p} variant="row" />
       ))}
