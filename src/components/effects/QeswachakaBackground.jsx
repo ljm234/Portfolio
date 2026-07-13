@@ -23,14 +23,14 @@ const CAPTIONS = {
   light: {
     es: "LA RENOVACION DEL Q'ESWACHAKA: CUATRO COMUNIDADES TEJEN EL PUENTE SOBRE EL APURIMAC",
     en: "THE Q'ESWACHAKA RENEWAL: FOUR COMMUNITIES WEAVE THE BRIDGE OVER THE APURIMAC",
-    esColor: "#2e5a66",
-    enColor: "#4e7a86",
+    esColor: "#ffffff",
+    enColor: "#c8dce2",
   },
   dark: {
     es: "EL Q'ESWACHAKA DESCANSA BAJO LA LUNA SOBRE EL APURIMAC",
     en: "THE Q'ESWACHAKA RESTS UNDER THE MOON OVER THE APURIMAC",
-    esColor: "#9aa8b8",
-    enColor: "#6e7c8c",
+    esColor: "#f0f4f8",
+    enColor: "#aeb9c6",
   },
 };
 
@@ -305,11 +305,17 @@ export default function QeswachakaBackground({ className = "", isDark = false })
         </g>
       </svg>
 
+      {/* Cinematic scrim: a soft transparent-to-dark gradient along the foot of
+          the scene so the caption reads over the river, the grass, or the rock. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 via-black/25 to-transparent"
+      />
       <div className="absolute bottom-4 left-4 md:bottom-5 md:left-6 select-none">
-        <p className="text-[9px] md:text-[10px] tracking-[0.12em]" style={{ color: caption.esColor }}>
+        <p className="text-[9px] md:text-[10px] tracking-[0.14em]" style={{ color: caption.esColor }}>
           {caption.es}
         </p>
-        <p className="mt-0.5 text-[9px] md:text-[10px] tracking-[0.12em]" style={{ color: caption.enColor }}>
+        <p className="mt-0.5 text-[9px] md:text-[10px] tracking-[0.14em]" style={{ color: caption.enColor }}>
           {caption.en}
         </p>
       </div>
