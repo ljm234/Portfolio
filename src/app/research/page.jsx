@@ -9,23 +9,37 @@ const FILTERS = ["All", "ML", "Wet lab", "Clinical"];
 
 const PROJECTS = [
   {
+    slug: "yachay",
+    title: "YACHAY",
+    desc: "Calibrated multiclass differential diagnosis of opportunistic meningitis in HIV, with conformal prediction and selective abstention. Cohort curated and frozen from MIMIC-IV; clinical collaboration forming with HIV referral hospitals in Lima.",
+    tags: ["ML", "Clinical"],
+    anim: "conformal",
+  },
+  {
+    slug: "salud",
+    title: "SALUD",
+    desc: "Do large language models stay calibrated when a clinical case is written in Wanka Quechua instead of Spanish? Expected calibration error, Brier score, risk-coverage curves, and conformal abstention across frontier and low-resource models.",
+    tags: ["ML", "Clinical"],
+    anim: "quechua",
+  },
+  {
     slug: "amoebanator",
     title: "Amoebanator",
-    desc: "Binary PAM-risk triage (Naegleria fowleri) with calibrated abstention. Compact tabular MLP (914 params), split conformal prediction, dual-gate OOD, decision curve analysis. Proof-of-concept on simulated data.",
+    desc: "Binary PAM-risk triage (Naegleria fowleri) with calibrated abstention. Compact tabular MLP, split conformal prediction, dual-gate OOD detection, decision curve analysis.",
     tags: ["ML", "Clinical"],
     anim: "amoebanator",
   },
   {
     slug: "montenegro-medium",
-    title: "Montenegro’s Medium",
-    desc: "Serum-free, low-cost culture medium that supports 3 to 5 times the growth of standard formulations for Naegleria fowleri.",
+    title: "Montenegro-Calla\u2019s Medium",
+    desc: "Serum-free, low-cost culture medium for axenic growth of Naegleria fowleri: over 70 percent cheaper than commercial alternatives, with roughly three times the cell yield.",
     tags: ["Wet lab"],
     anim: "medium",
   },
   {
     slug: "organelle-targets",
-    title: "Organelle-Target Discovery for Selective Amoebicidal Therapy",
-    desc: "LDH (24 h), Caspase-3 (48 h), JC-1 (72 h) matched HeLa+Nf vs Nf-only.",
+    title: "ER Stress and Mitochondrial Targeting",
+    desc: "Tunicamycin and thapsigargin-induced ER stress and metformin-driven mitochondrial dysfunction in Naegleria fowleri. Western blot (BiP/GRP78) and JC-1 staining. Grant funded.",
     tags: ["Wet lab"],
     anim: "erstress",
   },
@@ -177,6 +191,10 @@ function ResearchCard({ proj, variant = "grid" }) {
 /* ---------- Canvas animations ---------- */
 function AnimatedPanel({ kind }) {
   switch (kind) {
+    case "conformal":
+      return <CanvasAnim draw={drawConformal} />;
+    case "quechua":
+      return <CanvasAnim draw={drawQuechua} />;
     case "amoebanator":
       return <CanvasAnim draw={drawLogistic} />;
     case "medium":
@@ -231,6 +249,113 @@ function CanvasAnim({ draw }) {
 }
 
 /* draw funcs */
+/* YACHAY: a prediction set that widens and narrows with the confidence of the model,
+   with the points it declines to call greyed out. */
+function drawConformal(ctx, t, w, h) {
+  const pad = 10;
+  const x0 = pad;
+  const x1 = w - pad;
+  const mid = h / 2;
+
+  ctx.strokeStyle = "rgba(120,120,120,0.35)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(x0, h - pad);
+  ctx.lineTo(x1, h - pad);
+  ctx.moveTo(x0, pad);
+  ctx.lineTo(x0, h - pad);
+  ctx.stroke();
+
+  const band = (k) => {
+    ctx.beginPath();
+    for (let i = 0; i <= 40; i++) {
+      const p = i / 40;
+      const x = x0 + p * (x1 - x0);
+      const width = 6 + 10 * Math.abs(Math.sin(p * 3.1 + t * 0.6));
+      const y = mid + k * width + 6 * Math.sin(p * 4 + t * 0.4);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  };
+
+  ctx.strokeStyle = "rgba(58,138,134,0.55)";
+  ctx.lineWidth = 1.4;
+  band(1);
+  band(-1);
+
+  ctx.strokeStyle = "rgba(58,138,134,0.9)";
+  ctx.lineWidth = 1.8;
+  ctx.beginPath();
+  for (let i = 0; i <= 40; i++) {
+    const p = i / 40;
+    const x = x0 + p * (x1 - x0);
+    const y = mid + 6 * Math.sin(p * 4 + t * 0.4);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+
+  const pts = [0.14, 0.3, 0.46, 0.62, 0.78, 0.9];
+  pts.forEach((p, i) => {
+    const x = x0 + p * (x1 - x0);
+    const y = mid + 6 * Math.sin(p * 4 + t * 0.4) + (i % 2 === 0 ? -9 : 11);
+    const abstain = i === 2 || i === 4;
+    ctx.beginPath();
+    ctx.arc(x, y, abstain ? 2.6 : 3.4, 0, Math.PI * 2);
+    ctx.fillStyle = abstain ? "rgba(140,140,140,0.45)" : "rgba(182,71,46,0.85)";
+    ctx.fill();
+  });
+}
+
+/* SALUD: the same clinical question crossing from one language to another, and the
+   confidence of the answer drifting as it crosses. */
+function drawQuechua(ctx, t, w, h) {
+  const leftX = w * 0.24;
+  const rightX = w * 0.76;
+  const mid = h / 2;
+
+  ctx.strokeStyle = "rgba(120,120,120,0.3)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(leftX, mid - 26);
+  ctx.lineTo(leftX, mid + 26);
+  ctx.moveTo(rightX, mid - 26);
+  ctx.lineTo(rightX, mid + 26);
+  ctx.stroke();
+
+  for (let k = 0; k < 3; k++) {
+    const phase = t * 0.5 + k * 2.1;
+    const p = (Math.sin(phase) + 1) / 2;
+    const x = leftX + p * (rightX - leftX);
+    const y = mid + (k - 1) * 13 + 3 * Math.sin(phase * 2);
+    ctx.beginPath();
+    ctx.moveTo(leftX, mid + (k - 1) * 13);
+    ctx.bezierCurveTo(
+      leftX + (rightX - leftX) * 0.35,
+      mid + (k - 1) * 13 - 8,
+      rightX - (rightX - leftX) * 0.35,
+      mid + (k - 1) * 13 + 8,
+      rightX,
+      mid + (k - 1) * 13
+    );
+    ctx.strokeStyle = "rgba(122,90,154,0.35)";
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    const conf = 0.4 + 0.6 * (1 - p);
+    ctx.beginPath();
+    ctx.arc(x, y, 3 + 2 * conf, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(217,164,65,${0.35 + 0.5 * conf})`;
+    ctx.fill();
+  }
+
+  ctx.fillStyle = "rgba(90,90,90,0.5)";
+  ctx.font = "8px ui-sans-serif, system-ui";
+  ctx.fillText("ES", leftX - 8, mid + 40);
+  ctx.fillText("QU", rightX - 9, mid + 40);
+}
+
 function drawLogistic(ctx, t, w, h) {
   ctx.clearRect(0, 0, w, h);
   const pad = 18;
