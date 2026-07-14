@@ -9,6 +9,7 @@ import pubs from "./pubs.json";
 /* Research pages that back a publication */
 const DATA_ROUTES = {
   "montenegro-medium-jem": "/research/montenegro-medium",
+  "er-stress-mitochondria": "/research/organelle-targets",
 };
 
 const PRESENTATIONS = [
@@ -32,17 +33,35 @@ const PRESENTATIONS = [
     venue: "Utah Conference on Undergraduate Research (UCUR)",
     year: 2024,
     kind: "Poster presentation",
+    note: "Co-author, brain-eating amoeba rescue-of-infection model",
     accent: "#7a5a9a",
+  },
+  {
+    id: "weber-2023",
+    venue: "Weber State Symposium",
+    year: 2023,
+    kind: "Oral presentation",
+    note: "Drug inhibition in a human cell infection model, and PCB analysis of local soils",
+    accent: "#3a8a86",
   },
 ];
 
 const SOFTWARE = [
   {
+    id: "naylamp",
+    name: "Naylamp",
+    summary: "Distributed vector database written from scratch in Go, with no external dependencies.",
+    detail:
+      "Sharded architecture where each shard is a Raft replica group and a router performs scatter-gather across shards. Raft consensus with write-ahead logging and crash-safe recovery, a custom HNSW index, and TCP transport with mutual TLS where peer identity is the certificate CN rather than a self-declared hello. Correctness is validated with seeded deterministic simulation testing that injects partitions, crashes, and reorderings with exact reproducibility. On SIFT1M against the official INRIA ground truth, the index reaches recall@10 of 0.9942 at 703 queries per second single-threaded and 4,394 across ten threads.",
+    links: [],
+    accent: "#3a8a86",
+  },
+  {
     id: "amoebanator",
     name: "Amoebanator",
     summary: "Binary triage signal for primary amoebic meningoencephalitis (PAM) risk.",
     detail:
-      "Compact tabular PyTorch MLP (914 parameters) with temperature scaling, split conformal prediction with abstention, dual energy-based and Mahalanobis out-of-distribution detection, and decision curve analysis. Proof-of-concept trained on 30 simulated rows; not a diagnostic, research and educational use only.",
+      "Compact tabular PyTorch MLP with temperature scaling, split conformal prediction with abstention, dual energy-based and Mahalanobis out-of-distribution detection, and decision curve analysis, backed by an automated test suite and continuous integration. Proof-of-concept; not a diagnostic, research and educational use only.",
     links: [
       { label: "Live demo", href: "https://huggingface.co/spaces/luisjordanmontenegro/amoebanator-25" },
       { label: "Source", href: "https://github.com/ljm234/amoebanator-25" },
@@ -75,7 +94,7 @@ export default function PublicationsPage() {
             Publications
           </h1>
           <p className="mt-2 max-w-2xl italic text-neutral-800 dark:text-[#ece7d8] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
-            A manuscript under review, conference talks, and released software.
+            Manuscripts, conference talks, and released software.
           </p>
         </section>
 
@@ -94,9 +113,6 @@ export default function PublicationsPage() {
             ))}
           </div>
 
-          <p className="mt-4 text-sm text-neutral-600 dark:text-neutral-400">
-            Two additional manuscripts are in preparation.
-          </p>
         </section>
 
         {/* CONFERENCE PRESENTATIONS */}
@@ -148,6 +164,7 @@ export default function PublicationsPage() {
                   <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">
                     {s.detail}
                   </p>
+                  {s.links.length > 0 && (
                   <div className="mt-3 flex flex-wrap gap-2">
                     {s.links.map((l) => (
                       <a
@@ -161,6 +178,7 @@ export default function PublicationsPage() {
                       </a>
                     ))}
                   </div>
+                  )}
                 </div>
               </article>
             ))}
@@ -220,7 +238,14 @@ function PubCard({ p }) {
           </a>
         )}
         {p.links?.status && !p.links?.doi && (
-          <span className="rounded border border-amber-300 bg-amber-50 px-2 py-0.5 text-[11px] text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
+          <span
+            className={
+              "rounded border px-2 py-0.5 text-[11px] " +
+              (/review/i.test(p.links.status)
+                ? "border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200"
+                : "border-neutral-300 bg-neutral-50 text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400")
+            }
+          >
             {p.links.status}
           </span>
         )}
