@@ -1,255 +1,192 @@
+// /src/app/publications/page.jsx
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import HoverLift from "@/components/effects/HoverLift";
-import Reveal from "@/components/effects/Reveal";
-import LightboxPDF from "@/components/LightboxPDF";
-import CountUpNumber from "@/components/effects/CountUpNumber";
+import MachuPicchuBackground from "@/components/effects/MachuPicchuBackground";
 import pubs from "./pubs.json";
 
-/* ─────────────────────────────────────────
-   Helpers
-───────────────────────────────────────── */
-
-// Normalize public asset paths like "public/papers/x.pdf" → "/papers/x.pdf"
-const assetUrl = (s = "") => s.replace(/^\/?public\//, "/");
-const isPdf = (u = "") => /\.pdf(?:$|\?)/i.test(u);
-const uniq = (arr) => [...new Set(arr)];
-const yearsOf = (rows) => [...new Set(rows.map((p) => p.year))].sort((a, b) => b - a);
-
-// Research-page routes for entries that have a project page
+/* Research pages that back a publication */
 const DATA_ROUTES = {
   "montenegro-medium-jem": "/research/montenegro-medium",
 };
 
-// “Download Project” preference order
-function pickDownloadLink(p) {
-  const L = p.links || {};
-  const candidate = L.download || L.pdf || L.code || L.data || null;
-  return candidate ? assetUrl(candidate) : null;
-}
+const PRESENTATIONS = [
+  {
+    id: "ncur-2026",
+    venue: "National Conference on Undergraduate Research (NCUR)",
+    year: 2026,
+    kind: "Oral presentation",
+    note: "Full travel funding awarded",
+    accent: "#b6472e",
+  },
+  {
+    id: "ucur-2026",
+    venue: "Utah Conference on Undergraduate Research (UCUR)",
+    year: 2026,
+    kind: "Oral presentation",
+    accent: "#d9a441",
+  },
+  {
+    id: "ucur-2024",
+    venue: "Utah Conference on Undergraduate Research (UCUR)",
+    year: 2024,
+    kind: "Poster presentation",
+    accent: "#7a5a9a",
+  },
+];
 
-/* ─────────────────────────────────────────
-   Page
-───────────────────────────────────────── */
+const SOFTWARE = [
+  {
+    id: "amoebanator",
+    name: "Amoebanator",
+    summary: "Binary triage signal for primary amoebic meningoencephalitis (PAM) risk.",
+    detail:
+      "Compact tabular PyTorch MLP (914 parameters) with temperature scaling, split conformal prediction with abstention, dual energy-based and Mahalanobis out-of-distribution detection, and decision curve analysis. Proof-of-concept trained on 30 simulated rows; not a diagnostic, research and educational use only.",
+    links: [
+      { label: "Live demo", href: "https://huggingface.co/spaces/luisjordanmontenegro/amoebanator-25" },
+      { label: "Source", href: "https://github.com/ljm234/amoebanator-25" },
+    ],
+    accent: "#8a94c9",
+  },
+];
+
 export default function PublicationsPage() {
-  const [q, setQ] = useState("");
-  const [topic, setTopic] = useState("All");
-  const [venue, setVenue] = useState("All");
-  const [year, setYear] = useState("All");
-  const [mode, setMode] = useState("grid");
-  const [pdfSrc, setPdfSrc] = useState(null);
+  const [isDark, setIsDark] = useState(false);
 
-  const topics = ["All", ...uniq(pubs.map((p) => p.topic))];
-  const venues = ["All", ...uniq(pubs.map((p) => p.venue))];
-  const years = ["All", ...uniq(pubs.map((p) => String(p.year))).sort((a, b) => +b - +a)];
-
-  // Hero stats: real counts only.
-  const stats = useMemo(() => {
-    const total = pubs.length;
-    const withDoi = pubs.filter((p) => !!p.links?.doi).length;
-    const pending = pubs.filter((p) => !!p.links?.status && !p.links?.doi).length;
-    return { total, withDoi, pending };
+  useEffect(() => {
+    const check = () => setIsDark(document.documentElement.classList.contains("dark"));
+    check();
+    const obs = new MutationObserver(check);
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => obs.disconnect();
   }, []);
 
-  // Filters
-  const list = useMemo(() => {
-    const qq = q.trim().toLowerCase();
-    return pubs.filter((p) => {
-      if (topic !== "All" && p.topic !== topic) return false;
-      if (venue !== "All" && p.venue !== venue) return false;
-      if (year !== "All" && String(p.year) !== year) return false;
-      if (!qq) return true;
-      const text = `${p.title} ${p.venue} ${p.year} ${p.tags?.join(" ") ?? ""} ${p.abstract ?? ""}`.toLowerCase();
-      return text.includes(qq);
-    });
-  }, [q, topic, venue, year]);
-
-  const byYear = useMemo(() => {
-    const m = new Map();
-    for (const p of list) {
-      if (!m.has(p.year)) m.set(p.year, []);
-      m.get(p.year).push(p);
-    }
-    return [...m.entries()].sort((a, b) => b[0] - a[0]);
-  }, [list]);
-
-  const timelineYears = yearsOf(list);
-
-  function openAsset(url) {
-    const u = assetUrl(url);
-    if (!u) return;
-    if (isPdf(u)) setPdfSrc(u); // PDFs open in your lightbox
-    else window.open(u, "_blank", "noreferrer"); // docx / code / etc → new tab
-  }
-
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 md:py-10 space-y-10">
-      {/* HERO */}
-      <section>
-        <Reveal effect="fade-up">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Publications</h1>
-        </Reveal>
+    <>
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <MachuPicchuBackground className="absolute inset-0 h-full w-full" isDark={isDark} />
+      </div>
 
-        <div className="mt-6 grid grid-cols-3 gap-3">
-          <Stat label="Total" value={<CountUpNumber value={stats.total} />} />
-          <Stat label="With DOI" value={<CountUpNumber value={stats.withDoi} />} />
-          <Stat label="Pending" value={<CountUpNumber value={stats.pending} />} />
-        </div>
-      </section>
-
-      {/* FILTERS (aligned row) */}
-      <section className="rounded-2xl border p-4">
-        <div className="grid items-end gap-3 md:grid-cols-4">
-          <label className="block">
-            <div className="mb-1 text-xs text-neutral-500">Search</div>
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search title, abstract, tags…"
-              className="w-full rounded-md border px-3 py-2 text-sm"
-            />
-          </label>
-          <Select label="Topic" value={topic} onChange={setTopic} items={topics} />
-          <Select label="Venue" value={venue} onChange={setVenue} items={venues} />
-          <Select label="Year" value={year} onChange={setYear} items={years} />
-        </div>
-
-        <div className="mt-3 flex items-center gap-2">
-          <ModeChip on={mode === "grid"} onClick={() => setMode("grid")}>
-            Grid
-          </ModeChip>
-          <ModeChip on={mode === "timeline"} onClick={() => setMode("timeline")}>
-            Timeline
-          </ModeChip>
-          <span className="ml-auto text-xs text-neutral-500">
-            Showing <strong>{list.length}</strong> result{list.length === 1 ? "" : "s"}
-          </span>
-        </div>
-      </section>
-
-      {/* RESULTS */}
-      {mode === "grid" ? (
-        <section className="grid gap-5 md:grid-cols-2">
-          {list.map((p) => (
-            <HoverLift key={p.id}>
-              <PubCard p={p} onOpenAsset={openAsset} />
-            </HoverLift>
-          ))}
-          {list.length === 0 && <Empty />}
+      <div className="relative z-10 mx-auto max-w-6xl px-4 pt-2 pb-16 md:pt-3 space-y-8">
+        {/* HERO: same typography as the About template */}
+        <section className="pt-4 md:pt-6">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-[#f5f1e6] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
+            Publications
+          </h1>
+          <p className="mt-2 max-w-2xl italic text-neutral-800 dark:text-[#ece7d8] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
+            A manuscript under review, conference talks, and released software.
+          </p>
         </section>
-      ) : (
-        <section className="relative">
-          {/* Year rail */}
-          <div className="pointer-events-none absolute left-3 top-0 hidden h-full w-px bg-neutral-200 md:block" />
-          <div className="md:grid md:grid-cols-[110px_1fr] md:gap-6">
-            <div className="sticky top-20 hidden max-h-[70vh] flex-col gap-1 overflow-auto rounded-xl border p-2 text-xs md:flex">
-              {timelineYears.map((y) => (
-                <a
-                  key={y}
-                  href={`#y-${y}`}
-                  className="pointer-events-auto rounded-md px-2 py-1 hover:bg-neutral-50 dark:hover:bg-neutral-900"
-                >
-                  {y}
-                </a>
-              ))}
-            </div>
 
-            {/* Timeline with animated connectors */}
-            <div className="space-y-10">
-              {byYear.map(([y, rows]) => (
-                <div key={y} id={`y-${y}`} className="scroll-mt-24">
-                  <div className="relative mb-3 pl-6">
-                    <span className="absolute left-0 top-2 h-3 w-3 rounded-full bg-emerald-500 ring-4 ring-emerald-200/50 animate-pulse" />
-                    <div className="font-semibold">{y}</div>
+        <div className="space-y-6">
+        {/* MANUSCRIPTS */}
+        <section className="rounded-2xl border bg-white/80 dark:bg-neutral-950/60 backdrop-blur-sm p-6">
+          <h2 className="text-sm font-bold tracking-[0.15em] text-[#b0623a] dark:text-[#d9a441]">
+            MANUSCRIPTS
+          </h2>
+
+          <div className="mt-4 space-y-4">
+            {pubs.map((p) => (
+              <HoverLift key={p.id}>
+                <PubCard p={p} />
+              </HoverLift>
+            ))}
+          </div>
+
+          <p className="mt-4 text-sm text-neutral-600 dark:text-neutral-400">
+            Two additional manuscripts are in preparation.
+          </p>
+        </section>
+
+        {/* CONFERENCE PRESENTATIONS */}
+        <section className="rounded-2xl border bg-white/80 dark:bg-neutral-950/60 backdrop-blur-sm p-6">
+          <h2 className="text-sm font-bold tracking-[0.15em] text-[#b0623a] dark:text-[#d9a441]">
+            CONFERENCE PRESENTATIONS
+          </h2>
+
+          <div className="mt-4 space-y-3">
+            {PRESENTATIONS.map((t) => (
+              <article
+                key={t.id}
+                className="flex items-start gap-3 rounded-xl border bg-white/60 dark:bg-neutral-900/50 p-4"
+              >
+                <span
+                  className="mt-1 h-8 w-1 shrink-0 rounded-full"
+                  style={{ backgroundColor: t.accent }}
+                  aria-hidden="true"
+                />
+                <div className="min-w-0 grow">
+                  <div className="font-semibold leading-snug break-words">{t.venue}</div>
+                  <div className="mt-0.5 text-sm text-neutral-600 dark:text-neutral-400 break-words">
+                    {t.kind}
+                    {t.note ? ` - ${t.note}` : ""}
                   </div>
-                  <div className="space-y-4">
-                    {rows.map((p) => (
-                      <div key={p.id} className="relative pl-6">
-                        <span className="absolute left-[5px] top-5 h-px w-4 bg-emerald-300/70" />
-                        <HoverLift>
-                          <PubCard p={p} compact onOpenAsset={openAsset} />
-                        </HoverLift>
-                      </div>
+                </div>
+                <span className="shrink-0 rounded-md border px-2 py-1 text-xs">{t.year}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* SOFTWARE AND DATA */}
+        <section className="rounded-2xl border bg-white/80 dark:bg-neutral-950/60 backdrop-blur-sm p-6">
+          <h2 className="text-sm font-bold tracking-[0.15em] text-[#b0623a] dark:text-[#d9a441]">
+            SOFTWARE AND DATA
+          </h2>
+
+          <div className="mt-4 space-y-3">
+            {SOFTWARE.map((s) => (
+              <article
+                key={s.id}
+                className="overflow-hidden rounded-xl border bg-white/60 dark:bg-neutral-900/50"
+              >
+                <div className="h-1 w-full" style={{ backgroundColor: s.accent }} aria-hidden="true" />
+                <div className="min-w-0 p-4">
+                  <div className="font-semibold leading-snug break-words">{s.name}</div>
+                  <div className="mt-0.5 text-sm text-neutral-600 dark:text-neutral-400">{s.summary}</div>
+                  <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">
+                    {s.detail}
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {s.links.map((l) => (
+                      <a
+                        key={l.href}
+                        href={l.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rounded border px-2 py-0.5 text-[11px] hover:bg-neutral-50 dark:hover:bg-neutral-900"
+                      >
+                        {l.label}
+                      </a>
                     ))}
                   </div>
                 </div>
-              ))}
-              {byYear.length === 0 && <Empty />}
-            </div>
+              </article>
+            ))}
           </div>
         </section>
-      )}
-
-      {/* PDF lightbox (only for real PDFs; DOCX opens in new tab) */}
-      <LightboxPDF open={!!pdfSrc} onClose={() => setPdfSrc(null)} src={pdfSrc ?? ""} />
-    </div>
+        </div>
+      </div>
+    </>
   );
 }
 
 /* ─── Components ───────────────────────── */
-function Stat({ label, value }) {
-  return (
-    <div className="rounded-xl border p-4">
-      <div className="text-xs text-neutral-500">{label}</div>
-      <div className="text-2xl font-semibold">{value}</div>
-    </div>
-  );
-}
 
-function Select({ label, value, onChange, items }) {
-  return (
-    <label className="block">
-      <div className="mb-1 text-xs text-neutral-500">{label}</div>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-md border px-2 py-2 text-sm"
-      >
-        {items.map((it) => (
-          <option key={it} value={it}>
-            {it}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-}
-
-function ModeChip({ on, children, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className={
-        "rounded-full border px-3 py-1 text-xs transition-colors " +
-        (on
-          ? "bg-black text-white dark:bg-white dark:text-black"
-          : "hover:bg-neutral-50 dark:hover:bg-neutral-900")
-      }
-    >
-      {children}
-    </button>
-  );
-}
-
-function PubCard({ p, onOpenAsset, compact = false }) {
+function PubCard({ p }) {
   const [open, setOpen] = useState(false);
-  const L = p.links || {};
-
-  const researchHref = DATA_ROUTES[p.id] || null; // Data → research page
-  const downloadHref = pickDownloadLink(p); // docx/pdf/code/data
+  const researchHref = DATA_ROUTES[p.id] || null;
 
   return (
-    <article className="group relative overflow-hidden rounded-2xl border p-4 transition-colors">
-      {/* Hover glow (matches Services) */}
-      <div className="pointer-events-none absolute -inset-20 -z-10 opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-60 bg-gradient-to-tr from-sky-400/20 to-emerald-400/20" />
-      <div className="flex items-start gap-3">
-        <div className="shrink-0 rounded-md border px-2 py-1 text-xs">
+    <article className="rounded-xl border bg-white/60 dark:bg-neutral-900/50 p-4">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-3">
+        <div className="self-start shrink-0 rounded-md border px-2 py-1 text-xs">
           {p.venue} • {p.year}
         </div>
-        <div className="grow">
-          <div className="font-semibold leading-snug">{p.title}</div>
-          <div className="mt-0.5 text-xs text-neutral-500">{p.authors?.join(", ")}</div>
+        <div className="min-w-0 grow">
+          <div className="font-semibold leading-snug break-words">{p.title}</div>
+          <div className="mt-0.5 text-xs text-neutral-500 break-words">{p.authors?.join(", ")}</div>
         </div>
       </div>
 
@@ -263,12 +200,11 @@ function PubCard({ p, onOpenAsset, compact = false }) {
         </div>
       ) : null}
 
-      {/* Action strip: research page, DOI, status pill, optional download */}
       <div className="mt-3 flex flex-wrap items-center gap-2">
         {researchHref && (
           <a
             href={researchHref}
-            className="rounded border px-2 py-0.5 text-[11px] hover:bg-neutral-50"
+            className="rounded border px-2 py-0.5 text-[11px] hover:bg-neutral-50 dark:hover:bg-neutral-900"
           >
             Research page
           </a>
@@ -278,7 +214,7 @@ function PubCard({ p, onOpenAsset, compact = false }) {
             href={p.links.doi}
             target="_blank"
             rel="noreferrer"
-            className="rounded border px-2 py-0.5 text-[11px] hover:bg-neutral-50"
+            className="rounded border px-2 py-0.5 text-[11px] hover:bg-neutral-50 dark:hover:bg-neutral-900"
           >
             DOI
           </a>
@@ -288,64 +224,42 @@ function PubCard({ p, onOpenAsset, compact = false }) {
             {p.links.status}
           </span>
         )}
-        {downloadHref && (
-          <a
-            href={downloadHref}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded border px-2 py-0.5 text-[11px] hover:bg-neutral-50"
-          >
-            Download
-          </a>
-        )}
 
         <span className="ml-auto" />
-        {!compact && (
-          <button
-            onClick={() => setOpen((v) => !v)}
-            className="rounded-md border px-2 py-1 text-xs hover:bg-neutral-50"
-          >
-            {open ? "Hide" : "Quick Read"}
-          </button>
-        )}
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="rounded-md border px-2 py-1 text-xs hover:bg-neutral-50 dark:hover:bg-neutral-900"
+        >
+          {open ? "Hide" : "Quick Read"}
+        </button>
       </div>
 
-      {!compact && (
-        <div
-          className={
-            "grid transition-all duration-300 ease-out " +
-            (open ? "mt-3 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")
-          }
-        >
-          <div className="overflow-hidden">
-            <div className="rounded-md border p-3 text-sm">
-              <div className="text-xs font-medium text-neutral-500">Abstract</div>
-              <p className="mt-1">{p.abstract}</p>
+      <div
+        className={
+          "grid transition-all duration-300 ease-out " +
+          (open ? "mt-3 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")
+        }
+      >
+        <div className="overflow-hidden">
+          <div className="rounded-md border bg-white/70 dark:bg-neutral-950/50 p-3 text-sm">
+            <div className="text-xs font-medium text-neutral-500">Abstract</div>
+            <p className="mt-1">{p.abstract}</p>
 
-              {p.contributions?.length ? (
-                <>
-                  <div className="mt-3 text-xs font-medium text-neutral-500">Key contributions</div>
-                  <ul className="mt-1 list-disc pl-5">
-                    {p.contributions.map((c, i) => (
-                      <li key={i} className="mt-1">
-                        {c}
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              ) : null}
-            </div>
+            {p.contributions?.length ? (
+              <>
+                <div className="mt-3 text-xs font-medium text-neutral-500">Key contributions</div>
+                <ul className="mt-1 list-disc pl-5">
+                  {p.contributions.map((c, i) => (
+                    <li key={i} className="mt-1">
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
           </div>
         </div>
-      )}
+      </div>
     </article>
-  );
-}
-
-function Empty() {
-  return (
-    <div className="rounded-xl border p-6 text-center text-sm text-neutral-500">
-      No results. Try adjusting filters or search.
-    </div>
   );
 }
