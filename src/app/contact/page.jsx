@@ -78,27 +78,28 @@ export default function Contact() {
       {/* Animated beach background with click splashes */}
       <BeachFX />
 
-      {/* Foreground card */}
-      <div className="relative z-10 mx-auto flex min-h-[80vh] max-w-3xl items-center justify-center px-4 py-10 sm:py-12 md:py-14">
+      {/* Foreground content on the About template */}
+      <div className="relative z-10 mx-auto max-w-6xl px-4 pt-2 pb-16 md:pt-3 space-y-8">
+        {/* Hero on the About template, verbatim classes. The beach below has a
+            night variant so the cream dark-mode text stays readable. */}
+        <section className="pt-4 md:pt-6">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-[#f5f1e6] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
+            Contact
+          </h1>
+          <p className="mt-2 max-w-2xl italic text-neutral-800 dark:text-[#ece7d8] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
+            Let&apos;s talk. A short note with a clear goal helps me reply faster.
+          </p>
+        </section>
+
         <section
-          className="w-full animate-fadeUp rounded-3xl border bg-white/70 p-6 shadow-xl backdrop-blur-md dark:bg-neutral-950/60 md:p-10"
+          className="mx-auto w-full max-w-3xl animate-fadeUp rounded-3xl border bg-white/70 p-6 shadow-xl backdrop-blur-md dark:bg-neutral-950/60 md:p-10"
           aria-live="polite"
         >
-          {/* Header */}
-          <header className="text-center">
-            <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl">
-              <span className="title-grad">Let’s talk</span>
-            </h1>
-            <p className="mx-auto mt-3 max-w-xl text-neutral-700 dark:text-neutral-300">
-              A short note with a clear goal helps me reply faster.
-            </p>
-          </header>
-
           {/* Form / Success */}
           {status === "ok" ? (
             <SuccessCard />
           ) : (
-            <form onSubmit={submit} className="mx-auto mt-6 max-w-xl space-y-4">
+            <form onSubmit={submit} className="mx-auto max-w-xl space-y-4">
               {/* name + email grid */}
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label="Name" name="name" autoComplete="name" required />
@@ -355,6 +356,95 @@ function BeachFX() {
           <span className="bird b2" />
           <span className="bird b3" />
         </div>
+
+        {/* The long Pimentel pier reaching toward the horizon (anchored bottom-right) */}
+        <svg
+          className="pier pointer-events-none absolute"
+          viewBox="0 0 720 300"
+          preserveAspectRatio="xMaxYMax meet"
+          aria-hidden="true"
+        >
+          <path d="M40,232 L676,52 L706,52 L86,238 Z" fill="#a5824a" stroke="#8a6a3a" strokeWidth="1" />
+          <path d="M58,230 L682,54 M74,234 L694,53" stroke="#8a6a3a" strokeWidth="0.9" opacity="0.6" />
+          <g stroke="#6e5636" strokeWidth="3">
+            <line x1="100" y1="233" x2="100" y2="262" />
+            <line x1="160" y1="216" x2="160" y2="243" />
+          </g>
+          <g stroke="#6e5636" strokeWidth="2.5">
+            <line x1="222" y1="199" x2="222" y2="224" />
+            <line x1="282" y1="182" x2="282" y2="205" />
+          </g>
+          <g stroke="#6e5636" strokeWidth="2">
+            <line x1="340" y1="166" x2="340" y2="187" />
+            <line x1="396" y1="150" x2="396" y2="169" />
+          </g>
+          <g stroke="#6e5636" strokeWidth="1.6">
+            <line x1="450" y1="135" x2="450" y2="152" />
+            <line x1="500" y1="121" x2="500" y2="136" />
+          </g>
+          <g stroke="#6e5636" strokeWidth="1.3">
+            <line x1="548" y1="107" x2="548" y2="120" />
+            <line x1="592" y1="95" x2="592" y2="106" />
+          </g>
+          <g stroke="#6e5636" strokeWidth="1">
+            <line x1="632" y1="84" x2="632" y2="93" />
+            <line x1="666" y1="74" x2="666" y2="81" />
+          </g>
+          <path d="M52,226 L672,50" fill="none" stroke="#7a5a2a" strokeWidth="1.3" />
+          <rect x="680" y="40" width="22" height="12" fill="#8a6a3a" />
+          <path d="M676,40 L708,40 L699,32 L685,32 Z" fill="#6e5636" />
+          <line x1="674" y1="52" x2="674" y2="30" stroke="#5a4a34" strokeWidth="1.4" />
+          <circle className="pier-light" cx="674" cy="27" r="3" fill="#ffd98a" />
+          <g fill="#5a4a3a">
+            <ellipse cx="300" cy="160" rx="2.6" ry="4.4" />
+            <circle cx="300" cy="154" r="1.8" />
+          </g>
+          <g fill="#6a5a48">
+            <ellipse cx="352" cy="146" rx="2.2" ry="3.8" />
+            <circle cx="352" cy="141" r="1.5" />
+          </g>
+          <g fill="#c9a860" opacity="0.85">
+            <ellipse cx="34" cy="262" rx="3.4" ry="5" />
+            <ellipse cx="52" cy="252" rx="3.2" ry="4.7" />
+            <ellipse cx="70" cy="244" rx="3" ry="4.4" />
+          </g>
+        </svg>
+
+        {/* Sand keepsakes: the spondylus, a scuttling crab, stones and kelp */}
+        <svg className="spondylus pointer-events-none absolute" viewBox="0 0 30 30" aria-hidden="true">
+          <path d="M15,3 Q26,6 28,17 Q26,27 15,28 Q4,27 2,17 Q4,6 15,3 Z" fill="#d96a5a" />
+          <g stroke="#b64a3e" strokeWidth="1">
+            <path d="M15,3 L15,28 M9,5 L6,25 M21,5 L24,25" />
+          </g>
+          <g fill="#f2c4b0">
+            <circle cx="5" cy="13" r="1.3" />
+            <circle cx="25" cy="13" r="1.3" />
+            <circle cx="7" cy="23" r="1.3" />
+            <circle cx="23" cy="23" r="1.3" />
+            <circle cx="15" cy="2" r="1.4" />
+          </g>
+        </svg>
+        <svg className="crab pointer-events-none absolute" viewBox="0 0 30 20" aria-hidden="true">
+          <ellipse cx="15" cy="12" rx="7" ry="4.4" fill="#d97a4e" />
+          <circle cx="12.4" cy="7" r="1.4" fill="#22221f" />
+          <circle cx="17.6" cy="7" r="1.4" fill="#22221f" />
+          <path d="M8,14 L3,17 M9,16 L5,19 M22,14 L27,17 M21,16 L25,19" stroke="#c96a40" strokeWidth="1.4" strokeLinecap="round" />
+          <path d="M8,9 Q3,5 5,2 M22,9 Q27,5 25,2" stroke="#c96a40" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+        </svg>
+        <svg className="stones pointer-events-none absolute" viewBox="0 0 40 16" aria-hidden="true">
+          <ellipse cx="14" cy="9" rx="10" ry="5" fill="#b0a488" />
+          <ellipse cx="30" cy="11" rx="7" ry="3.6" fill="#c2b696" />
+        </svg>
+        <svg className="alga pointer-events-none absolute" viewBox="0 0 24 26" aria-hidden="true">
+          <path d="M8,24 q6,-10 2,-18 q8,6 6,16 q6,-6 8,-2 q-8,4 -8,8" fill="none" stroke="#6f8a48" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+
+        {/* Caption scrim + bilingual caption: Spanish above, English below */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/45 via-black/20 to-transparent" />
+        <div className="pointer-events-none absolute bottom-4 left-4 md:bottom-5 md:left-6 select-none">
+          <p className="cap-es">EL LARGO MUELLE DE PIMENTEL Y EL SPONDYLUS: CHICLAYO, LA CIUDAD DONDE NACI</p>
+          <p className="cap-en">THE LONG PIMENTEL PIER AND THE SPONDYLUS: CHICLAYO, THE CITY WHERE I WAS BORN</p>
+        </div>
       </div>
 
       <style>{`
@@ -416,6 +506,44 @@ function BeachFX() {
         .b3{ top:15vh; left:-12%; animation-duration:28s; animation-delay:-9s; transform:scale(1.1); opacity:.45 }
         @keyframes fly { 0%{transform:translateX(0)} 100%{transform:translateX(130vw)} }
 
+        /* --- Pimentel shore layers --- */
+        .pier { right: 0; bottom: 13vh; height: 31vh; width: min(48vw, 740px); }
+        .pier-light { animation: pierLight 4s ease-in-out infinite; }
+        @keyframes pierLight { 0%,100%{ opacity:.75 } 50%{ opacity:1 } }
+        .spondylus { left: 9%; bottom: 6.5vh; width: 46px; height: 46px; }
+        .crab { left: 21%; bottom: 4vh; width: 40px; height: 27px; animation: crabWalk 4.5s ease-in-out infinite; }
+        @keyframes crabWalk { 0%,100%{ transform: translateX(0) } 25%{ transform: translateX(10px) } 75%{ transform: translateX(-8px) } }
+        .stones { left: 33%; bottom: 3.2vh; width: 56px; height: 22px; }
+        .alga { left: 4%; bottom: 11vh; width: 30px; height: 32px; }
+        .cap-es, .cap-en { font-size: 10px; letter-spacing: .12em; text-shadow: 0 1px 2px rgba(0,0,0,.4); }
+        .cap-es { color: #ffffff; }
+        .cap-en { color: #e2d4b8; margin-top: 2px; }
+        @media (prefers-reduced-motion: reduce) {
+          .pier-light, .crab { animation: none; }
+        }
+
+        /* --- Night over Pimentel (dark mode): same beach, after sundown --- */
+        .dark .sky { background: linear-gradient(180deg,#16213a 0%,#1e2c46 55%,#233450 100%); }
+        .dark .sun {
+          background: radial-gradient(circle at 50% 50%, #e8eef4 0%, #c8d6e4 26%, rgba(255,255,255,0) 60%);
+          opacity: .7; filter: blur(6px);
+        }
+        .dark .ocean {
+          background: linear-gradient(180deg, rgba(26,58,84,.55) 0%, rgba(18,44,66,.75) 30%, #0e3450 70%, #0a2438 100%);
+        }
+        .dark .wave { opacity: .22; }
+        .dark .shore {
+          background:
+            linear-gradient(180deg,#8a795c 0%,#6e5f46 55%,#57492f 100%),
+            radial-gradient(60vmin 40vmin at 40% -6%, rgba(255,255,255,.18), rgba(255,255,255,0) 60%);
+          box-shadow: inset 0 10px 28px rgba(255,255,255,.14);
+        }
+        .dark .bird { opacity: .18; }
+        .dark .pier, .dark .spondylus, .dark .crab, .dark .stones, .dark .alga {
+          filter: brightness(.55) saturate(.85);
+        }
+        .dark .pier-light { filter: none; }
+
         /* --- Splash effects --- */
 
         /* Expanding ring on the surface */
@@ -465,15 +593,7 @@ function BeachFX() {
           100% { opacity:0;  transform: translate(-50%,-50%) translate(var(--dx), var(--dy)) }
         }
 
-        /* Title + card entrance */
-        .title-grad{
-          background-image: linear-gradient(90deg,#22c55e,#60a5fa,#6366f1);
-          background-size: 200% 200%;
-          -webkit-background-clip:text; background-clip:text; color:transparent;
-          animation: gradShift 9s ease-in-out infinite;
-        }
-        @keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-
+        /* Card entrance */
         .animate-fadeUp { animation: fadeUp 700ms cubic-bezier(.22,.61,.36,1) both; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(10px) } to { opacity:1; transform:translateY(0) } }
       `}</style>
