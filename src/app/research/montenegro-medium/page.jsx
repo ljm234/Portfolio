@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 export const metadata = {
-  title: "Montenegro’s Medium (MM) - Research",
+  title: "Montenegro-Calla’s Medium (MM) - Research",
   description:
     "Serum-free, low-cost axenic medium enabling robust Naegleria fowleri growth.",
   alternates: { canonical: "/research/montenegro-medium" },
@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <div className="space-y-10">
       <header>
-        <h1 className="text-4xl font-bold tracking-tight">Montenegro’s Medium (MM)</h1>
+        <h1 className="text-4xl font-bold tracking-tight">Montenegro-Calla’s Medium (MM)</h1>
         <p className="mt-2 text-neutral-700 dark:text-neutral-300">
           Serum-free, low-cost axenic medium enabling robust Naegleria fowleri growth.
         </p>
@@ -24,7 +24,7 @@ export default function Page() {
           <h3 className="text-lg font-semibold">Growth curve in MM</h3>
           <Image
             src="/research/mm/fig2-growth.png"
-            alt="Growth in Montenegro’s Medium from 0-168 hours"
+            alt="Growth in Montenegro-Calla’s Medium from 0-168 hours"
             width={1600}
             height={1000}
             sizes="100vw"
@@ -40,7 +40,7 @@ export default function Page() {
           <h3 className="text-lg font-semibold">Fresh vs old MM</h3>
           <Image
             src="/research/mm/fig3-fresh-old.png"
-            alt="Fresh vs old Montenegro’s Medium at 48 and 72 hours"
+            alt="Fresh vs old Montenegro-Calla’s Medium at 48 and 72 hours"
             width={1600}
             height={1000}
             sizes="100vw"

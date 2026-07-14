@@ -4,7 +4,7 @@ import Reveal from "@/components/effects/Reveal";
 import HoverLift from "@/components/effects/HoverLift";
 
 export const metadata = {
-  title: "Organelle-Target Discovery for Selective Amoebicidal Therapy",
+  title: "ER Stress and Mitochondrial Targeting - Research",
   description:
     "Matched HeLa+Nf vs Nf-only readouts across LDH (24 h), Caspase-3 (48 h), and JC-1 (72 h).",
   alternates: { canonical: "/research/organelle-targets" },
@@ -34,7 +34,7 @@ export default function OrganelleTargetsPage() {
       <header className="space-y-2">
         <Reveal effect="fade-up">
           <h1 className="text-3xl font-bold tracking-tight">
-            Organelle-Target Discovery for Selective Amoebicidal Therapy
+            ER Stress and Mitochondrial Targeting
           </h1>
         </Reveal>
         <p className="text-neutral-600 dark:text-neutral-300">
