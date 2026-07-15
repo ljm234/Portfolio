@@ -7,6 +7,36 @@ import MorayBackground from "@/components/effects/MorayBackground";
 
 const FILTERS = ["All", "ML", "Wet lab", "Clinical"];
 
+const SYSTEMS = [
+  {
+    name: "Naylamp",
+    tagline: "Distributed vector database, written from scratch in Go",
+    desc: "Sharded architecture where each shard is a Raft replica group and a router performs scatter-gather across shards. Write-ahead logging with crash-safe recovery, a custom HNSW index, and mutual TLS where peer identity is the certificate rather than a self-declared hello. On SIFT1M against the official ground truth it reaches recall@10 of 0.9942 at 4,394 queries per second across ten threads.",
+    links: [],
+    accent: "#3a8a86",
+  },
+  {
+    name: "Amoebanator",
+    tagline: "Calibrated, abstention-aware PAM-risk triage",
+    desc: "A binary triage signal for primary amoebic meningoencephalitis risk. Compact tabular PyTorch model with temperature scaling, split conformal prediction with abstention, dual energy-based and Mahalanobis out-of-distribution detection, and decision curve analysis. Proof of concept; not a diagnostic.",
+    links: [
+      { label: "Detail", href: "/research/amoebanator" },
+      { label: "GitHub", href: "https://github.com/ljm234/amoebanator-25" },
+      { label: "Hugging Face", href: "https://huggingface.co/spaces/luisjordanmontenegro/amoebanator-25" },
+    ],
+    accent: "#7a5a9a",
+  },
+  {
+    name: "Kallpa",
+    tagline: "Bilingual primary-care clinical decision-support engine",
+    desc: "Turns the primary-care encounter into a structured clinical note and surfaces guideline-informed candidate orders for a clinician to review and sign, with retrieval-augmented generation over a curated knowledge base and an explicit emphasis on calibration, human oversight, and knowing when to defer. Built on React/TypeScript, FastAPI, PostgreSQL, Redis, and Neo4j.",
+    links: [
+      { label: "kallpahealthcare.com", href: "https://kallpahealthcare.com" },
+    ],
+    accent: "#b0623a",
+  },
+];
+
 const PROJECTS = [
   {
     slug: "yachay",
@@ -23,14 +53,6 @@ const PROJECTS = [
     tags: ["ML", "Clinical"],
     status: "Research in progress",
     anim: "quechua",
-  },
-  {
-    slug: "amoebanator",
-    title: "Amoebanator",
-    desc: "Binary PAM-risk triage (Naegleria fowleri) with calibrated abstention. Compact tabular MLP, split conformal prediction, dual-gate OOD detection, decision curve analysis.",
-    tags: ["ML", "Clinical"],
-    status: "Proof of concept",
-    anim: "amoebanator",
   },
   {
     slug: "montenegro-medium",
@@ -78,7 +100,7 @@ export default function ResearchPage() {
             Research
           </h1>
           <p className="mt-2 max-w-2xl italic text-neutral-800 dark:text-[#ece7d8] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
-            Selected work across ML, wet lab, and clinical collaborations.
+            Selected research across ML, wet lab, and clinical work, with the systems built alongside it.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-2">
@@ -101,6 +123,8 @@ export default function ResearchPage() {
         </header>
 
         <StackedList items={items} />
+
+        <SystemsSection />
       </div>
 
       </>
@@ -108,6 +132,50 @@ export default function ResearchPage() {
 }
 
 /* ---------- Stacked list: three equal cards, kept to the left ---------- */
+
+function SystemsSection() {
+  return (
+    <section className="mt-4" aria-label="Systems and software">
+      <h2 className="text-sm font-bold tracking-[0.15em] text-[#b0623a] dark:text-[#d9a441]">
+        SYSTEMS & SOFTWARE
+      </h2>
+      <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+        Engineering built alongside the research.
+      </p>
+      <div className="mt-4 flex flex-col gap-4">
+        {SYSTEMS.map((s) => (
+          <article
+            key={s.name}
+            className="rounded-2xl border bg-white/80 p-5 backdrop-blur-sm dark:bg-neutral-950/60"
+            style={{ borderTopColor: s.accent, borderTopWidth: 3 }}
+          >
+            <h3 className="font-semibold tracking-tight">{s.name}</h3>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400">{s.tagline}</p>
+            <p className="mt-2 text-sm leading-snug text-neutral-700 dark:text-neutral-300">
+              {s.desc}
+            </p>
+            {s.links.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-2">
+                {s.links.map((l) => (
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    target={l.href.startsWith("http") ? "_blank" : undefined}
+                    rel={l.href.startsWith("http") ? "noreferrer" : undefined}
+                    className="rounded-md border px-3 py-1 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-900"
+                  >
+                    {l.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function StackedList({ items }) {
   return (
     <section className="flex flex-col gap-6" aria-label="Research projects">
