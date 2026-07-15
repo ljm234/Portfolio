@@ -13,6 +13,7 @@ const PROJECTS = [
     title: "YACHAY",
     desc: "Calibrated multiclass differential diagnosis of opportunistic meningitis in HIV, with conformal prediction and selective abstention. Cohort curated and frozen from MIMIC-IV; clinical collaboration forming with HIV referral hospitals in Lima.",
     tags: ["ML", "Clinical"],
+    status: "Research in progress",
     anim: "conformal",
   },
   {
@@ -20,6 +21,7 @@ const PROJECTS = [
     title: "SALUD",
     desc: "Do large language models stay calibrated when a clinical case is written in Wanka Quechua instead of Spanish? Expected calibration error, Brier score, risk-coverage curves, and conformal abstention across frontier and low-resource models.",
     tags: ["ML", "Clinical"],
+    status: "Research in progress",
     anim: "quechua",
   },
   {
@@ -27,6 +29,7 @@ const PROJECTS = [
     title: "Amoebanator",
     desc: "Binary PAM-risk triage (Naegleria fowleri) with calibrated abstention. Compact tabular MLP, split conformal prediction, dual-gate OOD detection, decision curve analysis.",
     tags: ["ML", "Clinical"],
+    status: "Proof of concept",
     anim: "amoebanator",
   },
   {
@@ -34,6 +37,7 @@ const PROJECTS = [
     title: "Montenegro-Calla\u2019s Medium",
     desc: "Serum-free, low-cost culture medium for axenic growth of Naegleria fowleri: over 70 percent cheaper than commercial alternatives, with roughly three times the cell yield.",
     tags: ["Wet lab"],
+    status: "Under review",
     anim: "medium",
   },
   {
@@ -41,6 +45,7 @@ const PROJECTS = [
     title: "ER Stress and Mitochondrial Targeting",
     desc: "Tunicamycin and thapsigargin-induced ER stress and metformin-driven mitochondrial dysfunction in Naegleria fowleri. Western blot (BiP/GRP78) and JC-1 staining. Grant funded.",
     tags: ["Wet lab"],
+    status: "In preparation",
     anim: "erstress",
   },
 ];
@@ -142,7 +147,10 @@ function ResearchCard({ proj, variant = "grid" }) {
 
         {/* Text (right) */}
         <div className="flex min-w-0 flex-1 flex-col p-4">
-          <div className="line-clamp-1 font-semibold">{proj.title}</div>
+          <div className="flex items-center gap-2">
+            <span className="line-clamp-1 font-semibold">{proj.title}</span>
+            <StatusBadge status={proj.status} />
+          </div>
           <p className="mt-1 line-clamp-2 text-sm text-neutral-500 dark:text-neutral-400">
             {proj.desc}
           </p>
@@ -166,25 +174,33 @@ function ResearchCard({ proj, variant = "grid" }) {
           </div>
         </div>
 
-        {/* Floating Quick preview */}
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
-          <div className="pointer-events-auto rounded-xl border bg-white/90 p-3 text-sm shadow-xl dark:bg-neutral-900/90">
-            <div className="font-medium">{proj.title}</div>
-            <div className="mt-1 max-w-[36ch] text-neutral-600 dark:text-neutral-300">
-              {proj.desc}
-            </div>
-            <div className="mt-3 flex gap-2">
-              <a className="rounded-md border px-3 py-1" href={`/research/${proj.slug}`}>
-                Open
-              </a>
-              <a className="rounded-md border px-3 py-1" href="/publications">
-                Publications
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
     </HoverLift>
+  );
+}
+
+/* Small state badge next to each project title.
+   Amber for active review, grey for in preparation, teal for a released
+   proof of concept, and a neutral slate for research still in progress. */
+function StatusBadge({ status }) {
+  if (!status) return null;
+  const tone =
+    status === "Under review"
+      ? "border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200"
+      : status === "In preparation"
+      ? "border-neutral-300 bg-neutral-50 text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400"
+      : status === "Proof of concept"
+      ? "border-teal-300 bg-teal-50 text-teal-800 dark:border-teal-500/30 dark:bg-teal-500/10 dark:text-teal-200"
+      : "border-sky-300 bg-sky-50 text-sky-800 dark:border-sky-500/30 dark:bg-sky-500/10 dark:text-sky-200";
+  return (
+    <span
+      className={
+        "shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide " +
+        tone
+      }
+    >
+      {status}
+    </span>
   );
 }
 
