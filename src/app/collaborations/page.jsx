@@ -69,7 +69,7 @@ export default function CollaborationsPage() {
                 Bilingual primary care decision support
               </p>
               <p className="mt-3 text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                A bilingual Spanish/English clinical decision support engine for primary care,
+                A bilingual Spanish/English clinical decision-support engine for primary care,
                 in active development at{" "}
                 <a
                   className="underline"
@@ -79,9 +79,30 @@ export default function CollaborationsPage() {
                 >
                   kallpahealthcare.com
                 </a>
-                , with V1.0 targeted for October 2026. Aimed at underserved populations in
-                Latin America, starting with Peru.
+                , with V1.0 targeted for October 2026. It turns the primary-care encounter into
+                a structured clinical note and surfaces guideline-informed candidate orders for
+                a clinician to review and sign, with retrieval-augmented generation over a
+                curated knowledge base and an explicit emphasis on calibration, human oversight,
+                and the system&apos;s ability to say it does not know. Built end to end on
+                React/TypeScript, FastAPI, PostgreSQL, Redis, and Neo4j. Aimed at reducing
+                documentation burden for Spanish-speaking and underserved populations, starting
+                with Peru.
               </p>
+
+              <dl className="mt-4 grid grid-cols-3 gap-3 text-center">
+                <div className="rounded-xl border bg-white/60 dark:bg-neutral-900/50 p-3">
+                  <dt className="text-lg font-bold tabular-nums">358</dt>
+                  <dd className="text-xs text-neutral-500 dark:text-neutral-400">conditions</dd>
+                </div>
+                <div className="rounded-xl border bg-white/60 dark:bg-neutral-900/50 p-3">
+                  <dt className="text-lg font-bold tabular-nums">3,322</dt>
+                  <dd className="text-xs text-neutral-500 dark:text-neutral-400">finding-level relationships</dd>
+                </div>
+                <div className="rounded-xl border bg-white/60 dark:bg-neutral-900/50 p-3">
+                  <dt className="text-lg font-bold tabular-nums">2,024</dt>
+                  <dd className="text-xs text-neutral-500 dark:text-neutral-400">cited sources</dd>
+                </div>
+              </dl>
             </div>
           </article>
         </section>
