@@ -130,10 +130,14 @@ export default function AboutPage() {
               Four undergraduate degrees across biology and computing: medical microbiology
               (Weber State, 2025), IT and system administration (Ensign College, 2025),
               software engineering (Ensign College, August 2026, GPA 4.000), and computer
-              science (University of the People, December 2026, GPA 3.92). One research paper
-              is under review at the Journal of Eukaryotic Microbiology, and I&apos;m
-              credentialed on MIMIC-IV. I built Amoebanator (PyTorch, conformal prediction,
-              dual-OOD;{" "}
+              science (University of the People, September 2026, GPA 3.92). Two manuscripts on
+              Naegleria fowleri are with the Journal of Eukaryotic Microbiology, one under
+              review and one in preparation, and I&apos;m credentialed on MIMIC-IV through
+              PhysioNet. My formal machine-learning training runs through the Stanford AI in
+              Healthcare specialization and the DeepLearning.AI Deep Learning, Machine
+              Learning, and AI for Medicine specializations. I built Naylamp, a distributed
+              vector database written from scratch in Go (Raft consensus, a custom HNSW index,
+              and mutual TLS), and Amoebanator (PyTorch, conformal prediction, dual-OOD;{" "}
               <a
                 className="underline"
                 href="https://huggingface.co/spaces/luisjordanmontenegro/amoebanator-25"
@@ -142,7 +146,7 @@ export default function AboutPage() {
               >
                 published on Hugging Face
               </a>
-              ) and Kallpa, a bilingual primary care decision support engine in active
+              ). Kallpa, a bilingual primary-care decision-support engine, is in active
               development at kallpahealthcare.com.
             </StoryBlock>
 
