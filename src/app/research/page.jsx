@@ -151,7 +151,7 @@ function ResearchCard({ proj, variant = "grid" }) {
             <span className="line-clamp-1 font-semibold">{proj.title}</span>
             <StatusBadge status={proj.status} />
           </div>
-          <p className="mt-1 line-clamp-2 text-sm text-neutral-500 dark:text-neutral-400">
+          <p className="mt-1 line-clamp-2 text-sm leading-snug text-neutral-500 dark:text-neutral-400">
             {proj.desc}
           </p>
           <div className="mt-auto flex items-center justify-between pt-3">
@@ -268,10 +268,16 @@ function CanvasAnim({ draw }) {
 /* YACHAY: a prediction set that widens and narrows with the confidence of the model,
    with the points it declines to call greyed out. */
 function drawConformal(ctx, t, w, h) {
-  const pad = 10;
+  const pad = 12;
   const x0 = pad;
   const x1 = w - pad;
   const mid = h / 2;
+
+  // Keep every stroke inside a safe vertical envelope so the band never
+  // touches the top or bottom edge of the panel, whatever the panel height.
+  const envelope = Math.max(8, h / 2 - pad);
+  const maxBand = envelope * 0.62;
+  const wobble = envelope * 0.16;
 
   ctx.strokeStyle = "rgba(120,120,120,0.35)";
   ctx.lineWidth = 1;
@@ -287,8 +293,8 @@ function drawConformal(ctx, t, w, h) {
     for (let i = 0; i <= 40; i++) {
       const p = i / 40;
       const x = x0 + p * (x1 - x0);
-      const width = 6 + 10 * Math.abs(Math.sin(p * 3.1 + t * 0.6));
-      const y = mid + k * width + 6 * Math.sin(p * 4 + t * 0.4);
+      const width = maxBand * (0.4 + 0.6 * Math.abs(Math.sin(p * 3.1 + t * 0.6)));
+      const y = mid + k * width + wobble * Math.sin(p * 4 + t * 0.4);
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
@@ -306,7 +312,7 @@ function drawConformal(ctx, t, w, h) {
   for (let i = 0; i <= 40; i++) {
     const p = i / 40;
     const x = x0 + p * (x1 - x0);
-    const y = mid + 6 * Math.sin(p * 4 + t * 0.4);
+    const y = mid + wobble * Math.sin(p * 4 + t * 0.4);
     if (i === 0) ctx.moveTo(x, y);
     else ctx.lineTo(x, y);
   }
@@ -315,7 +321,7 @@ function drawConformal(ctx, t, w, h) {
   const pts = [0.14, 0.3, 0.46, 0.62, 0.78, 0.9];
   pts.forEach((p, i) => {
     const x = x0 + p * (x1 - x0);
-    const y = mid + 6 * Math.sin(p * 4 + t * 0.4) + (i % 2 === 0 ? -9 : 11);
+    const y = mid + wobble * Math.sin(p * 4 + t * 0.4) + (i % 2 === 0 ? -maxBand * 0.5 : maxBand * 0.6);
     const abstain = i === 2 || i === 4;
     ctx.beginPath();
     ctx.arc(x, y, abstain ? 2.6 : 3.4, 0, Math.PI * 2);
