@@ -4,6 +4,33 @@
 import { useEffect, useState } from "react";
 import QeswachakaBackground from "@/components/effects/QeswachakaBackground";
 
+const OPPORTUNITIES = [
+  {
+    title: "YACHAY",
+    tagline: "Calibrated differential diagnosis of opportunistic meningitis in HIV",
+    accent: "#3a8a86",
+    blurb:
+      "A multiclass model that predicts the etiologic agent of meningitis in patients with HIV and decides when a case should be deferred to a specialist, with conformal prediction and selective abstention. The clinical arm is forming now, and I am looking to expand it.",
+    seeking: [
+      "Clinical sites in provincial Peru, especially non-research hospitals, to validate the tool where diagnostic expertise is scarce.",
+      "Physicians in infectious disease or neurology working with meningitis in people living with HIV.",
+      "PIs in clinical machine learning, conformal prediction, or selective abstention under distribution shift.",
+    ],
+  },
+  {
+    title: "SALUD",
+    tagline: "Do large language models stay calibrated in Wanka Quechua?",
+    accent: "#7a5a9a",
+    blurb:
+      "The first study of whether large language models remain calibrated when a clinical case is written in Wanka Quechua rather than in Spanish, measuring calibration and selective abstention across frontier and low-resource models. Data collection is underway, and the work depends on native expertise.",
+    seeking: [
+      "Native Wanka Quechua speakers to validate translations and annotations.",
+      "Rural Andean health facilities with de-identified clinical records.",
+      "Linguists and PIs in multilingual clinical NLP or low-resource-language modeling.",
+    ],
+  },
+];
+
 export default function CollaborationsPage() {
   const [isDark, setIsDark] = useState(false);
 
@@ -28,105 +55,46 @@ export default function CollaborationsPage() {
             Collaborations
           </h1>
           <p className="mt-2 max-w-2xl italic text-neutral-800 dark:text-[#ece7d8] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
-            Where I&apos;m focused this year.
+            Where I&apos;m looking for collaborators.
           </p>
         </section>
 
         {/* Intro */}
         <section className="rounded-2xl border bg-white/80 dark:bg-neutral-950/60 backdrop-blur-sm p-6">
           <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
-            I&apos;m building two systems and applying to PhD programs in computer science,
-            biomedical informatics, and computational biology. If any of the work below
-            overlaps with what you&apos;re doing, I&apos;d be glad to talk.
+            I&apos;m applying to PhD programs, and the two research projects below are actively
+            looking for collaborators. My work centers on calibrated, abstention-aware clinical
+            machine learning for underserved and multilingual populations.
           </p>
         </section>
 
-        {/* The two systems, side by side */}
-        <section className="grid gap-6 md:grid-cols-2" aria-label="Systems in development">
-          <article className="overflow-hidden rounded-2xl border bg-white/80 dark:bg-neutral-950/60 backdrop-blur-sm">
-            <div className="h-1 w-full bg-[#8a94c9]" aria-hidden="true" />
-            <div className="p-6">
-              <h2 className="text-xl font-semibold tracking-tight">Amoebanator</h2>
-              <p className="mt-0.5 text-sm text-neutral-500 dark:text-neutral-400">
-                Clinical ML safety
-              </p>
-              <p className="mt-3 text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                A binary triage signal for primary amoebic meningoencephalitis (PAM) risk, the
-                rare and near-uniformly fatal CNS infection caused by Naegleria fowleri. A
-                compact tabular PyTorch MLP (914 parameters) with temperature scaling, split
-                conformal prediction with abstention, dual energy-based and Mahalanobis OOD
-                detection, and decision curve analysis. Proof-of-concept trained on 30
-                simulated rows; not a diagnostic, research and educational use only.
-              </p>
-            </div>
-          </article>
-
-          <article className="overflow-hidden rounded-2xl border bg-white/80 dark:bg-neutral-950/60 backdrop-blur-sm">
-            <div className="h-1 w-full bg-[#3a8a86]" aria-hidden="true" />
-            <div className="p-6">
-              <h2 className="text-xl font-semibold tracking-tight">Kallpa</h2>
-              <p className="mt-0.5 text-sm text-neutral-500 dark:text-neutral-400">
-                Bilingual primary care decision support
-              </p>
-              <p className="mt-3 text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                A bilingual Spanish/English clinical decision-support engine for primary care,
-                in active development at{" "}
-                <a
-                  className="underline"
-                  href="https://kallpahealthcare.com"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  kallpahealthcare.com
-                </a>
-                , with V1.0 targeted for October 2026. It turns the primary-care encounter into
-                a structured clinical note and surfaces guideline-informed candidate orders for
-                a clinician to review and sign, with retrieval-augmented generation over a
-                curated knowledge base and an explicit emphasis on calibration, human oversight,
-                and the system&apos;s ability to say it does not know. Built end to end on
-                React/TypeScript, FastAPI, PostgreSQL, Redis, and Neo4j. Aimed at reducing
-                documentation burden for Spanish-speaking and underserved populations, starting
-                with Peru.
-              </p>
-
-              <dl className="mt-4 grid grid-cols-3 gap-3 text-center">
-                <div className="rounded-xl border bg-white/60 dark:bg-neutral-900/50 p-3">
-                  <dt className="text-lg font-bold tabular-nums">358</dt>
-                  <dd className="text-xs text-neutral-500 dark:text-neutral-400">conditions</dd>
-                </div>
-                <div className="rounded-xl border bg-white/60 dark:bg-neutral-900/50 p-3">
-                  <dt className="text-lg font-bold tabular-nums">3,322</dt>
-                  <dd className="text-xs text-neutral-500 dark:text-neutral-400">finding-level relationships</dd>
-                </div>
-                <div className="rounded-xl border bg-white/60 dark:bg-neutral-900/50 p-3">
-                  <dt className="text-lg font-bold tabular-nums">2,024</dt>
-                  <dd className="text-xs text-neutral-500 dark:text-neutral-400">cited sources</dd>
-                </div>
-              </dl>
-            </div>
-          </article>
-        </section>
-
-        {/* What I am looking for, full width */}
-        <section className="rounded-2xl border bg-white/80 dark:bg-neutral-950/60 backdrop-blur-sm p-6">
-          <h2 className="text-sm font-bold tracking-[0.15em] text-[#b0623a] dark:text-[#d9a441]">
-            WHAT I&apos;M LOOKING FOR
-          </h2>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-neutral-700 dark:text-neutral-300 leading-relaxed">
-            <li>
-              Collaborators interested in calibrated, abstention-aware clinical ML and
-              uncertainty quantification.
-            </li>
-            <li>
-              Pilot sites for Kallpa: primary care clinics in Peru, with priority on bilingual
-              or rural settings.
-            </li>
-            <li>
-              Conversations with PIs in computer science, biomedical informatics, clinical ML
-              safety, conformal prediction, multilingual clinical NLP, or bilingual healthcare
-              AI for underserved populations.
-            </li>
-          </ul>
+        {/* The two research projects seeking collaboration */}
+        <section className="grid gap-6 md:grid-cols-2" aria-label="Projects seeking collaboration">
+          {OPPORTUNITIES.map((o) => (
+            <article
+              key={o.title}
+              className="overflow-hidden rounded-2xl border bg-white/80 dark:bg-neutral-950/60 backdrop-blur-sm"
+            >
+              <div className="h-1 w-full" style={{ backgroundColor: o.accent }} aria-hidden="true" />
+              <div className="p-6">
+                <h2 className="text-xl font-semibold tracking-tight">{o.title}</h2>
+                <p className="mt-0.5 text-sm text-neutral-500 dark:text-neutral-400">
+                  {o.tagline}
+                </p>
+                <p className="mt-3 text-neutral-700 dark:text-neutral-300 leading-relaxed">
+                  {o.blurb}
+                </p>
+                <h3 className="mt-5 text-xs font-bold uppercase tracking-[0.15em] text-[#b0623a] dark:text-[#d9a441]">
+                  What I&apos;m looking for
+                </h3>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">
+                  {o.seeking.map((s, i) => (
+                    <li key={i}>{s}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))}
         </section>
 
         {/* Contact */}
