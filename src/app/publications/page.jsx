@@ -46,30 +46,6 @@ const PRESENTATIONS = [
   },
 ];
 
-const SOFTWARE = [
-  {
-    id: "naylamp",
-    name: "Naylamp",
-    summary: "Distributed vector database written from scratch in Go, with no external dependencies.",
-    detail:
-      "Sharded architecture where each shard is a Raft replica group and a router performs scatter-gather across shards. Raft consensus with write-ahead logging and crash-safe recovery, a custom HNSW index, and TCP transport with mutual TLS where peer identity is the certificate CN rather than a self-declared hello. Correctness is validated with seeded deterministic simulation testing that injects partitions, crashes, and reorderings with exact reproducibility. On SIFT1M against the official INRIA ground truth, the index reaches recall@10 of 0.9942 at 703 queries per second single-threaded and 4,394 across ten threads.",
-    links: [],
-    accent: "#3a8a86",
-  },
-  {
-    id: "amoebanator",
-    name: "Amoebanator",
-    summary: "Binary triage signal for primary amoebic meningoencephalitis (PAM) risk.",
-    detail:
-      "Compact tabular PyTorch MLP with temperature scaling, split conformal prediction with abstention, dual energy-based and Mahalanobis out-of-distribution detection, and decision curve analysis, backed by an automated test suite and continuous integration. Proof-of-concept; not a diagnostic, research and educational use only.",
-    links: [
-      { label: "Live demo", href: "https://huggingface.co/spaces/luisjordanmontenegro/amoebanator-25" },
-      { label: "Source", href: "https://github.com/ljm234/amoebanator-25" },
-    ],
-    accent: "#8a94c9",
-  },
-];
-
 export default function PublicationsPage() {
   const [isDark, setIsDark] = useState(false);
 
@@ -94,7 +70,7 @@ export default function PublicationsPage() {
             Publications
           </h1>
           <p className="mt-2 max-w-2xl italic text-neutral-800 dark:text-[#ece7d8] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
-            Manuscripts, conference talks, and released software.
+            Manuscripts and conference talks.
           </p>
         </section>
 
@@ -140,46 +116,6 @@ export default function PublicationsPage() {
                   </div>
                 </div>
                 <span className="shrink-0 rounded-md border px-2 py-1 text-xs">{t.year}</span>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* SOFTWARE AND DATA */}
-        <section className="rounded-2xl border bg-white/80 dark:bg-neutral-950/60 backdrop-blur-sm p-6">
-          <h2 className="text-sm font-bold tracking-[0.15em] text-[#b0623a] dark:text-[#d9a441]">
-            SOFTWARE AND DATA
-          </h2>
-
-          <div className="mt-4 space-y-3">
-            {SOFTWARE.map((s) => (
-              <article
-                key={s.id}
-                className="overflow-hidden rounded-xl border bg-white/60 dark:bg-neutral-900/50"
-              >
-                <div className="h-1 w-full" style={{ backgroundColor: s.accent }} aria-hidden="true" />
-                <div className="min-w-0 p-4">
-                  <div className="font-semibold leading-snug break-words">{s.name}</div>
-                  <div className="mt-0.5 text-sm text-neutral-600 dark:text-neutral-400">{s.summary}</div>
-                  <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                    {s.detail}
-                  </p>
-                  {s.links.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {s.links.map((l) => (
-                      <a
-                        key={l.href}
-                        href={l.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rounded border px-2 py-0.5 text-[11px] hover:bg-neutral-50 dark:hover:bg-neutral-900"
-                      >
-                        {l.label}
-                      </a>
-                    ))}
-                  </div>
-                  )}
-                </div>
               </article>
             ))}
           </div>
