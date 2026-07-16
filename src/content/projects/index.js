@@ -5,6 +5,8 @@ export const projects = [
     tags: ["Clinical ML", "Conformal", "Abstention"],
     summary:
       "Multiclass model that predicts the etiologic agent of meningitis in HIV patients and decides when to defer to a specialist. Protocol stage; cohort frozen, model not yet trained.",
+    brief:
+      "Meningitis in HIV patients has several etiologies that look alike at presentation, yet published systems are binary, single-center, and answer every case. YACHAY builds a multiclass model that predicts the etiologic agent (tuberculous and cryptococcal, with syphilis and Listeria routed to abstention) and, crucially, decides when a case should be deferred to a specialist. It classifies over cerebrospinal fluid and blood laboratory values with split and Mondrian conformal prediction for guaranteed coverage, selective abstention for rare and low-signal cases, and SHAP as a teaching component. The purpose is formative: helping clinicians in provincial and non-research hospitals recognize when a case exceeds what they can safely resolve locally and should be referred.",
     sections: {
       abstract:
         "Meningitis in HIV patients has several etiologies that look alike at presentation, and the published systems are binary, single-center, without abstention, and answer every case. YACHAY builds a multiclass model that predicts the etiologic agent (tuberculous and cryptococcal, with syphilis and Listeria routed to abstention) and, crucially, decides when a case should be deferred to a specialist. The purpose is formative: helping clinicians outside referral centers recognize when a case exceeds what they can safely resolve locally, in a country where diagnosis is concentrated in the capital and incidence has never been formally characterized.",
@@ -24,6 +26,8 @@ export const projects = [
     tags: ["Clinical ML", "Calibration", "Multilingual"],
     summary:
       "Do large language models stay calibrated when a clinical case is written in Wanka Quechua instead of Spanish? Data collection in progress; target preprint 15 November 2026.",
+    brief:
+      "No frontier model documents official Quechua support, and no clinical benchmark exists for the language. SALUD asks whether large language models remain calibrated when a clinical case is presented in Wanka Quechua rather than in Spanish; the danger is not the error itself, but the error delivered with high stated confidence to a clinician who cannot audit it. Calibration is measured with expected calibration error, Brier score, and reliability diagrams; selective abstention with risk-coverage curves, the area under them, and conformal prediction. Frontier models (GPT, Gemini, Claude) are evaluated alongside open and low-resource-language models, including models trained on Quechua.",
     sections: {
       abstract:
         "No frontier model documents official Quechua support, and no clinical benchmark exists for the language. SALUD asks whether large language models remain calibrated when a clinical case is presented in Wanka Quechua rather than in Spanish. The danger is not the error itself, but the error delivered with high stated confidence to a clinician who has no way to audit it.",
