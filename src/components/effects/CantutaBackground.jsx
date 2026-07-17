@@ -1,14 +1,15 @@
 "use client";
 
 /**
- * Detail-page background for SALUD: the cantuta, the sacred flower of Peru and
- * the national flower, tubular blooms with five lobes and an orange calyx that
- * hang from arching branches. The flowers frame both sides of the viewBox so
- * the centered text column is never crossed. It reads as something living and
- * human, fitting a project about a language and the people who speak it.
+ * Detail-page background for SALUD: the cantuta, the sacred flower of Peru,
+ * shown alive in its Andean habitat. A shrub grows from the lower right with
+ * arching stems, leaves, and large hanging tubular blooms with five lobes and
+ * an orange calyx, against a dusk sky and the silhouettes of Andean hills.
  *
- * preserveAspectRatio is xMidYMid so the framing holds on any aspect ratio.
- * Motion respects prefers-reduced-motion.
+ * The plant occupies the right side so the text column never crosses it. The
+ * bilingual caption is a self-contained HTML overlay with its own scrim,
+ * matching the caption format used across the site. Motion respects
+ * prefers-reduced-motion.
  */
 
 const CAPTIONS = {
@@ -16,86 +17,105 @@ const CAPTIONS = {
   en: "THE CANTUTA: THE SACRED FLOWER OF THE INCAS",
 };
 
-function Cantuta({ x, y, delay = 0, small = false }) {
-  const s = small ? 0.82 : 1;
+function Bloom({ x, y, s = 1, delay = 0 }) {
   return (
-    <g transform={`translate(${x},${y}) scale(${s})`} className="cant-anim" style={{ transformOrigin: "top", animation: `cant-sway 7.5s ease-in-out infinite ${delay}s` }}>
-      <path d="M0,0 Q-4,20 -3,40 L-14,64 Q-8,72 0,70 Q8,72 14,64 L3,40 Q4,20 0,0 Z" fill="url(#cantTube)" />
-      <g fill="url(#cantPet)">
-        <path d="M0,58 Q-16,66 -14,80 Q-6,78 0,68 Z" />
-        <path d="M0,58 Q16,66 14,80 Q6,78 0,68 Z" />
-        <path d="M0,60 Q-8,74 0,84 Q8,74 0,60 Z" />
-        <path d="M0,62 Q-12,72 -8,82 Z" />
-        <path d="M0,62 Q12,72 8,82 Z" />
+    <g
+      transform={`translate(${x},${y}) scale(${s})`}
+      className="cant-anim"
+      style={{ transformOrigin: "top", animation: `cant-sway 8s ease-in-out infinite ${delay}s` }}
+    >
+      {/* tube with orange calyx */}
+      <path d="M0,0 Q-6,26 -4,52 L-18,82 Q-10,93 0,90 Q10,93 18,82 L4,52 Q6,26 0,0 Z" fill="url(#cantTube3)" />
+      {/* five magenta lobes */}
+      <g fill="url(#cantPet3)">
+        <path d="M0,76 Q-22,88 -19,106 Q-8,103 0,90 Z" />
+        <path d="M0,76 Q22,88 19,106 Q8,103 0,90 Z" />
+        <path d="M0,78 Q-11,96 0,110 Q11,96 0,78 Z" />
+        <path d="M0,80 Q-17,94 -11,108 Z" />
+        <path d="M0,80 Q17,94 11,108 Z" />
       </g>
-      <circle cx="0" cy="66" r="2.5" fill="#fff4d0" />
+      <circle cx="0" cy="86" r="3.5" fill="#fff4d0" />
     </g>
   );
 }
 
 export default function CantutaBackground({ className = "", isDark = false }) {
   const bg = isDark
-    ? { from: "#2a0e1e", mid: "#3e162e", to: "#2e3348" }
-    : { from: "#4a1630", mid: "#6a2246", to: "#48506a" };
+    ? { from: "#3c2434", mid: "#452c3c", to: "#341e2e" }
+    : { from: "#7a4a66", mid: "#8a5a72", to: "#6a3a56" };
 
   return (
     <div className={className}>
       <svg
         className="absolute inset-0 h-full w-full"
-        viewBox="0 0 680 300"
+        viewBox="0 0 800 440"
         preserveAspectRatio="xMidYMid slice"
         role="img"
-        aria-label="The cantuta, the sacred flower of Peru"
+        aria-label="The cantuta, the sacred flower of Peru, growing in the Andes"
         xmlns="http://www.w3.org/2000/svg"
       >
         <style>{`
-          @keyframes cant-sway { 0%,100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
+          @keyframes cant-sway { 0%,100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
           @media (prefers-reduced-motion: reduce) { .cant-anim { animation: none !important; } }
         `}</style>
 
         <defs>
-          <linearGradient id="cantBg" x1="0" y1="0" x2="1" y2="1">
+          <linearGradient id="cantBg3" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor={bg.from} />
-            <stop offset="0.55" stopColor={bg.mid} />
+            <stop offset="0.5" stopColor={bg.mid} />
             <stop offset="1" stopColor={bg.to} />
           </linearGradient>
-          <linearGradient id="cantPet" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="cantHill3" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#4a5a4e" />
+            <stop offset="1" stopColor="#3a4a3e" />
+          </linearGradient>
+          <linearGradient id="cantPet3" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#f294be" />
             <stop offset="0.6" stopColor="#e05a8e" />
             <stop offset="1" stopColor="#c8306e" />
           </linearGradient>
-          <linearGradient id="cantTube" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="cantTube3" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#f0b070" />
             <stop offset="1" stopColor="#e07a4a" />
           </linearGradient>
         </defs>
 
-        <rect width="680" height="300" fill="url(#cantBg)" />
+        <rect width="800" height="440" fill="url(#cantBg3)" />
 
-        {/* LEFT branch with hanging cantutas */}
-        <g>
-          <path d="M-10,0 Q14,60 2,130 Q-8,180 12,240" fill="none" stroke="#5a8a5e" strokeWidth="2.5" opacity="0.55" />
-          <g stroke="#6a9a6e" strokeWidth="1.4" fill="#4a7a4e" opacity="0.4">
-            <path d="M6,70 q-22,-6 -32,6 q20,10 32,-6 Z" />
-            <path d="M0,140 q24,-6 34,8 q-22,8 -34,-8 Z" />
-          </g>
-          <Cantuta x={-2} y={74} delay={0} />
-          <Cantuta x={10} y={150} delay={1.2} small />
-        </g>
+        {/* Andean hill silhouettes */}
+        <path
+          d="M0,190 L150,128 L320,184 L500,118 L680,178 L800,138 L800,440 L0,440 Z"
+          fill="url(#cantHill3)"
+          opacity="0.5"
+        />
+        {/* ground */}
+        <path d="M0,356 Q400,336 800,360 L800,440 L0,440 Z" fill="#3a4a38" opacity="0.6" />
 
-        {/* RIGHT branch with hanging cantutas (mirror) */}
-        <g transform="translate(680,0) scale(-1,1)">
-          <path d="M-10,0 Q14,60 2,130 Q-8,180 12,240" fill="none" stroke="#5a8a5e" strokeWidth="2.5" opacity="0.55" />
-          <g stroke="#6a9a6e" strokeWidth="1.4" fill="#4a7a4e" opacity="0.4">
-            <path d="M6,70 q-22,-6 -32,6 q20,10 32,-6 Z" />
-            <path d="M0,140 q24,-6 34,8 q-22,8 -34,-8 Z" />
+        {/* the cantuta shrub, growing from the lower right */}
+        <g transform="translate(600,440)">
+          {/* arching stems */}
+          <g fill="none" stroke="#4a7a4e" strokeWidth="3" opacity="0.75">
+            <path d="M0,0 Q-40,-120 -20,-230 Q-10,-280 -40,-320" />
+            <path d="M0,0 Q20,-140 10,-250 Q5,-300 30,-330" />
+            <path d="M0,0 Q60,-100 80,-210 Q90,-260 70,-300" />
+            <path d="M0,0 Q-80,-90 -90,-190" />
           </g>
-          <Cantuta x={-2} y={90} delay={0.6} />
-          <Cantuta x={10} y={166} delay={1.8} small />
+          {/* leaves */}
+          <g fill="#4a7a4e" opacity="0.6" stroke="#5a8a5e" strokeWidth="1">
+            <ellipse cx="-30" cy="-180" rx="16" ry="7" transform="rotate(-30 -30 -180)" />
+            <ellipse cx="20" cy="-200" rx="16" ry="7" transform="rotate(20 20 -200)" />
+            <ellipse cx="60" cy="-150" rx="16" ry="7" transform="rotate(-40 60 -150)" />
+            <ellipse cx="-70" cy="-140" rx="14" ry="6" transform="rotate(30 -70 -140)" />
+          </g>
+          {/* hanging blooms at the stem tips */}
+          <Bloom x={-40} y={-320} delay={0} />
+          <Bloom x={30} y={-330} delay={1.1} />
+          <Bloom x={70} y={-300} s={0.9} delay={0.5} />
+          <Bloom x={-90} y={-190} s={0.85} delay={1.7} />
         </g>
       </svg>
 
-      {/* bilingual caption: HTML overlay with its own scrim, independent of SVG scaling */}
+      {/* bilingual caption: HTML overlay with its own scrim, site format */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0">
         <div
           className="px-4 pb-2 pt-8 text-[10px] leading-[1.6] tracking-wider"
