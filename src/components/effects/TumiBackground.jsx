@@ -94,15 +94,17 @@ export default function TumiBackground({ className = "", isDark = false }) {
           {/* inlaid turquoise on the chest */}
           <circle cx="0" cy="-11" r="3.4" fill="#4a9a94" />
         </g>
-
-        {/* caption scrim */}
-        <rect x="0" y="266" width="680" height="34" fill="#2a1e06" opacity="0.5" />
       </svg>
 
-      {/* bilingual caption as HTML overlay (never clips) */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 p-3 text-[10px] tracking-wider">
-        <div className="font-medium text-white drop-shadow">{CAPTIONS.es}</div>
-        <div style={{ color: "#f4e0a0" }} className="drop-shadow">{CAPTIONS.en}</div>
+      {/* bilingual caption: HTML overlay with its own scrim, independent of SVG scaling */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0">
+        <div
+          className="px-4 pb-2 pt-8 text-[10px] leading-[1.6] tracking-wider"
+          style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0))" }}
+        >
+          <div className="font-medium text-white drop-shadow">{CAPTIONS.es}</div>
+          <div style={{ color: "#f4e0a0" }} className="drop-shadow">{CAPTIONS.en}</div>
+        </div>
       </div>
     </div>
   );

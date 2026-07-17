@@ -93,15 +93,17 @@ export default function CantutaBackground({ className = "", isDark = false }) {
           <Cantuta x={-2} y={90} delay={0.6} />
           <Cantuta x={10} y={166} delay={1.8} small />
         </g>
-
-        {/* caption scrim */}
-        <rect x="0" y="266" width="680" height="34" fill="#280a1a" opacity="0.5" />
       </svg>
 
-      {/* bilingual caption as HTML overlay */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 p-3 text-[10px] tracking-wider">
-        <div className="font-medium text-white drop-shadow">{CAPTIONS.es}</div>
-        <div style={{ color: "#f0c0d4" }} className="drop-shadow">{CAPTIONS.en}</div>
+      {/* bilingual caption: HTML overlay with its own scrim, independent of SVG scaling */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0">
+        <div
+          className="px-4 pb-2 pt-8 text-[10px] leading-[1.6] tracking-wider"
+          style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0))" }}
+        >
+          <div className="font-medium text-white drop-shadow">{CAPTIONS.es}</div>
+          <div style={{ color: "#f0c0d4" }} className="drop-shadow">{CAPTIONS.en}</div>
+        </div>
       </div>
     </div>
   );

@@ -33,16 +33,19 @@ export default function ResearchDetail({ proj }) {
   if (featured && proj.brief) {
     const { Background } = featured;
     return (
-      <div className="mx-auto max-w-3xl">
-        {/* Backdrop panel */}
-        <div className="relative overflow-hidden rounded-3xl border shadow-sm">
+      // Full-bleed: break out of the layout's max-w-7xl and fill the viewport width.
+      // The header is 56px and the layout adds py-10 (40px top+bottom); 96px offset keeps
+      // the panel filling the screen without spilling past it.
+      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
+        <div className="relative min-h-[calc(100vh-9rem)] w-full overflow-hidden">
+          {/* Peruvian backdrop fills the whole panel */}
           <div className="absolute inset-0 z-0" aria-hidden="true">
             <Background className="absolute inset-0 h-full w-full" isDark={isDark} />
           </div>
 
-          {/* Content card floating over the backdrop */}
-          <div className="relative z-10 p-5 sm:p-8">
-            <div className="rounded-2xl bg-white/90 p-6 backdrop-blur-sm dark:bg-neutral-950/85 sm:p-8">
+          {/* Content card centered over the backdrop */}
+          <div className="relative z-10 flex min-h-[calc(100vh-9rem)] items-center justify-center px-4 py-10">
+            <div className="w-full max-w-2xl rounded-2xl bg-white/90 p-6 shadow-xl backdrop-blur-sm dark:bg-neutral-950/85 sm:p-8">
               <h1 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-[#f5f1e6] sm:text-3xl">
                 {proj.title}
               </h1>
