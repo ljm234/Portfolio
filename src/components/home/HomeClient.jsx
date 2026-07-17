@@ -14,27 +14,6 @@ export default function HomeClient() {
     return () => obs.disconnect();
   }, []);
 
-  const Cards = [
-    {
-      title: "AI/ML products",
-      bullets: [
-        "Production-ready web apps with accessible, clean UX.",
-        "Observable data pipelines and evaluation harnesses.",
-        "A/B or counterfactual checks to prove real lift.",
-      ],
-      href: "https://huggingface.co/spaces/luisjordanmontenegro/amoebanator-25",
-    },
-    {
-      title: "Clinical ML research",
-      bullets: [
-        "Calibrated risk with decision-curve thresholds.",
-        "External validation, reliability plots, uncertainty.",
-        "Model/Data cards and reproducible analysis.",
-      ],
-      href: "/collaborations",
-    },
-  ];
-
   const Work = [
     {
       title: "Research",
@@ -56,6 +35,18 @@ export default function HomeClient() {
     },
   ];
 
+  const Marquee = [
+    "Calibrated risk",
+    "Uncertainty quantification",
+    "Selective abstention",
+    "Conformal prediction",
+    "Decision-curve analysis",
+    "Reliability diagrams",
+    "External validation",
+    "Model & dataset cards",
+    "Reproducible analysis",
+  ];
+
   return (
     <>
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -71,17 +62,17 @@ export default function HomeClient() {
             data-testid="hero-title"
             className="text-balance text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#f5f1e6] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]"
           >
-            <span className="title-grad">Clinical&nbsp;ML</span>{" "}
-            and{" "}
-            <span className="title-grad-2">AI/ML products</span>{" "}
-            that ship and hold up to scrutiny
+            Calibrated, <span className="mark-underline">abstention-aware</span> clinical
+            machine learning for underserved care
           </h1>
           <p className="mt-4 max-w-3xl text-[#ece7d8] drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
-            I split my work between careful{" "}
-            <span className="font-medium">Clinical ML research</span> and shipping{" "}
-            <span className="font-medium">AI/ML products</span>. The work I care about:
-            calibrated risk, decision-curve thresholds, and figures that anyone on
-            the team can read. I would rather ship fewer claims with better evidence.
+            I work at the intersection of clinical machine learning and real-world systems.
+            My research asks whether a model can be trusted: calibration, uncertainty, and
+            knowing when to abstain and defer to a clinician, especially for underserved and
+            low-resource-language populations. I also build the tools themselves, from
+            decision-support classifiers to a bilingual clinical platform. My long-term goal
+            is trustworthy AI for primary care, and I would rather ship fewer claims with
+            stronger evidence than more claims without it.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -93,52 +84,18 @@ export default function HomeClient() {
           {/* trust chips / marquee */}
           <div className="mt-8 overflow-hidden rounded-xl border bg-white/60 dark:bg-neutral-950/60">
             <div className="marquee">
-              {[
-                "Calibrated risk",
-                "Decision-curve thresholds",
-                "External validation",
-                "Reliability diagrams",
-                "Conformal options",
-                "Model cards",
-                "Dataset cards",
-                "Reproducible figures",
-                "Accessible UX",
-              ].map((t, i) => (
+              {Marquee.map((t, i) => (
                 <span key={i} className="mx-3 whitespace-nowrap text-sm opacity-80">
                   {t} •
                 </span>
               ))}
-              {[
-                "Calibrated risk",
-                "Decision-curve thresholds",
-                "External validation",
-                "Reliability diagrams",
-                "Conformal options",
-                "Model cards",
-                "Dataset cards",
-                "Reproducible figures",
-                "Accessible UX",
-              ].map((t, i) => (
+              {Marquee.map((t, i) => (
                 <span key={`d-${i}`} className="mx-3 whitespace-nowrap text-sm opacity-80">
                   {t} •
                 </span>
               ))}
             </div>
           </div>
-
-          {/* quick KPIs */}
-          <dl className="mt-6 grid gap-3 sm:grid-cols-4">
-            {[
-              ["Ship cadence", "Weekly"],
-              ["Accessibility", "AA target"],
-              ["Tests", "Green"],
-            ].map(([k, v]) => (
-              <div key={k} className="rounded-xl border bg-white/60 p-3 text-center dark:bg-neutral-950/60">
-                <div className="text-2xl font-semibold leading-none">{v}</div>
-                <div className="mt-1 text-xs text-neutral-600 dark:text-neutral-400">{k}</div>
-              </div>
-            ))}
-          </dl>
         </div>
       </header>
 
@@ -185,37 +142,10 @@ export default function HomeClient() {
         </a>
       </section>
 
-      {/* WHERE I CAN HELP */}
-      <section className="space-y-4">
-        <h2 className="text-xl font-semibold tracking-tight text-[#f5f1e6] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">Where I can help</h2>
-        <div className="grid gap-6 md:grid-cols-2">
-          {Cards.map((c) => (
-            <a
-              key={c.title}
-              href={c.href}
-              target={c.href.startsWith("http") ? "_blank" : undefined}
-              rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="group relative block rounded-2xl border p-6 card hover:shadow-lg"
-            >
-              <span className="glow" />
-              <div className="text-lg font-semibold">{c.title}</div>
-              <ul className="mt-3 list-disc space-y-2 pl-5">
-                {c.bullets.map((b) => (
-                  <li key={b} className="text-neutral-700 dark:text-neutral-300">{b}</li>
-                ))}
-              </ul>
-              <div className="mt-5 inline-flex items-center text-sm opacity-80 group-hover:opacity-100">
-                Explore <Arrow />
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-
       {/* SELECTED WORK */}
       <section className="space-y-4">
         <h2 className="text-xl font-semibold tracking-tight text-[#f5f1e6] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">Selected work</h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {Work.map((w) => (
             <a key={w.title} href={w.href} className="group relative block rounded-2xl border p-5 card hover:shadow-lg">
               <span className="chip">{w.tag}</span>
@@ -234,13 +164,14 @@ export default function HomeClient() {
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_20%_0%,rgba(16,185,129,.12),transparent),radial-gradient(80%_60%_at_80%_100%,rgba(56,189,248,.12),transparent)]" />
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h3 className="text-lg font-semibold">Have an idea that fits?</h3>
+            <h3 className="text-lg font-semibold">Open to research collaborations and PhD opportunities</h3>
             <p className="max-w-xl text-neutral-700 dark:text-neutral-300">
-              Send the smallest useful dataset and a short note. I’ll reply quickly with next steps.
+              Clinical machine learning, uncertainty, and trustworthy AI for underserved care.
+              If your work connects, let’s talk.
             </p>
           </div>
           <div className="flex gap-3">
-            <a href="/contact" className="btn-primary">Contact</a>
+            <a href="/contact" className="btn-primary">Get in touch</a>
             <a href="/collaborations" className="btn-ghost">How I work</a>
           </div>
         </div>
@@ -264,23 +195,11 @@ function Arrow() {
 function StyleBlock() {
   // same CSS as before; rendered in a way that avoids hydration diffing
   const CSS = `
-      /* Title treatments */
-      .title-grad{
-        background: linear-gradient(90deg,#22c55e,#38bdf8,#6366f1);
-        background-size: 220% 220%;
-        -webkit-background-clip:text; background-clip:text; color:transparent;
-        animation: gradShift 8s ease-in-out infinite;
-      }
-      .title-grad-2{
-        background: linear-gradient(90deg,#60a5fa,#34d399,#8b5cf6);
-        background-size: 220% 220%;
-        -webkit-background-clip:text; background-clip:text; color:transparent;
-        animation: gradShift 10s ease-in-out infinite reverse;
-      }
-      @keyframes gradShift {
-        0%{background-position:0% 50%}
-        50%{background-position:100% 50%}
-        100%{background-position:0% 50%}
+      /* Keyword highlight: marker-style underline behind the method term */
+      .mark-underline{
+        background-image: linear-gradient(transparent 62%, rgba(232,200,96,.42) 62%);
+        background-repeat: no-repeat;
+        padding: 0 .05em;
       }
 
       /* Buttons */
@@ -306,13 +225,6 @@ function StyleBlock() {
         backdrop-filter: saturate(1.05) blur(6px);
       }
       .card:hover{ transform: translateY(-3px); }
-      .glow{
-        pointer-events:none; position:absolute; inset:-1px; border-radius:1rem; opacity:0; transition:opacity .25s ease;
-        background:
-          radial-gradient(420px 120px at 20% 0%, rgba(16,185,129,.16), transparent),
-          radial-gradient(420px 120px at 80% 100%, rgba(56,189,248,.16), transparent);
-      }
-      .card:hover .glow{ opacity:1 }
       .chip{
         display:inline-block; font-size:.7rem; letter-spacing:.02em;
         padding:.35rem .55rem; border-radius:9999px; border:1px solid rgba(0,0,0,.12);
@@ -340,28 +252,8 @@ function StyleBlock() {
         0%{ transform:translateX(0) }
         100%{ transform:translateX(-50%) }
       }
-
-      /* HERO FX (parallax field) */
-      .heroFX{ --mx: 0; --my: 0; }
-      .noise{
-        position:absolute; inset:0; opacity:.035; pointer-events:none;
-        background-image:url('data:image/svg+xml;utf8,\
-<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140">\
-<filter id="n"><feTurbulence baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter>\
-<rect width="140" height="140" filter="url(%23n)" opacity=".9"/></svg>');
-        mix-blend-mode:multiply;
-      }
-      .orb{
-        position:absolute; width:72vmin; height:72vmin; border-radius:50%; filter: blur(32px);
-        transform: translate(calc(var(--mx) * 24px), calc(var(--my) * 20px));
-      }
-      .orb-a{ left:-20vmin; top:-12vmin; background: radial-gradient(closest-side, rgba(16,185,129,.22), transparent 70%) }
-      .orb-b{ right:-18vmin; bottom:-22vmin; background: radial-gradient(closest-side, rgba(56,189,248,.22), transparent 70%) }
-      .gridlines{
-        position:absolute; inset:0; background-image:
-          linear-gradient(to right, rgba(0,0,0,.04) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(0,0,0,.04) 1px, transparent 1px);
-        background-size: 44px 44px; mask-image: radial-gradient(80% 80% at 50% 40%, #000, transparent 75%);
+      @media (prefers-reduced-motion: reduce){
+        .marquee{ animation: none }
       }
   `;
   return (
