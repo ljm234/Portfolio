@@ -2,33 +2,49 @@
   {
     "id": "montenegro-medium-jem",
     "title": "Montenegro-Calla's Medium: an optimized, low-cost culture formulation for axenic growth of Naegleria fowleri",
-    "authors": ["Montenegro-Calla, L.J."],
+    "authors": [
+      "Montenegro-Calla, L.J."
+    ],
     "venue": "Journal of Eukaryotic Microbiology",
     "year": 2026,
     "topic": "Microbiology",
-    "tags": ["Naegleria fowleri", "growth media", "wet lab"],
-    "abstract": "An optimized, serum-free, low-cost axenic medium for Naegleria fowleri that reduces cost by over 70 percent versus commercial alternatives while achieving roughly three times the cell yield, with reproducible passage timing across replicates.",
-    "contributions": [
-      "Roughly three times higher cell yield, reaching 1.03 x 10^7 cells/mL at 96 hours",
-      "Over 70 percent cost reduction versus commercial alternatives, with documented sourcing for each component",
-      "Reproducible protocol with quality-control checkpoints and a stable passage cadence"
+    "tags": [
+      "Naegleria fowleri",
+      "growth media",
+      "wet lab"
     ],
-    "links": { "status": "Under review at Journal of Eukaryotic Microbiology; currently in revision" }
+    "abstract": "A serum-free, low-cost culture medium for the axenic growth of Naegleria fowleri, developed as a more accessible and reproducible alternative to commercial formulations for laboratories in low-resource settings.",
+    "contributions": [
+      "A serum-free formulation designed for accessibility and reproducibility",
+      "Documented component sourcing aimed at low-resource laboratories",
+      "Full formulation and characterization reported in the manuscript under review"
+    ],
+    "links": {
+      "status": "Under review at Journal of Eukaryotic Microbiology; currently in revision"
+    }
   },
   {
     "id": "er-stress-mitochondria",
     "title": "Targeting ER stress and mitochondrial pathways in Naegleria fowleri",
-    "authors": ["Montenegro-Calla, L.J."],
+    "authors": [
+      "Montenegro-Calla, L.J."
+    ],
     "venue": "Journal of Eukaryotic Microbiology",
     "year": 2026,
     "topic": "Microbiology",
-    "tags": ["Naegleria fowleri", "ER stress", "wet lab"],
-    "abstract": "Tunicamycin and thapsigargin-induced endoplasmic reticulum stress and metformin-driven mitochondrial dysfunction as therapeutic pathways against Naegleria fowleri, the near-uniformly fatal amoeba behind primary amoebic meningoencephalitis.",
-    "contributions": [
-      "ER stress induction assessed by Western blot for BiP/GRP78",
-      "Mitochondrial dysfunction assessed by JC-1 staining and fluorometric assays",
-      "Grant funded, 10,500 dollars total"
+    "tags": [
+      "Naegleria fowleri",
+      "ER stress",
+      "wet lab"
     ],
-    "links": { "status": "In preparation" }
+    "abstract": "A study of endoplasmic reticulum stress and mitochondrial function as potential therapeutic pressure points against Naegleria fowleri, the near-uniformly fatal amoeba behind primary amoebic meningoencephalitis.",
+    "contributions": [
+      "ER stress induced with tunicamycin and thapsigargin, assessed by Western blot (BiP/GRP78)",
+      "Mitochondrial function perturbed with metformin, assessed by JC-1 staining",
+      "Grant funded; manuscript in preparation"
+    ],
+    "links": {
+      "status": "In preparation"
+    }
   }
 ]
