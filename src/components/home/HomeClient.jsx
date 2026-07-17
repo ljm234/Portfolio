@@ -56,7 +56,22 @@ export default function HomeClient() {
       <StyleBlock />
 
       {/* HERO */}
-      <header className="relative overflow-hidden">
+      <header className="relative overflow-hidden rounded-3xl">
+        {/* Readability scrim: a faint dark, blurred panel sitting behind the hero
+            text so the copy stays legible when a light cloud from the Hanan Pacha
+            sky drifts behind it. Kept subtle; barely visible at night, and just
+            enough to hold contrast in the day scene. The backdrop itself is
+            untouched. */}
+        <div
+          className="pointer-events-none absolute inset-0 z-0 rounded-3xl"
+          aria-hidden="true"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(18,24,42,0.34), rgba(18,24,42,0.22))",
+            backdropFilter: "blur(2px)",
+            WebkitBackdropFilter: "blur(2px)",
+          }}
+        />
         <div className="relative z-10 p-6 md:p-10">
           <h1
             data-testid="hero-title"
