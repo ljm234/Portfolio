@@ -58,9 +58,9 @@ export async function POST(req) {
 
   try {
     const result = await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "Jordan Montenegro <noreply@jordanmontenegrocalla.com>",
       to: "jordanmontenegroc.99@gmail.com",
-      reply_to: email,
+      replyTo: email,
       subject,
       text: textBody,
     });
