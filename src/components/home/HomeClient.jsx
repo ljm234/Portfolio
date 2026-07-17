@@ -77,8 +77,7 @@ export default function HomeClient() {
             data-testid="hero-title"
             className="text-balance text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#f5f1e6] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]"
           >
-            Calibrated, <span className="mark-underline">abstention-aware</span> clinical
-            machine learning for underserved care
+            Calibrated, abstention-aware clinical machine learning for underserved care
           </h1>
           <p className="mt-4 max-w-3xl text-[#ece7d8] drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
             I work at the intersection of clinical machine learning and real-world systems.
@@ -98,17 +97,23 @@ export default function HomeClient() {
 
           {/* trust chips / marquee */}
           <div className="mt-8 overflow-hidden rounded-xl border bg-white/60 dark:bg-neutral-950/60">
-            <div className="marquee">
-              {Marquee.map((t, i) => (
-                <span key={i} className="mx-3 whitespace-nowrap text-sm opacity-80">
-                  {t} •
-                </span>
-              ))}
-              {Marquee.map((t, i) => (
-                <span key={`d-${i}`} className="mx-3 whitespace-nowrap text-sm opacity-80">
-                  {t} •
-                </span>
-              ))}
+            <div className="hpm-viewport">
+              <div className="hpm-track">
+                <div className="hpm-group" aria-hidden="false">
+                  {Marquee.map((t, i) => (
+                    <span key={i} className="hpm-item text-sm opacity-80">
+                      {t} •
+                    </span>
+                  ))}
+                </div>
+                <div className="hpm-group" aria-hidden="true">
+                  {Marquee.map((t, i) => (
+                    <span key={`d-${i}`} className="hpm-item text-sm opacity-80">
+                      {t} •
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -210,13 +215,6 @@ function Arrow() {
 function StyleBlock() {
   // same CSS as before; rendered in a way that avoids hydration diffing
   const CSS = `
-      /* Keyword highlight: marker-style underline behind the method term */
-      .mark-underline{
-        background-image: linear-gradient(transparent 62%, rgba(232,200,96,.42) 62%);
-        background-repeat: no-repeat;
-        padding: 0 .05em;
-      }
-
       /* Buttons */
       .btn-primary{
         position:relative; display:inline-flex; align-items:center; gap:.5rem;
@@ -257,18 +255,39 @@ function StyleBlock() {
         background:rgba(18,18,18,.5);
       }
 
-      /* Marquee */
-      .marquee{
-        display:flex; align-items:center; height:40px; padding:0 10px;
-        animation: slide 18s linear infinite; will-change: transform;
+      /* Home marquee: two identical groups on a flex track; the track slides by
+         exactly one group width (-100% of a group = -50% of the track) so the
+         loop is seamless with no jump when it restarts. */
+      .hpm-viewport{
+        overflow:hidden;
+        display:flex;
+        height:40px;
+      }
+      .hpm-track{
+        display:flex;
+        flex:0 0 auto;
+        min-width:100%;
+        gap:0;
+        animation: hpm-slide 26s linear infinite;
+        will-change: transform;
+      }
+      .hpm-group{
+        display:flex;
+        align-items:center;
+        flex:0 0 auto;
         white-space:nowrap;
       }
-      @keyframes slide{
-        0%{ transform:translateX(0) }
-        100%{ transform:translateX(-50%) }
+      .hpm-item{
+        margin:0 .75rem;
+        white-space:nowrap;
       }
+      @keyframes hpm-slide{
+        from{ transform:translate3d(0,0,0) }
+        to{ transform:translate3d(-50%,0,0) }
+      }
+      .hpm-track:hover{ animation-play-state: paused }
       @media (prefers-reduced-motion: reduce){
-        .marquee{ animation: none }
+        .hpm-track{ animation: none }
       }
   `;
   return (

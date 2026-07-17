@@ -67,30 +67,6 @@
   transform-origin: left center;
 }
 
-/* ---------------------------
-   Marquee carousel (seamless)
----------------------------- */
-.marquee { /* wrapper */ }
-.marquee-track {
-  display: flex;
-  gap: 1.5rem;       /* matches gap-6 */
-  width: max-content;
-  animation: marquee-scroll var(--dur, 28s) linear infinite;
-  will-change: transform;
-}
-@keyframes marquee-scroll {
-  0%   { transform: translate3d(0,0,0); }
-  100% { transform: translate3d(-50%,0,0); } /* moves by half of duplicated track */
-}
-/* Pause on interaction */
-.marquee:hover .marquee-track,
-.marquee:focus-within .marquee-track,
-.marquee:active .marquee-track { animation-play-state: paused; }
-
-/* Reduced motion: stop marquee */
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none !important; }
-}
 /* Hero entrance (slower, smooth) */
 @keyframes heroFadeUp {
   from { opacity: 0; transform: translateY(12px); }
