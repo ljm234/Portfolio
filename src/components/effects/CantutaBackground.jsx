@@ -2,14 +2,20 @@
 
 /**
  * Detail-page background for SALUD: the cantuta, the sacred flower of Peru,
- * shown alive in its Andean habitat. A shrub grows from the lower right with
- * arching stems, leaves, and large hanging tubular blooms with five lobes and
- * an orange calyx, against a dusk sky and the silhouettes of Andean hills.
+ * shown alive in its Andean habitat. A compact shrub grows from the lower
+ * right with arching stems, leaves, and large hanging tubular blooms with five
+ * lobes and an orange calyx, against a dusk sky and the silhouettes of Andean
+ * hills.
  *
- * The plant occupies the right side so the text column never crosses it. The
- * bilingual caption is a self-contained HTML overlay with its own scrim,
- * matching the caption format used across the site. Motion respects
- * prefers-reduced-motion.
+ * The blooms sit in the middle-right band of the viewBox, the region that the
+ * xMidYMid slice never crops on wide viewports. Each bloom splits its
+ * transforms across two nested groups: the outer group carries the static SVG
+ * translate/scale that positions it, and the inner group carries only the CSS
+ * sway rotation. CSS transforms override an element's own transform attribute,
+ * so keeping them on separate elements lets them compose instead of the sway
+ * wiping out the position. The bilingual caption is a self-contained HTML
+ * overlay with its own scrim, matching the caption format used across the
+ * site. Motion respects prefers-reduced-motion.
  */
 
 const CAPTIONS = {
@@ -19,22 +25,27 @@ const CAPTIONS = {
 
 function Bloom({ x, y, s = 1, delay = 0 }) {
   return (
-    <g
-      transform={`translate(${x},${y}) scale(${s})`}
-      className="cant-anim"
-      style={{ transformOrigin: "top", animation: `cant-sway 8s ease-in-out infinite ${delay}s` }}
-    >
-      {/* tube with orange calyx */}
-      <path d="M0,0 Q-6,26 -4,52 L-18,82 Q-10,93 0,90 Q10,93 18,82 L4,52 Q6,26 0,0 Z" fill="url(#cantTube3)" />
-      {/* five magenta lobes */}
-      <g fill="url(#cantPet3)">
-        <path d="M0,76 Q-22,88 -19,106 Q-8,103 0,90 Z" />
-        <path d="M0,76 Q22,88 19,106 Q8,103 0,90 Z" />
-        <path d="M0,78 Q-11,96 0,110 Q11,96 0,78 Z" />
-        <path d="M0,80 Q-17,94 -11,108 Z" />
-        <path d="M0,80 Q17,94 11,108 Z" />
+    <g transform={`translate(${x},${y}) scale(${s})`}>
+      <g
+        className="cant-anim"
+        style={{
+          transformBox: "fill-box",
+          transformOrigin: "50% 0%",
+          animation: `cant-sway 8s ease-in-out infinite ${delay}s`,
+        }}
+      >
+        {/* tube with orange calyx */}
+        <path d="M0,0 Q-7,30 -5,60 L-20,94 Q-11,106 0,102 Q11,106 20,94 L5,60 Q7,30 0,0 Z" fill="url(#cantTube5)" />
+        {/* five magenta lobes */}
+        <g fill="url(#cantPet5)">
+          <path d="M0,88 Q-26,102 -22,122 Q-9,118 0,104 Z" />
+          <path d="M0,88 Q26,102 22,122 Q9,118 0,104 Z" />
+          <path d="M0,90 Q-13,110 0,126 Q13,110 0,90 Z" />
+          <path d="M0,92 Q-20,108 -13,124 Z" />
+          <path d="M0,92 Q20,108 13,124 Z" />
+        </g>
+        <circle cx="0" cy="99" r="4" fill="#fff4d0" />
       </g>
-      <circle cx="0" cy="86" r="3.5" fill="#fff4d0" />
     </g>
   );
 }
@@ -60,58 +71,59 @@ export default function CantutaBackground({ className = "", isDark = false }) {
         `}</style>
 
         <defs>
-          <linearGradient id="cantBg3" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="cantBg5" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor={bg.from} />
             <stop offset="0.5" stopColor={bg.mid} />
             <stop offset="1" stopColor={bg.to} />
           </linearGradient>
-          <linearGradient id="cantHill3" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="cantHill5" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#4a5a4e" />
             <stop offset="1" stopColor="#3a4a3e" />
           </linearGradient>
-          <linearGradient id="cantPet3" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="cantPet5" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#f294be" />
             <stop offset="0.6" stopColor="#e05a8e" />
             <stop offset="1" stopColor="#c8306e" />
           </linearGradient>
-          <linearGradient id="cantTube3" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="cantTube5" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#f0b070" />
             <stop offset="1" stopColor="#e07a4a" />
           </linearGradient>
         </defs>
 
-        <rect width="800" height="440" fill="url(#cantBg3)" />
+        <rect width="800" height="440" fill="url(#cantBg5)" />
 
         {/* Andean hill silhouettes */}
         <path
           d="M0,190 L150,128 L320,184 L500,118 L680,178 L800,138 L800,440 L0,440 Z"
-          fill="url(#cantHill3)"
+          fill="url(#cantHill5)"
           opacity="0.5"
         />
         {/* ground */}
         <path d="M0,356 Q400,336 800,360 L800,440 L0,440 Z" fill="#3a4a38" opacity="0.6" />
 
-        {/* the cantuta shrub, growing from the lower right */}
-        <g transform="translate(600,440)">
-          {/* arching stems */}
-          <g fill="none" stroke="#4a7a4e" strokeWidth="3" opacity="0.75">
-            <path d="M0,0 Q-40,-120 -20,-230 Q-10,-280 -40,-320" />
-            <path d="M0,0 Q20,-140 10,-250 Q5,-300 30,-330" />
-            <path d="M0,0 Q60,-100 80,-210 Q90,-260 70,-300" />
-            <path d="M0,0 Q-80,-90 -90,-190" />
+        {/* the cantuta shrub, compact, growing from the lower right; blooms
+            kept in the middle-right band so the slice never crops them */}
+        <g transform="translate(650,440)">
+          {/* shorter arching stems */}
+          <g fill="none" stroke="#4a7a4e" strokeWidth="4" opacity="0.8">
+            <path d="M0,0 Q-50,-90 -80,-180" />
+            <path d="M0,0 Q-10,-100 -30,-200" />
+            <path d="M0,0 Q40,-90 30,-190" />
+            <path d="M0,0 Q90,-70 120,-150" />
           </g>
           {/* leaves */}
-          <g fill="#4a7a4e" opacity="0.6" stroke="#5a8a5e" strokeWidth="1">
-            <ellipse cx="-30" cy="-180" rx="16" ry="7" transform="rotate(-30 -30 -180)" />
-            <ellipse cx="20" cy="-200" rx="16" ry="7" transform="rotate(20 20 -200)" />
-            <ellipse cx="60" cy="-150" rx="16" ry="7" transform="rotate(-40 60 -150)" />
-            <ellipse cx="-70" cy="-140" rx="14" ry="6" transform="rotate(30 -70 -140)" />
+          <g fill="#4a7a4e" opacity="0.65" stroke="#5a8a5e" strokeWidth="1">
+            <ellipse cx="-55" cy="-110" rx="18" ry="8" transform="rotate(-35 -55 -110)" />
+            <ellipse cx="-15" cy="-130" rx="18" ry="8" transform="rotate(15 -15 -130)" />
+            <ellipse cx="25" cy="-115" rx="18" ry="8" transform="rotate(-25 25 -115)" />
+            <ellipse cx="75" cy="-95" rx="16" ry="7" transform="rotate(-45 75 -95)" />
           </g>
-          {/* hanging blooms at the stem tips */}
-          <Bloom x={-40} y={-320} delay={0} />
-          <Bloom x={30} y={-330} delay={1.1} />
-          <Bloom x={70} y={-300} s={0.9} delay={0.5} />
-          <Bloom x={-90} y={-190} s={0.85} delay={1.7} />
+          {/* large hanging blooms at the stem tips */}
+          <Bloom x={-80} y={-180} delay={0} />
+          <Bloom x={-30} y={-200} delay={1.1} />
+          <Bloom x={30} y={-190} s={0.92} delay={0.5} />
+          <Bloom x={120} y={-150} s={0.88} delay={1.7} />
         </g>
       </svg>
 
